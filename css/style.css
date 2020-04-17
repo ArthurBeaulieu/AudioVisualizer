@@ -1,0 +1,84 @@
+html {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+body {
+  align-items: center;
+  background-color: #aaaabe;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+canvas {
+  background-color: black;
+  border: solid 1px #2c2c30;
+  display: block;
+}
+
+.mzk-spectrum {
+  font-family: Segoe UI, Helvetica, sans-serif;
+  overflow: hidden;
+  position: relative;
+  z-index: 800;
+}
+
+.mzkspectrum-settings {
+  cursor: pointer;
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  width: 25px;
+  z-index: 850;
+
+  transition: left .4s ease-in-out;
+}
+
+.mzkspectrum-settings.opened {
+  left: calc(140px - 35px);
+}
+
+.mzkspectrum-settings-panel {
+  background-color: #1D1E25;
+  border-bottom-right-radius: 5px;
+  box-sizing: border-box;
+  color: #E7E9E7;
+  font-size: .9rem;
+  height: auto;
+  left: -140px;
+  opacity: 0;
+  padding: 0 10px;
+  position: absolute;
+  width: 140px;
+  z-index: 825;
+
+  transition: left .4s ease-in-out, opacity .4s ease-in;
+}
+
+.mzkspectrum-settings-panel h3 {
+  margin: 5px 0 1rem 0;
+}
+
+.mzkspectrum-settings-panel p.legend {
+  font-style: italic;
+  font-weight: bold;
+  margin: 0;
+}
+
+.mzkspectrum-settings-panel p.smooth-color {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mzkspectrum-settings-panel input {
+  float: right;
+}
+
+.mzkspectrum-settings-panel.opened {
+  left: 0;
+  opacity: 1;
+}

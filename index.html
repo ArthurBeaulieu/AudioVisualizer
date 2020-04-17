@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SandBox</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="render-spectrum-to"></div>
+  <audio id="audio-player" src="assets/audio/test.flac" style="position:absolute;top:0;" controls></audio>
+  <script type="module">
+    import MzkVisualizer from './js/MzkVisualizer.js';
+
+    const mzkVisualizer = new MzkVisualizer({
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-spectrum-to'),
+      fftSize: 1024 // [128, 4096], powers of 2 only
+    });
+
+    mzkVisualizer.new({
+      type: 'MzkSpectrum',
+      params: {
+        height: 500,
+        width: 1000,
+        scale: 'logarithmic', // 'linear' or 'logarithmic'
+        colorSmoothing: true // Apply gradient between sample to smoothen visualization
+      }
+    });
+  </script>
+</body>
+</html>
