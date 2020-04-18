@@ -1,4 +1,5 @@
 import MzkSpectrum from './MzkSpectrum.js';
+import MzkVueMeter from './MzkVueMeter.js';
 
 
 class MzkVisualizer {
@@ -6,8 +7,6 @@ class MzkVisualizer {
 
   constructor(options) {
     this._player = options.player; // Source (HTML audio player)
-    this._renderTo = options.renderTo; // Target div to render module in
-    this._fftSize = options.fftSize || 1024; // FFT size used to analyse audio stream
   }
 
 
@@ -21,6 +20,8 @@ class MzkVisualizer {
     if (this._player !== null && this._renderTo !== null) {
       if (options.type === 'MzkSpectrum') {
         component = this._createMzkSpectrum(options);
+      } else if (options.type === 'MzkVueMeter') {
+        component = this._createMzkVueMeter(options);
       }
     }
 
@@ -31,8 +32,14 @@ class MzkVisualizer {
   _createMzkSpectrum(options) {
     return new MzkSpectrum({
       player: this._player,
-      renderTo: this._renderTo,
-      fftSize: this._fftSize,
+      params: options.params
+    });
+  }
+
+
+  _createMzkVueMeter(options) {
+    return new MzkVueMeter({
+      player: this._player,
       params: options.params
     });
   }

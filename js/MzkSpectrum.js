@@ -63,8 +63,8 @@ class MzkSpectrum {
   _fillAttributes(options) {
     return new Promise(resolve => {
       this._player = options.player;
-      this._renderTo = options.renderTo;
-      this._fftSize = options.fftSize || 1024;
+      this._fftSize = options.params.fftSize || 1024;
+      this._renderTo = options.params.renderTo;
       this._scaleType = options.params.scale || 'linear';
       this._colorSmoothing = options.params.colorSmoothing || false;
       this._dimension.height = options.params.height;
@@ -150,22 +150,22 @@ class MzkSpectrum {
     this._nodes.merger = this._audioCtx.createChannelMerger(this._nodes.source.channelCount);
     // Actual script node from source node with a fixed buffer size of 256
     this._nodes.script = this._audioCtx.createScriptProcessor(this._speed, this._nodes.source.channelCount, this._nodes.source.channelCount);
-    // Create analyzer node to read frequency bin on audio proccessed
-    this.analyzerL = this._audioCtx.createAnalyser();
-    this.analyzerR = this._audioCtx.createAnalyser();
-    this.analyzerL.smoothingTimeConstant = 0;
-    this.analyzerR.smoothingTimeConstant = 0;
-    this.analyzerL.fftSize = this._fftSize;
-    this.analyzerR.fftSize = this._fftSize;
-    // Attach script processor node to both analyzer
-    this.analyzerL.connect(this._nodes.script);
-    this.analyzerR.connect(this._nodes.script);
+    // Create analyser node to read frequency bin on audio proccessed
+    this.analyserL = this._audioCtx.createAnalyser();
+    this.analyserR = this._audioCtx.createAnalyser();
+    this.analyserL.smoothingTimeConstant = 0;
+    this.analyserR.smoothingTimeConstant = 0;
+    this.analyserL.fftSize = this._fftSize;
+    this.analyserR.fftSize = this._fftSize;
+    // Attach script processor node to both analyser
+    this.analyserL.connect(this._nodes.script);
+    this.analyserR.connect(this._nodes.script);
     // Nodes chaining
     this._nodes.source.connect(this._nodes.splitter);
-    this._nodes.splitter.connect(this.analyzerL, 0);
-    this._nodes.splitter.connect(this.analyzerR, 1);
-    this.analyzerL.connect(this._nodes.merger, 0, 0);
-    this.analyzerR.connect(this._nodes.merger, 0, 1);
+    this._nodes.splitter.connect(this.analyserL, 0);
+    this._nodes.splitter.connect(this.analyserR, 1);
+    this.analyserL.connect(this._nodes.merger, 0, 0);
+    this.analyserR.connect(this._nodes.merger, 0, 1);
     this._nodes.merger.connect(this._audioCtx.destination);
   }
 
@@ -196,10 +196,10 @@ class MzkSpectrum {
 
   _processAudioBin(event) {
     if (this._nodes.source.mediaElement.paused === false) {
-      const frequenciesL = new Uint8Array(this.analyzerL.frequencyBinCount);
-      const frequenciesR = new Uint8Array(this.analyzerR.frequencyBinCount);
-      this.analyzerL.getByteFrequencyData(frequenciesL);
-      this.analyzerR.getByteFrequencyData(frequenciesR);
+      const frequenciesL = new Uint8Array(this.analyserL.frequencyBinCount);
+      const frequenciesR = new Uint8Array(this.analyserR.frequencyBinCount);
+      this.analyserL.getByteFrequencyData(frequenciesL);
+      this.analyserR.getByteFrequencyData(frequenciesR);
       requestAnimationFrame(() => {
         this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
         this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);

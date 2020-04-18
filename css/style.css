@@ -82,3 +82,15 @@ canvas {
   left: 0;
   opacity: 1;
 }
+
+.mzk-vuemeter {
+  display: flex;
+  height: 100px;
+  width: 20px;
+}
+
+.mzk-vuemeter.horizontal-vuemeter {
+  flex-direction: column;
+  height: 20px;
+  width: 100px;
+}
