@@ -63,17 +63,13 @@ class MzkSpectrum {
   _fillAttributes(options) {
     return new Promise(resolve => {
       this._player = options.player;
-      this._fftSize = options.params.fftSize || 1024;
-      this._renderTo = options.params.renderTo;
-      this._scaleType = options.params.scale || 'linear';
-      this._colorSmoothing = options.params.colorSmoothing || false;
-      this._dimension.height = options.params.height;
-      this._dimension.canvasHeight = this._dimension.height / 2;
-      this._dimension.width = options.params.width;
-
+      this._fftSize = options.fftSize || 1024;
+      this._renderTo = options.renderTo;
+      this._scaleType = options.scale || 'linear';
+      this._colorSmoothing = options.colorSmoothing || false;
       this._canvasSpeed = 1; // Canvas offset per bin
       this._speed = 512; // Those are MzSprectum proper attributes
-
+      this._updateDimensions();
       this._createLogarithmicScaleHeights().then(resolve);
     });
   }
@@ -138,6 +134,13 @@ class MzkSpectrum {
     this._dom.container.appendChild(this._canvasL);
     this._dom.container.appendChild(this._canvasR);
     this._renderTo.appendChild(this._dom.container);
+  }
+
+
+  _updateDimensions() {
+    this._dimension.height = this._renderTo.offsetHeight;
+    this._dimension.canvasHeight = this._renderTo.offsetHeight / 2;
+    this._dimension.width = this._renderTo.offsetWidth;
   }
 
 

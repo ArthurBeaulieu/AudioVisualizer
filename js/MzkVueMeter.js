@@ -6,8 +6,6 @@ class MzkVueMeter {
     this._player = null; // Source (HTML audio player)
     this._renderTo = null; // Target div to render module in
     this._fftSize = null; // FFT size used to analyse audio stream
-    this._borderColor = null;
-    this._backgroundColor = null;
     // The Web Audio API context
     this._audioCtx = null;
     // Audio nodes
@@ -54,19 +52,15 @@ class MzkVueMeter {
 
   _fillAttributes(options) {
     this._player = options.player;
-    this._fftSize = options.params.fftSize || 1024;
-    // style options
-    this._borderColor = options.params.borderColor || 'black';
-    this._backgroundColor = options.params.backgroundColor || 'black';
-    // init amplitude values
-    this._amplitudeL = options.params.initAmplitude || 0;
-    this._peakL = options.params.initPeak || -1;
+    this._renderTo = options.renderTo;
+    this._fftSize = options.fftSize || 1024;
+    this._orientation = options.orientation || 'vertical';
+    this._amplitudeL = 0;
+    this._peakL = -1;
     this._prevAmplitudeL = 0;
-    this._amplitudeR = options.params.initAmplitude || 0;
-    this._peakR = options.params.initPeak || -1;
-    this._orientation = options.params.orientation || 'vertical';
+    this._amplitudeR = 0;
+    this._peakR = -1;
     this._prevAmplitudeR = 0;
-    this._renderTo = options.params.renderTo;
   }
 
 
@@ -82,15 +76,15 @@ class MzkVueMeter {
 
     if (this._orientation === 'horizontal') {
       this._dom.container.classList.add('horizontal-vuemeter');
-      this._canvasL.width = this._dom.container.offsetWidth;
-      this._canvasR.width = this._dom.container.offsetWidth;
-      this._canvasL.height = this._dom.container.offsetHeight / 2;
-      this._canvasR.height = this._dom.container.offsetHeight / 2;
+      this._canvasL.width = this._renderTo.offsetWidth;
+      this._canvasR.width = this._renderTo.offsetWidth;
+      this._canvasL.height = this._renderTo.offsetHeight / 2;
+      this._canvasR.height = this._renderTo.offsetHeight / 2;
     } else if (this._orientation === 'vertical') {
-      this._canvasL.width = this._dom.container.offsetWidth / 2;
-      this._canvasR.width = this._dom.container.offsetWidth / 2;
-      this._canvasL.height = this._dom.container.offsetHeight;
-      this._canvasR.height = this._dom.container.offsetHeight;
+      this._canvasL.width = this._renderTo.offsetWidth / 2;
+      this._canvasR.width = this._renderTo.offsetWidth / 2;
+      this._canvasL.height = this._renderTo.offsetHeight;
+      this._canvasR.height = this._renderTo.offsetHeight;
     }
 
     this.drawLiveMeter(this._canvasL, this._amplitudeL, this._peakL);

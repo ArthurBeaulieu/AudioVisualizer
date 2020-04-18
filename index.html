@@ -5,36 +5,28 @@
   <title>SandBox</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <div id="render-spectrum-to"></div>
-  <div id="render-vuemeter-to"></div>
-  <audio id="audio-player" src="assets/audio/test.flac" style="position:absolute;top:0;" controls></audio>
+<body style="position:absolute;height:100%;width:100%;">
+  <div id="render-spectrum-to" style="width:90%;height:200px;"></div>
+  <div id="render-vuemeter-to" style="height:100px;width:20px;"></div>
+  <audio id="audio-player" src="assets/audio/test.flac" controls></audio>
   <script type="module">
     import MzkVisualizer from './js/MzkVisualizer.js';
 
-    const mzkVisualizer = new MzkVisualizer({
-      player: document.querySelector('#audio-player')
-    });
-
-    mzkVisualizer.new({
+    const spectrum = new MzkVisualizer({
       type: 'MzkSpectrum',
-      params: {
-        renderTo: document.querySelector('#render-spectrum-to'),
-        fftSize: 128, // [128, 4096], powers of 2 only
-        height: 500,
-        width: 500,
-        scale: 'logarithmic', // 'linear' or 'logarithmic'
-        colorSmoothing: true // Apply gradient between sample to smoothen visualization
-      }
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-spectrum-to'), // Height must be defined in px
+      fftSize: 1024, // [128, 4096], powers of 2 only
+      colorSmoothing: true, // Apply gradient between sample to smoothen visualization
+      scale: 'logarithmic' // 'linear' or 'logarithmic'
     });
 
-    mzkVisualizer.new({
+    const vuewMeter = new MzkVisualizer({
       type: 'MzkVueMeter',
-      params: {
-        renderTo: document.querySelector('#render-vuemeter-to'),
-        fftSize: 1024,
-        orientation: 'vertical' // 'vertical' or 'horizontal'
-      }
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-vuemeter-to'),
+      fftSize: 1024,
+      orientation: 'vertical' // 'vertical' or 'horizontal'
     });
   </script>
 </body>
