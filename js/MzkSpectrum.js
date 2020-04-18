@@ -236,7 +236,7 @@ class MzkSpectrum {
     if (i === 0 || !this._colorSmoothing) {
       ctx.fillStyle = `rgb(${frequencies[i]}, ${frequencies[i]}, ${frequencies[i]})`;
     } else {
-      var gradient = ctx.createLinearGradient(
+      const gradient = ctx.createLinearGradient(
         0, this._dimension.canvasHeight - scaledHeight - frequencyHeight, // X0/Y0
         0, this._dimension.canvasHeight - scaledHeight // X1/Y1
       );
@@ -259,7 +259,7 @@ class MzkSpectrum {
     if (i === 0 || i === frequencies.length - 1 || !this._colorSmoothing) {
       ctx.fillStyle = `rgb(${frequencies[i]}, ${frequencies[i]}, ${frequencies[i]})`;
     } else {
-      var gradient = ctx.createLinearGradient(
+      const gradient = ctx.createLinearGradient(
         0, this._logScale[i], // X0/Y0
         0, this._logScale[i - 1] // X1/Y1
       );
