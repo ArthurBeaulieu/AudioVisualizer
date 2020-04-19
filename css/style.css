@@ -2,6 +2,7 @@ canvas {
   background-color: black;
   border: solid 1px #2c2c30;
   display: block;
+  box-sizing: border-box;
 }
 
 .mzk-spectrum {
@@ -38,6 +39,7 @@ canvas {
   opacity: 0;
   padding: 0 10px;
   position: absolute;
+  top: 0;
   width: 140px;
   z-index: 825;
 
@@ -71,6 +73,7 @@ canvas {
 
 .mzk-vuemeter {
   display: flex;
+  height: 100%;
 }
 
 .mzk-vuemeter.horizontal-vuemeter {

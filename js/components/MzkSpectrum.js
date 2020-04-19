@@ -1,86 +1,44 @@
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
+import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 
 
-class MzkSpectrum {
+class MzkSpectrum extends VisuComponentStereo {
 
 
   constructor(options) {
-    // Attributes that can be sent as options
-    this._player = null; // Source (HTML audio player)
-    this._renderTo = null; // Target div to render module in
-    this._fftSize = null; // FFT size used to analyse audio stream
-    this._scaleType = null;
-    this._colorSmoothing = null
-    // The Web Audio API context
-    this._audioCtx = null;
-    // Audio nodes
-    this._nodes = {
-      source: null, // HTML audio element
-      splitter: null, // Stereo channel splitting
-      merger: null, // Merge channels into one
-      analyserL: null, // Left channel analysis
-      analyserR: null, // Right channel analysis
-      script: null
-    };
-    // Canvas and contexts
-    this._canvasL = null;
-    this._canvasR = null;
+    super(options);
     // Used to animate canvas on audio bins analysis
     this._bufferCanvas = null;
     this._bufferCtx = null;
     // Display utils
-    this._dom = {
-      container: null,
-      settings: null,
-      settingsPanel: null
-    };
+    this._dom.settings = null;
+    this._dom.settingsPanel = null;
     this._dimension = {
       height: null,
       canvasHeight: null,
       width: null
     };
+    this._scaleType = null;
+    this._colorSmoothing = null
     this._canvasSpeed = null;
     this._logScale = [];
     // Event binding
     this._settingsClicked = this._settingsClicked.bind(this);
-    this._processAudioBin = this._processAudioBin.bind(this);
-    // Construction sequence
-    this._fillAttributes(options)
-    .then(() => {
-      this._buildUI();
-      this._setAudioNodes();
-      this._addEvents();
-    });
+    // Complementary building
+    this._setupSpectrum(options);
+    this._buildSettingsUI();
   }
 
 
-  destroy() {
-    this._removeEvents();
-    Object.keys(this).forEach(key => { delete this[key]; });
+  _setupSpectrum(options) {
+    this._scaleType = options.scale || 'linear';
+    this._colorSmoothing = options.colorSmoothing || false;
+    this._canvasSpeed = 1; // Canvas offset per bin
+    this._updateDimensions();
+    this._createLogarithmicScaleHeights();
   }
 
 
-  _fillAttributes(options) {
-    return new Promise(resolve => {
-      this._player = options.player;
-      this._fftSize = options.fftSize || 1024;
-      this._renderTo = options.renderTo;
-      this._scaleType = options.scale || 'linear';
-      this._colorSmoothing = options.colorSmoothing || false;
-      this._canvasSpeed = 1; // Canvas offset per bin
-      this._speed = 512; // Those are MzSprectum proper attributes
-      this._updateDimensions();
-      this._createLogarithmicScaleHeights().then(resolve);
-    });
-  }
-
-
-  _buildUI() {
-    this._dom.container = document.createElement('DIV');
-    this._dom.container.classList.add('mzk-spectrum');
-    // Create canvas and associated contexts (both display canvas and buffer canvas)
-    this._canvasL = document.createElement('CANVAS');
-    this._canvasR = document.createElement('CANVAS');
+  _buildSettingsUI() {
     this._bufferCanvas = document.createElement('CANVAS');
     this._bufferCtx = this._bufferCanvas.getContext('2d');
     // Update canvas dimensions
@@ -131,57 +89,14 @@ class MzkSpectrum {
     // Add display canvas to renderTo parent
     this._dom.container.appendChild(this._dom.settings);
     this._dom.container.appendChild(this._dom.settingsPanel);
-    this._dom.container.appendChild(this._canvasL);
-    this._dom.container.appendChild(this._canvasR);
-    this._renderTo.appendChild(this._dom.container);
+    this._dom.settings.addEventListener('click', this._settingsClicked, false);
   }
 
 
   _updateDimensions() {
-    this._dimension.height = this._renderTo.offsetHeight;
-    this._dimension.canvasHeight = this._renderTo.offsetHeight / 2;
-    this._dimension.width = this._renderTo.offsetWidth;
-  }
-
-
-  _setAudioNodes() {
-    // Create new audio context using WebAudioAPI
-    this._audioCtx = new AudioContext();
-    // Attach HTML audio player to the audio context as source
-    this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
-    this._nodes.splitter = this._audioCtx.createChannelSplitter(this._nodes.source.channelCount);
-    this._nodes.merger = this._audioCtx.createChannelMerger(this._nodes.source.channelCount);
-    // Actual script node from source node with a fixed buffer size of 256
-    this._nodes.script = this._audioCtx.createScriptProcessor(this._speed, this._nodes.source.channelCount, this._nodes.source.channelCount);
-    // Create analyser node to read frequency bin on audio proccessed
-    this.analyserL = this._audioCtx.createAnalyser();
-    this.analyserR = this._audioCtx.createAnalyser();
-    this.analyserL.smoothingTimeConstant = 0;
-    this.analyserR.smoothingTimeConstant = 0;
-    this.analyserL.fftSize = this._fftSize;
-    this.analyserR.fftSize = this._fftSize;
-    // Attach script processor node to both analyser
-    this.analyserL.connect(this._nodes.script);
-    this.analyserR.connect(this._nodes.script);
-    // Nodes chaining
-    this._nodes.source.connect(this._nodes.splitter);
-    this._nodes.splitter.connect(this.analyserL, 0);
-    this._nodes.splitter.connect(this.analyserR, 1);
-    this.analyserL.connect(this._nodes.merger, 0, 0);
-    this.analyserR.connect(this._nodes.merger, 0, 1);
-    this._nodes.merger.connect(this._audioCtx.destination);
-  }
-
-
-  _addEvents() {
-    this._dom.settings.addEventListener('click', this._settingsClicked, false);
-    this._nodes.script.addEventListener('audioprocess', this._processAudioBin, false);
-  }
-
-
-  _removeEvents() {
-    this._dom.settings.removeEventListener('click', this._settingsClicked, false);
-    this._nodes.script.removeEventListener('audioprocess', this._processAudioBin, false);
+    this._dimension.height = this._renderTo.offsetHeight - 4; // 2px borders times two channels
+    this._dimension.width = this._renderTo.offsetWidth - 2;  // 2px borders
+    this._dimension.canvasHeight = this._dimension.height / 2;
   }
 
 
@@ -199,10 +114,10 @@ class MzkSpectrum {
 
   _processAudioBin(event) {
     if (this._nodes.source.mediaElement.paused === false) {
-      const frequenciesL = new Uint8Array(this.analyserL.frequencyBinCount);
-      const frequenciesR = new Uint8Array(this.analyserR.frequencyBinCount);
-      this.analyserL.getByteFrequencyData(frequenciesL);
-      this.analyserR.getByteFrequencyData(frequenciesR);
+      const frequenciesL = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
+      const frequenciesR = new Uint8Array(this._nodes.analyserR.frequencyBinCount);
+      this._nodes.analyserL.getByteFrequencyData(frequenciesL);
+      this._nodes.analyserR.getByteFrequencyData(frequenciesR);
       requestAnimationFrame(() => {
         this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
         this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
@@ -304,6 +219,18 @@ class MzkSpectrum {
 
   _computeLogSampleHeight(sample) {
     return this._dimension.canvasHeight - (((Math.log(sample) / Math.log(10)) / (Math.log(this._fftSize / 2) / Math.log(10))) * this._dimension.canvasHeight);
+  }
+
+
+  _onResizeOverride() {
+    this._updateDimensions();
+    // Update canvas dimensions
+    this._canvasL.width = this._dimension.width;
+    this._canvasL.height = this._dimension.canvasHeight;
+    this._canvasR.width = this._dimension.width;
+    this._canvasR.height = this._dimension.canvasHeight;
+    this._bufferCanvas.width = this._dimension.width;
+    this._bufferCanvas.height = this._dimension.canvasHeight;
   }
 
 

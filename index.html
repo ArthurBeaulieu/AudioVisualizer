@@ -10,13 +10,14 @@
   <div id="render-spectrum-to" style="width:90%;height:200px;"></div>
   <div id="render-vuemeter-to" style="height:100px;width:20px;"></div>
   <div id="render-frequencybars-to" style="width:90%;height:200px;"></div>
+  <div id="render-oscilloscope-to" style="width:90%;height:200px;"></div>
 
   <audio id="audio-player" src="assets/audio/test.flac" controls></audio>
   <script type="module">
     import MzkVisualizer from './js/MzkVisualizer.js';
 
     const spectrum = new MzkVisualizer({
-      type: 'MzkSpectrum',
+      type: 'spectrum',
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-spectrum-to'), // Height must be defined in px
       fftSize: 1024, // [128, 4096], powers of 2 only
@@ -25,7 +26,7 @@
     });
 
     const vuewMeter = new MzkVisualizer({
-      type: 'MzkVueMeter',
+      type: 'vuemeter',
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-vuemeter-to'),
       fftSize: 1024,
@@ -33,9 +34,16 @@
     });
 
     const frequencyBars = new MzkVisualizer({
-      type: 'MzkFrequencyBars',
+      type: 'frequencybars',
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-frequencybars-to'),
+      fftSize: 512
+    });
+
+    const oscilloscope = new MzkVisualizer({
+      type: 'oscilloscope',
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-oscilloscope-to'),
       fftSize: 512
     });
   </script>

@@ -1,18 +1,25 @@
-import MzkSpectrum from './MzkSpectrum.js';
-import MzkVueMeter from './MzkVueMeter.js';
-import MzkFrequencyBars from './MzkFrequencyBars.js';
+import MzkSpectrum from './components/MzkSpectrum.js';
+import MzkVueMeter from './components/MzkVueMeter.js';
+import MzkFrequencyBars from './components/MzkFrequencyBars.js';
+import MzkOscilloscope from './components/MzkOscilloscope.js';
+
+
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
 
 
 class MzkVisualizer {
 
 
   constructor(options) {
-    if (options.type === 'MzkSpectrum') {
+    if (options.type === 'spectrum') {
       return new MzkSpectrum(options);
-    } else if (options.type === 'MzkVueMeter') {
+    } else if (options.type === 'vuemeter') {
       return new MzkVueMeter(options);
-    } else if (options.type === 'MzkFrequencyBars') {
+    } else if (options.type === 'frequencybars') {
       return new MzkFrequencyBars(options);
+    } else if (options.type === 'oscilloscope') {
+      return new MzkOscilloscope(options);
     }
 
     return null;

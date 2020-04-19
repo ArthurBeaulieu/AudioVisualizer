@@ -1,22 +1,11 @@
-class MzkVueMeter {
+import VisuComponentStereo from '../utils/VisuComponentStereo.js';
+
+
+class MzkVueMeter extends VisuComponentStereo {
 
 
   constructor(options) {
-    // Attributes that can be sent as options
-    this._player = null; // Source (HTML audio player)
-    this._renderTo = null; // Target div to render module in
-    this._fftSize = null; // FFT size used to analyse audio stream
-    // The Web Audio API context
-    this._audioCtx = null;
-    // Audio nodes
-    this._nodes = {
-      source: null, // HTML audio element
-      splitter: null, // Stereo channel splitting
-      merger: null, // Merge channels into one
-      analyserL: null, // Left channel analysis
-      analyserR: null, // Right channel analysis
-      script: null
-    };
+    super(options);
     // VueMeter utils
     this._amplitudeL = null;
     this._amplitudeR = null;
@@ -26,34 +15,13 @@ class MzkVueMeter {
     this._peakSetTimeR = null;
     this._prevAmplitudeL = null;
     this._prevAmplitudeR = null;
-    // Canvas and context
-    this._canvasL = null;
-    this._canvasR = null;
-    // Display utils
     this._orientation = null;
-    this._dom = {
-      container: null
-    };
-    // Event binding
-    this._processAudioBin = this._processAudioBin.bind(this);
-    // Construction sequence
-    this._fillAttributes(options);
-    this._buildUI();
-    this._setAudioNodes();
-    this._addEvents();
+
+    this._setupVueMeter(options);
   }
 
 
-  destroy() {
-    this._removeEvents();
-    Object.keys(this).forEach(key => { delete this[key]; });
-  }
-
-
-  _fillAttributes(options) {
-    this._player = options.player;
-    this._renderTo = options.renderTo;
-    this._fftSize = options.fftSize || 1024;
+  _setupVueMeter(options) {
     this._orientation = options.orientation || 'vertical';
     this._amplitudeL = 0;
     this._peakL = -1;
@@ -61,18 +29,9 @@ class MzkVueMeter {
     this._amplitudeR = 0;
     this._peakR = -1;
     this._prevAmplitudeR = 0;
-  }
 
-
-  _buildUI() {
-    this._dom.container = document.createElement('DIV');
-    this._dom.container.classList.add('mzk-vuemeter');
-
-    this._canvasL = document.createElement('canvas');
-    this._canvasR = document.createElement('canvas');
-    this._dom.container.appendChild(this._canvasL);
-    this._dom.container.appendChild(this._canvasR);
-    this._renderTo.appendChild(this._dom.container);
+    this._peakSetTimeL = this._audioCtx.currentTime;
+    this._peakSetTimeR = this._audioCtx.currentTime;
 
     if (this._orientation === 'horizontal') {
       this._dom.container.classList.add('horizontal-vuemeter');
@@ -89,42 +48,6 @@ class MzkVueMeter {
 
     this.drawLiveMeter(this._canvasL, this._amplitudeL, this._peakL);
     this.drawLiveMeter(this._canvasR, this._amplitudeR, this._peakR);
-  }
-
-
-  _setAudioNodes() {
-    this._audioCtx = new AudioContext();
-
-    this._peakSetTimeL = this._audioCtx.currentTime;
-    this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
-    this._nodes.splitter = this._audioCtx.createChannelSplitter(this._nodes.source.channelCount);
-    this._nodes.merger = this._audioCtx.createChannelMerger(this._nodes.source.channelCount);
-    this._nodes.analyserL = this._audioCtx.createAnalyser();
-    this._nodes.analyserL.fftSize = this._fftSize;
-    this._nodes.analyserR = this._audioCtx.createAnalyser();
-    this._nodes.analyserR.fftSize = this._fftSize;
-
-    this._nodes.script = this._audioCtx.createScriptProcessor(this._fftSize * 2, 1, 1);
-    // Attach script processor node to both analyzer
-    this._nodes.analyserL.connect(this._nodes.script);
-    this._nodes.analyserR.connect(this._nodes.script);
-    // Nodes chaining
-    this._nodes.source.connect(this._nodes.splitter);
-    this._nodes.splitter.connect(this._nodes.analyserL, 0);
-    this._nodes.splitter.connect(this._nodes.analyserR, 1);
-    this._nodes.analyserL.connect(this._nodes.merger, 0, 0);
-    this._nodes.analyserR.connect(this._nodes.merger, 0, 1);
-    this._nodes.merger.connect(this._audioCtx.destination);
-  }
-
-
-  _addEvents() {
-    this._nodes.script.addEventListener('audioprocess', this._processAudioBin, false);
-  }
-
-
-  _removeEvents() {
-    this._nodes.script.removeEventListener('audioprocess', this._processAudioBin, false);
   }
 
 
@@ -233,6 +156,21 @@ class MzkVueMeter {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.drawLed(canvas, ctx, amplitude);
     this.drawPeak(canvas, ctx, peak);
+  }
+
+
+  _onResizeOverride() {
+    if (this._orientation === 'horizontal') {
+      this._canvasL.width = this._renderTo.offsetWidth - 2;
+      this._canvasR.width = this._renderTo.offsetWidth - 1;
+      this._canvasL.height = (this._renderTo.offsetHeight - 2) / 2;
+      this._canvasR.height = (this._renderTo.offsetHeight - 2) / 2;
+    } else if (this._orientation === 'vertical') {
+      this._canvasL.width = (this._renderTo.offsetWidth - 4) / 2; // 2px borders times two channels
+      this._canvasR.width = (this._renderTo.offsetWidth - 4) / 2; // 2px borders times two channels
+      this._canvasL.height = this._renderTo.offsetHeight - 2; // 2px borders
+      this._canvasR.height = this._renderTo.offsetHeight - 2; // 2px borders
+    }
   }
 
 
