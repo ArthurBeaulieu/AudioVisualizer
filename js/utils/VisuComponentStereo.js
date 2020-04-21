@@ -15,8 +15,7 @@ class VisuComponentStereo {
       splitter: null, // Stereo channel splitting
       merger: null, // Merge channels into one
       analyserL: null, // Left channel analysis
-      analyserR: null, // Right channel analysis
-      script: null
+      analyserR: null // Right channel analysis
     };
     // Canvas and context
     this._canvasL = null;
@@ -28,6 +27,8 @@ class VisuComponentStereo {
     // Event binding
     this._resizeObserver = null;
     this._onResize = this._onResize.bind(this);
+    this._play = this._play.bind(this);
+    this._pause = this._pause.bind(this);
     this._processAudioBin = this._processAudioBin.bind(this);
     // Construction sequence
     this._fillAttributes(options);
@@ -72,10 +73,6 @@ class VisuComponentStereo {
     this._nodes.analyserR = this._audioCtx.createAnalyser();
     this._nodes.analyserR.fftSize = this._fftSize;
     this._nodes.analyserL.fftSize = this._fftSize;
-    this._nodes.script = this._audioCtx.createScriptProcessor(this._fftSize / 2, 1, 1);
-    // Attach script processor node to both analyzer
-    this._nodes.analyserL.connect(this._nodes.script);
-    this._nodes.analyserR.connect(this._nodes.script);
     // Nodes chaining
     this._nodes.source.connect(this._nodes.splitter);
     this._nodes.splitter.connect(this._nodes.analyserL, 0);
@@ -88,13 +85,26 @@ class VisuComponentStereo {
 
   _addEvents() {
     this._resizeObserver = new ResizeObserver(this._onResize).observe(this._renderTo);
-    this._nodes.script.addEventListener('audioprocess', this._processAudioBin, false);
+    this._player.addEventListener('play', this._play, false);
+    this._player.addEventListener('pause', this._pause, false);
   }
 
 
   _removeEvents() {
     this._resizeObserver.disconnect();
-    this._nodes.script.removeEventListener('audioprocess', this._processAudioBin, false);
+    this._player.removeEventListener('play', this._play, false);
+    this._player.removeEventListener('pause', this._pause, false);
+  }
+
+
+  _play() {
+    this._isPlaying = true;
+    this._processAudioBin();
+  }
+
+
+  _pause() {
+    this._isPlaying = false;
   }
 
 
@@ -102,6 +112,12 @@ class VisuComponentStereo {
     if (this._onResizeOverride) {
       this._onResizeOverride();
     }
+  }
+
+
+  _clearCanvas() {
+    this._canvasL.getContext('2d').clearRect(0, 0, this._canvasL.width, this._canvasL.height);
+    this._canvasR.getContext('2d').clearRect(0, 0, this._canvasR.width, this._canvasR.height);
   }
 
 

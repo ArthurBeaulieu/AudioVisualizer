@@ -63,8 +63,8 @@ class MzkSpectrum extends VisuComponentStereo {
         <label for="logarithmic">Logarithmic</label>
         <input type="radio" id="id-logarithmic" name="scale" value="logarithmic" ${this._scaleType === 'logarithmic' ? 'checked' : ''}>
         <p class="smooth-color">
-          <label for="debug">Smooth colors</label>
-          <input type="checkbox" id="smoothColor" name="smoothColorActivated" ${this._colorSmoothing ? 'checked' : ''}>
+          <label for="smoothColor">Smooth colors</label>
+          <input type="checkbox" id="smoothColor" name="smoothColor" ${this._colorSmoothing ? 'checked' : ''}>
         </p>
       </form>
     `;
@@ -113,15 +113,14 @@ class MzkSpectrum extends VisuComponentStereo {
 
 
   _processAudioBin(event) {
-    if (this._nodes.source.mediaElement.paused === false) {
+    if (this._isPlaying === true) {
       const frequenciesL = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
       const frequenciesR = new Uint8Array(this._nodes.analyserR.frequencyBinCount);
       this._nodes.analyserL.getByteFrequencyData(frequenciesL);
       this._nodes.analyserR.getByteFrequencyData(frequenciesR);
-      requestAnimationFrame(() => {
-        this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
-        this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
-      });
+      this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
+      this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
+      requestAnimationFrame(this._processAudioBin);
     }
   }
 

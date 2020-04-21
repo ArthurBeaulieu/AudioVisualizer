@@ -52,56 +52,61 @@ class MzkVueMeter extends VisuComponentStereo {
 
 
   _processAudioBin() {
-    var dataL = new Float32Array(this._fftSize);
-    var dataR = new Float32Array(this._fftSize);
-    this._nodes.analyserL.getFloatTimeDomainData(dataL);
-    this._nodes.analyserR.getFloatTimeDomainData(dataR);
-    /* LEFT */
-    // use rms to calculate the average amplitude over the this._fftSize samples
-    this._amplitudeL = Math.sqrt(dataL.reduce((prev,cur) => {
-      return prev + (cur * cur);
-    }, 0) / dataL.length);
+    this._clearCanvas();
+    
+    if (this._isPlaying === true) {
+      var dataL = new Float32Array(this._fftSize);
+      var dataR = new Float32Array(this._fftSize);
+      this._nodes.analyserL.getFloatTimeDomainData(dataL);
+      this._nodes.analyserR.getFloatTimeDomainData(dataR);
+      /* LEFT */
+      // use rms to calculate the average amplitude over the this._fftSize samples
+      this._amplitudeL = Math.sqrt(dataL.reduce((prev,cur) => {
+        return prev + (cur * cur);
+      }, 0) / dataL.length);
 
-    // calculate the peak position
-    // special cases - peak = -1 means peak expired and waiting for amplitude to rise
-    // peak = 0 means amplitude is rising, waiting for peak
-    if (this._amplitudeL < this._prevAmplitudeL && this._peakL < this._prevAmplitudeL && this._peakL !== -1) {
-      this._peakL = this._prevAmplitudeL;
-      this._peakSetTimeL = this._audioCtx.currentTime;
-    } else if (this._amplitudeL > this._prevAmplitudeL) {
-      this._peakL = 0;
+      // calculate the peak position
+      // special cases - peak = -1 means peak expired and waiting for amplitude to rise
+      // peak = 0 means amplitude is rising, waiting for peak
+      if (this._amplitudeL < this._prevAmplitudeL && this._peakL < this._prevAmplitudeL && this._peakL !== -1) {
+        this._peakL = this._prevAmplitudeL;
+        this._peakSetTimeL = this._audioCtx.currentTime;
+      } else if (this._amplitudeL > this._prevAmplitudeL) {
+        this._peakL = 0;
+      }
+
+      // draw the peak for 2 seconds, then remove it
+      if (this._audioCtx.currentTime - this._peakSetTimeL > 2 && this._peakL !== 0) {
+        this._peakL = -1;
+      }
+
+      this._prevAmplitudeL = this._amplitudeL;
+      /* RIGHT */
+      this._amplitudeR = Math.sqrt(dataR.reduce((prev,cur) => {
+        return prev + (cur * cur);
+      }, 0) / dataR.length);
+
+      // calculate the peak position
+      // special cases - peak = -1 means peak expired and waiting for amplitude to rise
+      // peak = 0 means amplitude is rising, waiting for peak
+      if (this._amplitudeR < this._prevAmplitudeR && this._peakR < this._prevAmplitudeR && this._peakR !== -1) {
+        this._peakR = this._prevAmplitudeR;
+        this._peakSetTimeR = this._audioCtx.currentTime;
+      } else if (this._amplitudeR > this._prevAmplitudeR) {
+        this._peakR = 0;
+      }
+
+      // draw the peak for 2 seconds, then remove it
+      if (this._audioCtx.currentTime - this._peakSetTimeR > 2 && this._peakR !== 0) {
+        this._peakR = -1;
+      }
+
+      this._prevAmplitudeR = this._amplitudeR;
+
+      this.drawLiveMeter(this._canvasL, this._amplitudeL, this._peakL);
+      this.drawLiveMeter(this._canvasR, this._amplitudeR, this._peakR);
+      requestAnimationFrame(this._processAudioBin);
     }
-
-    // draw the peak for 2 seconds, then remove it
-    if (this._audioCtx.currentTime - this._peakSetTimeL > 2 && this._peakL !== 0) {
-      this._peakL = -1;
-    }
-
-    this._prevAmplitudeL = this._amplitudeL;
-    /* RIGHT */
-    this._amplitudeR = Math.sqrt(dataR.reduce((prev,cur) => {
-      return prev + (cur * cur);
-    }, 0) / dataR.length);
-
-    // calculate the peak position
-    // special cases - peak = -1 means peak expired and waiting for amplitude to rise
-    // peak = 0 means amplitude is rising, waiting for peak
-    if (this._amplitudeR < this._prevAmplitudeR && this._peakR < this._prevAmplitudeR && this._peakR !== -1) {
-      this._peakR = this._prevAmplitudeR;
-      this._peakSetTimeR = this._audioCtx.currentTime;
-    } else if (this._amplitudeR > this._prevAmplitudeR) {
-      this._peakR = 0;
-    }
-
-    // draw the peak for 2 seconds, then remove it
-    if (this._audioCtx.currentTime - this._peakSetTimeR > 2 && this._peakR !== 0) {
-      this._peakR = -1;
-    }
-
-    this._prevAmplitudeR = this._amplitudeR;
-
-    this.drawLiveMeter(this._canvasL, this._amplitudeL, this._peakL);
-    this.drawLiveMeter(this._canvasR, this._amplitudeR, this._peakR);
   }
 
 

@@ -60,6 +60,7 @@ canvas {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  margin: 10px 0;
 }
 
 .mzkspectrum-settings-panel input {

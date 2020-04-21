@@ -1,11 +1,20 @@
-import VisuComponentMono from '../utils/VisuComponentMono.js';
+import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 
 
-class MzkOscilloscope extends VisuComponentMono {
+class MzkOscilloscope extends VisuComponentStereo {
 
 
   constructor(options) {
     super(options);
+
+    this._color = options.color || '#56D45B';
+    this._dimension = {
+      height: null,
+      canvasHeight: null,
+      width: null
+    };
+
+    this._updateDimensions();
   }
 
 
@@ -17,30 +26,80 @@ class MzkOscilloscope extends VisuComponentMono {
 
 
   _processAudioBin() {
-    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
-    this._ctx.beginPath();
+    const ctxL = this._canvasL.getContext('2d');
+    const ctxR = this._canvasR.getContext('2d');
+    ctxL.clearRect(0, 0, this._canvasL.width, this._canvasL.height);
+    ctxR.clearRect(0, 0, this._canvasR.width, this._canvasR.height);
 
-    var timeDomain =  new Uint8Array(this._nodes.analyser.frequencyBinCount);
-    this._nodes.analyser.getByteTimeDomainData(timeDomain);
+    if (this._isPlaying === true) {
+      /* L part */
+      ctxL.beginPath();
 
-    var sliceWidth = this._canvas.width / this._nodes.analyser.frequencyBinCount;
+      var timeDomain =  new Uint8Array(this._nodes.analyserL.frequencyBinCount);
+      this._nodes.analyserL.getByteTimeDomainData(timeDomain);
 
-    var x = 0;
-    for (let i = 0; i < this._nodes.analyser.frequencyBinCount; ++i) {
-      var offsetHeight = timeDomain[i] / 255; // Get value between 0 and 1
-      var y = this._canvas.height * offsetHeight;
+      var sliceWidth = this._canvasL.width / this._nodes.analyserL.frequencyBinCount;
 
-      if (i === 0) {
-        this._ctx.moveTo(x, y);
-      } else {
-        this._ctx.lineTo(x, y);
+      var x = 0;
+      for (let i = 0; i < this._nodes.analyserL.frequencyBinCount; ++i) {
+        var offsetHeight = timeDomain[i] / 255; // Get value between 0 and 1
+        var y = this._canvasL.height * offsetHeight;
+
+        if (i === 0) {
+          ctxL.moveTo(x, y);
+        } else {
+          ctxL.lineTo(x, y);
+        }
+
+        x += sliceWidth;
       }
 
-      x += sliceWidth;
-    }
+      ctxL.strokeStyle = this._color;
+      ctxL.stroke();
 
-    this._ctx.strokeStyle = '#F00';
-    this._ctx.stroke();
+      /* R part */
+      ctxR.beginPath();
+
+      timeDomain =  new Uint8Array(this._nodes.analyserR.frequencyBinCount);
+      this._nodes.analyserR.getByteTimeDomainData(timeDomain);
+
+      sliceWidth = this._canvasR.width / this._nodes.analyserR.frequencyBinCount;
+
+      x = 0;
+      for (let i = 0; i < this._nodes.analyserR.frequencyBinCount; ++i) {
+        var offsetHeight = timeDomain[i] / 255; // Get value between 0 and 1
+        var y = this._canvasR.height * offsetHeight;
+
+        if (i === 0) {
+          ctxR.moveTo(x, y);
+        } else {
+          ctxR.lineTo(x, y);
+        }
+
+        x += sliceWidth;
+      }
+
+      ctxR.strokeStyle = this._color;
+      ctxR.stroke();
+
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  _updateDimensions() {
+    this._dimension.height = this._renderTo.offsetHeight - 4; // 2px borders times two channels
+    this._dimension.width = this._renderTo.offsetWidth - 2; // 2px borders
+    this._dimension.canvasHeight = this._dimension.height / 2;
+    this._canvasL.width = this._dimension.width;
+    this._canvasL.height = this._dimension.canvasHeight;
+    this._canvasR.width = this._dimension.width;
+    this._canvasR.height = this._dimension.canvasHeight;
+  }
+
+
+  _onResizeOverride() {
+    this._updateDimensions();
   }
 
 

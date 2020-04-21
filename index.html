@@ -4,17 +4,39 @@
   <meta charset="utf-8">
   <title>SandBox</title>
   <link rel="stylesheet" href="css/style.css">
+<!-- Style rules only needed for demo -->
+  <style>
+  * { box-sizing: border-box; margin: 0; }
+body { font-family: sans-serif; overflow: auto; padding: 20px 0; position: absolute; width: 100%; }
+h1, h3 { margin: 10px 0; }
+audio { position: absolute; right: 0; top: 0; }
+.mzkvisualizer-demo { align-items: center; display: flex; flex-direction: column; }
+  </style>
 </head>
-<body style="position:absolute;height:100%;width:100%;">
-
-  <div id="render-spectrum-to" style="width:90%;height:200px;"></div>
-  <div id="render-vuemeter-to" style="height:100px;width:20px;"></div>
-  <div id="render-frequencybars-to" style="width:90%;height:200px;"></div>
-  <div id="render-oscilloscope-to" style="width:90%;height:200px;"></div>
-
+<body>
+  <div class="mzkvisualizer-demo">
+    <h1>MzkVisualizer</h1>
+    <h3>Vue meter</h3>
+    <div id="render-vuemeter-to" style="height:20px;width:140px;"></div>
+    <h3>Spectrum analysis</h3>
+    <div id="render-spectrum-to" style="width:90%;height:200px;"></div>
+    <h3>Signal oscilloscope</h3>
+    <div id="render-oscilloscope-to" style="width:90%;height:200px;"></div>
+    <h3>Signal frequencies (bars)</h3>
+    <div id="render-frequencybars-to" style="width:90%;height:200px;"></div>
+  </div>
   <audio id="audio-player" src="assets/audio/test.flac" controls></audio>
+  <!-- Usage as a JavaScript module -->
   <script type="module">
     import MzkVisualizer from './js/MzkVisualizer.js';
+
+    const vuewMeter = new MzkVisualizer({
+      type: 'vuemeter',
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-vuemeter-to'),
+      fftSize: 1024,
+      orientation: 'horizontal' // 'vertical' or 'horizontal'
+    });
 
     const spectrum = new MzkVisualizer({
       type: 'spectrum',
@@ -25,26 +47,21 @@
       scale: 'logarithmic' // 'linear' or 'logarithmic'
     });
 
-    const vuewMeter = new MzkVisualizer({
-      type: 'vuemeter',
+    const oscilloscope = new MzkVisualizer({
+      type: 'oscilloscope',
       player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-vuemeter-to'),
-      fftSize: 1024,
-      orientation: 'vertical' // 'vertical' or 'horizontal'
+      renderTo: document.querySelector('#render-oscilloscope-to'),
+      fftSize: 512,
+      color: '#56D45B'
     });
 
     const frequencyBars = new MzkVisualizer({
       type: 'frequencybars',
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-frequencybars-to'),
-      fftSize: 512
-    });
-
-    const oscilloscope = new MzkVisualizer({
-      type: 'oscilloscope',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-oscilloscope-to'),
-      fftSize: 512
+      fftSize: 512,
+      bars: 512,
+      color: '#56D45B'
     });
   </script>
 </body>

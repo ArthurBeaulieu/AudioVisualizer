@@ -12,15 +12,17 @@ class VisuComponentMono {
     // Audio nodes
     this._nodes = {
       source: null, // HTML audio element
-      analyser: null, // Stereo analysis
-      script: null
+      analyser: null
     };
+    this._isPlaying = false;
     // Canvas and context
     this._canvas = null;
     this._ctx = null;
     // Event binding
     this._resizeObserver = null;
     this._onResize = this._onResize.bind(this);
+    this._play = this._play.bind(this);
+    this._pause = this._pause.bind(this);
     this._processAudioBin = this._processAudioBin.bind(this);
     // Construction sequence
     this._fillAttributes(options);
@@ -57,29 +59,45 @@ class VisuComponentMono {
     this._audioCtx = new AudioContext();
     this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
     this._nodes.analyser = this._audioCtx.createAnalyser();
-    this._nodes.script = this._audioCtx.createScriptProcessor(this._fftSize * 2, 1, 1);
 
     this._nodes.source.connect(this._nodes.analyser);
-    this._nodes.analyser.connect(this._nodes.script);
-    this._nodes.script.connect(this._audioCtx.destination);
+    this._nodes.analyser.connect(this._audioCtx.destination);
   }
 
 
   _addEvents() {
     this._resizeObserver = new ResizeObserver(this._onResize).observe(this._renderTo);
-    this._nodes.script.addEventListener('audioprocess', this._processAudioBin, false);
+    this._player.addEventListener('play', this._play, false);
+    this._player.addEventListener('pause', this._pause, false);
   }
 
 
   _removeEvents() {
     this._resizeObserver.disconnect();
-    this._nodes.script.removeEventListener('audioprocess', this._processAudioBin, false);
+    this._player.removeEventListener('play', this._play, false);
+    this._player.removeEventListener('pause', this._pause, false);
+  }
+
+
+  _play() {
+    this._isPlaying = true;
+    this._processAudioBin();
+  }
+
+
+  _pause() {
+    this._isPlaying = false;
   }
 
 
   _onResize() {
     this._canvas.width = this._renderTo.offsetWidth - 2;
     this._canvas.height = this._renderTo.offsetHeight - 2;
+  }
+
+
+  _clearCanvas() {
+
   }
 
 
