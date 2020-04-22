@@ -9,7 +9,7 @@
   * { box-sizing: border-box; margin: 0; }
 body { font-family: sans-serif; overflow: auto; padding: 20px 0; position: absolute; width: 100%; }
 h1, h3 { margin: 10px 0; }
-audio { position: absolute; right: 0; top: 0; }
+audio { position: fixed; right: 0; top: 0; }
 .mzkvisualizer-demo { align-items: center; display: flex; flex-direction: column; }
   </style>
 </head>
@@ -24,6 +24,8 @@ audio { position: absolute; right: 0; top: 0; }
     <div id="render-oscilloscope-to" style="width:90%;height:200px;"></div>
     <h3>Signal frequencies (bars)</h3>
     <div id="render-frequencybars-to" style="width:90%;height:200px;"></div>
+    <h3>Signal frequencies (circle)</h3>
+    <div id="render-frequencycircle-to" style="width:90%;height:800px;"></div>
   </div>
   <audio id="audio-player" src="assets/audio/test.flac" controls></audio>
   <!-- Usage as a JavaScript module -->
@@ -60,7 +62,16 @@ audio { position: absolute; right: 0; top: 0; }
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-frequencybars-to'),
       fftSize: 512,
-      bars: 512,
+      bars: 190,
+      color: '#56D45B'
+    });
+
+    const frequencyCircle = new MzkVisualizer({
+      type: 'frequencycircle',
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-frequencycircle-to'),
+      fftSize: 512,
+      image: 'assets/img/manazeak-logo.svg',
       color: '#56D45B'
     });
   </script>

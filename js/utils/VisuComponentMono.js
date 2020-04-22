@@ -18,6 +18,10 @@ class VisuComponentMono {
     // Canvas and context
     this._canvas = null;
     this._ctx = null;
+    // Display utils
+    this._dom = {
+      container: null
+    };
     // Event binding
     this._resizeObserver = null;
     this._onResize = this._onResize.bind(this);
@@ -47,11 +51,14 @@ class VisuComponentMono {
 
 
   _buildUI() {
+    this._dom.container = document.createElement('DIV');
+    this._dom.container.classList.add(`mzk-${this._type}`);
     this._canvas = document.createElement('CANVAS');
     this._ctx = this._canvas.getContext('2d');
     this._canvas.width = this._renderTo.offsetWidth - 2;
     this._canvas.height = this._renderTo.offsetHeight - 2;
-    this._renderTo.appendChild(this._canvas);
+    this._dom.container.appendChild(this._canvas);
+    this._renderTo.appendChild(this._dom.container);
   }
 
 
@@ -59,6 +66,7 @@ class VisuComponentMono {
     this._audioCtx = new AudioContext();
     this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
     this._nodes.analyser = this._audioCtx.createAnalyser();
+    this._nodes.analyser.fftSize = this._fftSize;
 
     this._nodes.source.connect(this._nodes.analyser);
     this._nodes.analyser.connect(this._audioCtx.destination);
@@ -93,11 +101,15 @@ class VisuComponentMono {
   _onResize() {
     this._canvas.width = this._renderTo.offsetWidth - 2;
     this._canvas.height = this._renderTo.offsetHeight - 2;
+
+    if (this._onResizeOverride) {
+      this._onResizeOverride();
+    }
   }
 
 
   _clearCanvas() {
-
+    this._canvas.getContext('2d').clearRect(0, 0, this._canvas.width, this._canvas.height);
   }
 
 

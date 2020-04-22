@@ -80,3 +80,25 @@ canvas {
 .mzk-vuemeter.horizontal-vuemeter {
   flex-direction: column;
 }
+
+.mzk-frequencycircle {
+  position: relative;
+}
+
+.mzk-frequencycircle img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  height: calc((100% / 2) - 12.5%);
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+.mzk-frequencycircle img.rotate{
+  animation: rotate 64s linear infinite;
+}
