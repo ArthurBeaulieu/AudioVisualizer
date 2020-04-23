@@ -1,8 +1,8 @@
-import MzkSpectrum from './components/MzkSpectrum.js';
-import MzkVueMeter from './components/MzkVueMeter.js';
-import MzkFrequencyBars from './components/MzkFrequencyBars.js';
-import MzkFrequencyCircle from './components/MzkFrequencyCircle.js';
-import MzkOscilloscope from './components/MzkOscilloscope.js';
+import FrequencyBars from './components/FrequencyBars.js';
+import FrequencyCircle from './components/FrequencyCircle.js';
+import Oscilloscope from './components/Oscilloscope.js';
+import Spectrum from './components/Spectrum.js';
+import PeakMeter from './components/PeakMeter.js';
 
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -13,16 +13,16 @@ class MzkVisualizer {
 
 
   constructor(options) {
-    if (options.type === 'spectrum') {
-      return new MzkSpectrum(options);
-    } else if (options.type === 'vuemeter') {
-      return new MzkVueMeter(options);
-    } else if (options.type === 'frequencybars') {
-      return new MzkFrequencyBars(options);
+    if (options.type === 'frequencybars') {
+      return new FrequencyBars(options);
     } else if (options.type === 'frequencycircle') {
-      return new MzkFrequencyCircle(options);
+      return new FrequencyCircle(options);
     } else if (options.type === 'oscilloscope') {
-      return new MzkOscilloscope(options);
+      return new Oscilloscope(options);
+    } else if (options.type === 'spectrum') {
+      return new Spectrum(options);
+    } else if (options.type === 'peakmeter') {
+      return new PeakMeter(options);
     }
 
     return null;

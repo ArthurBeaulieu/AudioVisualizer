@@ -3,7 +3,7 @@ import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
 
 
-class MzkFrequencyCircle extends VisuComponentMono {
+class FrequencyCircle extends VisuComponentMono {
 
 
   constructor(options) {
@@ -358,4 +358,4 @@ class AvgCircle {
 }
 
 
-export default MzkFrequencyCircle;
+export default FrequencyCircle;

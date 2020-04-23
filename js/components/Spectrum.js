@@ -1,7 +1,7 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 
 
-class MzkSpectrum extends VisuComponentStereo {
+class Spectrum extends VisuComponentStereo {
 
 
   constructor(options) {
@@ -23,6 +23,7 @@ class MzkSpectrum extends VisuComponentStereo {
     this._logScale = [];
     // Event binding
     this._settingsClicked = this._settingsClicked.bind(this);
+    this._clickedElsewhere = this._clickedElsewhere.bind(this);
     // Complementary building
     this._setupSpectrum(options);
     this._buildSettingsUI();
@@ -87,8 +88,8 @@ class MzkSpectrum extends VisuComponentStereo {
       }
     }, false);
     // Add display canvas to renderTo parent
+    this._dom.container.appendChild(this._dom.settingsPanel); // Append panel before to emulate z-index under settings button w/ no css rules of z-index
     this._dom.container.appendChild(this._dom.settings);
-    this._dom.container.appendChild(this._dom.settingsPanel);
     this._dom.settings.addEventListener('click', this._settingsClicked, false);
   }
 
@@ -102,12 +103,19 @@ class MzkSpectrum extends VisuComponentStereo {
 
   _settingsClicked() {
     const opened = this._dom.settingsPanel.classList.contains('opened');
-    if (opened === true) {
-      this._dom.settings.classList.remove('opened');
-      this._dom.settingsPanel.classList.remove('opened');
-    } else {
+    if (opened === false) { // If opened, setings closure will be handled in clickedElsewhere
       this._dom.settings.classList.add('opened');
       this._dom.settingsPanel.classList.add('opened');
+      document.body.addEventListener('click', this._clickedElsewhere, false);
+    }
+  }
+
+
+  _clickedElsewhere(event) {
+    if (!event.target.closest('.mzkspectrum-settings') && !event.target.closest('.mzkspectrum-settings-panel')) {
+      this._dom.settings.classList.remove('opened');
+      this._dom.settingsPanel.classList.remove('opened');
+      document.body.removeEventListener('click', this._clickedElsewhere, false);
     }
   }
 
@@ -223,6 +231,7 @@ class MzkSpectrum extends VisuComponentStereo {
 
   _onResizeOverride() {
     this._updateDimensions();
+    this._createLogarithmicScaleHeights();
     // Update canvas dimensions
     this._canvasL.width = this._dimension.width;
     this._canvasL.height = this._dimension.canvasHeight;
@@ -236,4 +245,4 @@ class MzkSpectrum extends VisuComponentStereo {
 }
 
 
-export default MzkSpectrum;
+export default Spectrum;

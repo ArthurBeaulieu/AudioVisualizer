@@ -1,7 +1,7 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 
 
-class MzkFrequencyBars extends VisuComponentMono {
+class FrequencyBars extends VisuComponentMono {
 
 
   constructor(options) {
@@ -37,4 +37,4 @@ class MzkFrequencyBars extends VisuComponentMono {
 }
 
 
-export default MzkFrequencyBars;
+export default FrequencyBars;

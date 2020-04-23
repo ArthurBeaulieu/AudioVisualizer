@@ -1,7 +1,7 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 
 
-class MzkOscilloscope extends VisuComponentStereo {
+class Oscilloscope extends VisuComponentStereo {
 
 
   constructor(options) {
@@ -106,4 +106,4 @@ class MzkOscilloscope extends VisuComponentStereo {
 }
 
 
-export default MzkOscilloscope;
+export default Oscilloscope;

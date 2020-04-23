@@ -20,9 +20,17 @@ class VisuComponentStereo {
     // Canvas and context
     this._canvasL = null;
     this._canvasR = null;
+    this._ctxL = null;
+    this._ctxR = null;
     // Display utils
     this._dom = {
       container: null
+    };
+    this._parentDimension = {
+      position: null,
+      height: null,
+      width: null,
+      zIndex: null
     };
     // Event binding
     this._resizeObserver = null;
@@ -30,6 +38,7 @@ class VisuComponentStereo {
     this._play = this._play.bind(this);
     this._pause = this._pause.bind(this);
     this._processAudioBin = this._processAudioBin.bind(this);
+    this._dblClick = this._dblClick.bind(this);
     // Construction sequence
     this._fillAttributes(options);
     this._buildUI();
@@ -57,6 +66,11 @@ class VisuComponentStereo {
     this._dom.container.classList.add(`mzk-${this._type}`);
     this._canvasL = document.createElement('canvas');
     this._canvasR = document.createElement('canvas');
+    this._ctxL = this._canvasL.getContext('2d');
+    this._ctxR = this._canvasR.getContext('2d');
+    this._ctxL.translate(0.5, 0.5);
+    this._ctxR.translate(0.5, 0.5);
+
     this._dom.container.appendChild(this._canvasL);
     this._dom.container.appendChild(this._canvasR);
     this._renderTo.appendChild(this._dom.container);
@@ -87,6 +101,7 @@ class VisuComponentStereo {
     this._resizeObserver = new ResizeObserver(this._onResize).observe(this._renderTo);
     this._player.addEventListener('play', this._play, false);
     this._player.addEventListener('pause', this._pause, false);
+    this._dom.container.addEventListener('dblclick', this._dblClick, false);
   }
 
 
@@ -94,6 +109,7 @@ class VisuComponentStereo {
     this._resizeObserver.disconnect();
     this._player.removeEventListener('play', this._play, false);
     this._player.removeEventListener('pause', this._pause, false);
+    this._dom.container.removeEventListener('dblclick', this._dblClick, false);
   }
 
 
@@ -111,6 +127,37 @@ class VisuComponentStereo {
   _onResize() {
     if (this._onResizeOverride) {
       this._onResizeOverride();
+    }
+  }
+
+
+  _dblClick(event) {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      // Restore renderTo initial style
+      this._renderTo.style.position = this._parentDimension.position;
+      this._renderTo.style.height = this._parentDimension.height;
+      this._renderTo.style.width = this._parentDimension.width;
+      this._renderTo.style.zIndex = this._parentDimension.zIndex;
+      this._parentDimension = {
+        position: null,
+        height: null,
+        width: null,
+        zIndex: null
+      };
+    } else {
+      document.documentElement.requestFullscreen();
+      // Update renderTo dimension (canvas will be automatically rescaled)
+      this._parentDimension = {
+        position: this._renderTo.style.position,
+        height: this._renderTo.style.height,
+        width: this._renderTo.style.width,
+        zIndex: this._renderTo.style.zIndex || ''
+      };
+      this._renderTo.style.position = 'fixed';
+      this._renderTo.style.height = '100vh';
+      this._renderTo.style.width = '100vw';
+      this._renderTo.style.zIndex = '999';
     }
   }
 

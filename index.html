@@ -2,49 +2,62 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>SandBox</title>
+  <title>MzkVisualizer 0.6</title>
   <link rel="stylesheet" href="css/style.css">
-<!-- Style rules only needed for demo -->
+  <!-- Style rules only needed for demo, no need to copy those in your project -->
   <style>
-  * { box-sizing: border-box; margin: 0; }
-body { font-family: sans-serif; overflow: auto; padding: 20px 0; position: absolute; width: 100%; }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: sans-serif; overflow: auto; padding: 0; position: absolute; width: 100%; }
 h1, h3 { margin: 10px 0; }
 audio { position: fixed; right: 0; top: 0; }
-.mzkvisualizer-demo { align-items: center; display: flex; flex-direction: column; }
+.mzkvisualizer-demo { align-items: center; display: flex; flex-direction: column; font-size: 1em; }
   </style>
 </head>
+<!--
+
+
+MzkVisualizer 2020
+@author Arthur Beaulieu - https://github.com/ArthurBeaulieu
+
+To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
+folder keep the same tree structure (or change yourself pathes in classes).
+
+
+-->
 <body>
   <div class="mzkvisualizer-demo">
+    <!-- For any visual component you want to use, you must provide an HTML element to render in -->
+    <!-- Each component has its own optional options (refer to each component instanciation in this example) -->
+    <!-- Exotic heights are used on purpose to demonstrate dynamic dimension scaling of each component -->
     <h1>MzkVisualizer</h1>
-    <h3>Vue meter</h3>
-    <div id="render-vuemeter-to" style="height:20px;width:140px;"></div>
-    <h3>Spectrum analysis</h3>
-    <div id="render-spectrum-to" style="width:90%;height:200px;"></div>
+    <h3>Signal spectrum</h3>
+    <div id="render-spectrum-to" style="height:calc(13em - 2px);width:90%;"></div>
     <h3>Signal oscilloscope</h3>
-    <div id="render-oscilloscope-to" style="width:90%;height:200px;"></div>
+    <div id="render-oscilloscope-to" style="height:calc(17em - 8px);width:90%;"></div>
     <h3>Signal frequencies (bars)</h3>
-    <div id="render-frequencybars-to" style="width:90%;height:200px;"></div>
+    <div id="render-frequencybars-to" style="height:calc(17em - 8px);width:90%;"></div>
     <h3>Signal frequencies (circle)</h3>
-    <div id="render-frequencycircle-to" style="width:90%;height:800px;"></div>
+    <div id="render-frequencycircle-to" style="height:calc(37em);width:90%;"></div>
+    <h3>Vue meter (horizontal)</h3>
+    <div id="render-peakmeter-horizontal-to" style="width:90%;height:86px;"></div> <!-- Best to have even height -->
   </div>
-  <audio id="audio-player" src="assets/audio/test.flac" controls></audio>
+  <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
+  <!-- Module tested for mp3, ogg, flac and wav audio files. -->
+  <audio id="audio-player" src="assets/audio/FrequencyTest.flac" controls loop></audio>
+  <!-- <audio id="audio-player" src="assets/audio/FrequencyTest.wav" controls loop></audio> -->
+  <!-- <audio id="audio-player" src="assets/audio/FrequencyTest.ogg" controls loop></audio> -->
+  <!-- <audio id="audio-player" src="assets/audio/FrequencyTest.mp3" controls loop></audio> -->
+
   <!-- Usage as a JavaScript module -->
   <script type="module">
+    // FFT size must be included in [128, 4096], powers of 2 only
     import MzkVisualizer from './js/MzkVisualizer.js';
-
-    const vuewMeter = new MzkVisualizer({
-      type: 'vuemeter',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-vuemeter-to'),
-      fftSize: 1024,
-      orientation: 'horizontal' // 'vertical' or 'horizontal'
-    });
 
     const spectrum = new MzkVisualizer({
       type: 'spectrum',
       player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-spectrum-to'), // Height must be defined in px
-      fftSize: 1024, // [128, 4096], powers of 2 only
+      renderTo: document.querySelector('#render-spectrum-to'),
+      fftSize: 2048, // Higher fft value require higher render to height to be properly apreciated (heavy CPU cost)
       colorSmoothing: true, // Apply gradient between sample to smoothen visualization
       scale: 'logarithmic' // 'linear' or 'logarithmic'
     });
@@ -53,7 +66,7 @@ audio { position: fixed; right: 0; top: 0; }
       type: 'oscilloscope',
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-oscilloscope-to'),
-      fftSize: 512,
+      fftSize: 4096, // Higher is more precise for oscilloscope (doesn't consume much CPU)
       color: '#56D45B'
     });
 
@@ -61,8 +74,7 @@ audio { position: fixed; right: 0; top: 0; }
       type: 'frequencybars',
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-frequencybars-to'),
-      fftSize: 512,
-      bars: 190,
+      fftSize: 1024,
       color: '#56D45B'
     });
 
@@ -71,9 +83,24 @@ audio { position: fixed; right: 0; top: 0; }
       player: document.querySelector('#audio-player'),
       renderTo: document.querySelector('#render-frequencycircle-to'),
       fftSize: 512,
-      image: 'assets/img/manazeak-logo.svg',
-      color: '#56D45B'
+      image: 'assets/img/manazeak-logo.svg'
     });
+
+    const peakMeter = new MzkVisualizer({
+      type: 'peakmeter',
+      player: document.querySelector('#audio-player'),
+      renderTo: document.querySelector('#render-peakmeter-horizontal-to'),
+      fftSize: 8192, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+      orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
+      dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
+      dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
+    });
+    // You can can call delete on those view when done consuming them
+    // spectrum.destroy();
+    // oscilloscope.destroy();
+    // frequencyBars.destroy();
+    // frequencyCircle.destroy();
+    // peakMeter.destroy();
   </script>
 </body>
 </html>

@@ -19,6 +19,12 @@ class VisuComponentMono {
     this._canvas = null;
     this._ctx = null;
     // Display utils
+    this._parentDimension = { // Used to resize renderTo on toggle fullscreen
+      position: null,
+      height: null,
+      width: null,
+      zIndex: null
+    };
     this._dom = {
       container: null
     };
@@ -28,6 +34,7 @@ class VisuComponentMono {
     this._play = this._play.bind(this);
     this._pause = this._pause.bind(this);
     this._processAudioBin = this._processAudioBin.bind(this);
+    this._dblClick = this._dblClick.bind(this);
     // Construction sequence
     this._fillAttributes(options);
     this._buildUI();
@@ -55,6 +62,7 @@ class VisuComponentMono {
     this._dom.container.classList.add(`mzk-${this._type}`);
     this._canvas = document.createElement('CANVAS');
     this._ctx = this._canvas.getContext('2d');
+    this._ctx.translate(0.5, 0.5);
     this._canvas.width = this._renderTo.offsetWidth - 2;
     this._canvas.height = this._renderTo.offsetHeight - 2;
     this._dom.container.appendChild(this._canvas);
@@ -77,6 +85,7 @@ class VisuComponentMono {
     this._resizeObserver = new ResizeObserver(this._onResize).observe(this._renderTo);
     this._player.addEventListener('play', this._play, false);
     this._player.addEventListener('pause', this._pause, false);
+    this._dom.container.addEventListener('dblclick', this._dblClick, false);
   }
 
 
@@ -84,6 +93,7 @@ class VisuComponentMono {
     this._resizeObserver.disconnect();
     this._player.removeEventListener('play', this._play, false);
     this._player.removeEventListener('pause', this._pause, false);
+    this._dom.container.removeEventListener('dblclick', this._dblClick, false);
   }
 
 
@@ -104,6 +114,37 @@ class VisuComponentMono {
 
     if (this._onResizeOverride) {
       this._onResizeOverride();
+    }
+  }
+
+
+  _dblClick(event) {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      // Restore renderTo initial style
+      this._renderTo.style.position = this._parentDimension.position;
+      this._renderTo.style.height = this._parentDimension.height;
+      this._renderTo.style.width = this._parentDimension.width;
+      this._renderTo.style.zIndex = this._parentDimension.zIndex;
+      this._parentDimension = {
+        position: null,
+        height: null,
+        width: null,
+        zIndex: null
+      };
+    } else {
+      document.documentElement.requestFullscreen();
+      // Update renderTo dimension (canvas will be automatically rescaled)
+      this._parentDimension = {
+        position: this._renderTo.style.position,
+        height: this._renderTo.style.height,
+        width: this._renderTo.style.width,
+        zIndex: this._renderTo.style.zIndex || ''
+      };
+      this._renderTo.style.position = 'fixed';
+      this._renderTo.style.height = '100vh';
+      this._renderTo.style.width = '100vw';
+      this._renderTo.style.zIndex = '999';
     }
   }
 
