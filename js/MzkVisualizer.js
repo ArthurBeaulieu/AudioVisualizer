@@ -8,7 +8,7 @@ import PeakMeter from './components/PeakMeter.js';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
-
+/* MzkVisualizer version 0.6 */
 class MzkVisualizer {
 
 
