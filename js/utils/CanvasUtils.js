@@ -57,6 +57,41 @@ class CanvasUtils {
   }
 
 
+  static drawVerticalBar(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.fillStyle = options.color;
+    ctx.fillRect(options.originX, canvas.height - options.frequencyHeight, options.frequencyWidth, options.frequencyHeight);
+    ctx.closePath();
+  }
+
+
+  static drawOscilloscope(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    // Iterate over data to build each bar
+    let cursorX = 0;
+    const frequencyWidth = canvas.width / options.samples;
+    for (let i = 0; i < options.samples; ++i) {
+      // Compute frequency height percentage relative to canvas height to determine Y origin
+      const frequencyHeight = options.timeDomain[i] / 255; // Get value between 0 and 1
+      const cursorY = canvas.height * frequencyHeight;
+
+      if (i > 0) { // General case
+        ctx.lineTo(cursorX, cursorY);
+      } else { // 0 index case
+        ctx.moveTo(cursorX, cursorY);
+      }
+      // Update cursor position
+      cursorX += frequencyWidth;
+    }
+
+    ctx.strokeStyle = options.color;
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+
 }
 
 

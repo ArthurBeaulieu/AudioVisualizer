@@ -111,10 +111,6 @@ class VisuComponentMono {
   _onResize() {
     this._canvas.width = this._renderTo.offsetWidth - 2;
     this._canvas.height = this._renderTo.offsetHeight - 2;
-
-    if (this._onResizeOverride) {
-      this._onResizeOverride();
-    }
   }
 
 

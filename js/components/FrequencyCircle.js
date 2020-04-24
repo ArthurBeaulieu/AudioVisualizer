@@ -2,6 +2,8 @@ import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
 
+// https://www.kkhaydarov.com/audio-visualizer/
+// https://codepen.io/noeldelgado/pen/EaNjBy
 
 class FrequencyCircle extends VisuComponentMono {
 
@@ -9,7 +11,7 @@ class FrequencyCircle extends VisuComponentMono {
   constructor(options) {
     super(options);
 
-    this._imageSrc = options.image;
+    this._imageSrc = null;
     this._centerX = null;
     this._centerY = null;
     this._radius = null;
@@ -26,16 +28,15 @@ class FrequencyCircle extends VisuComponentMono {
     this._averageBreakpoint = 128; // Putting breakpoint on mid amplitude [0, 255]
     this._averageHit = false;
     // Append only once the given logo if any
-    this._setupFrenquencyCircle();
+    this._setupFrenquencyCircle(options);
   }
 
 
-  _setupFrenquencyCircle() {
-    if (this._imageSrc) {
-      this._dom.logo = document.createElement('IMG');
-      this._dom.logo.src = this._imageSrc;
-      this._dom.container.appendChild(this._dom.logo);
-    }
+  _setupFrenquencyCircle(options) {
+    this._imageSrc = options.image || 'assets/img/manazeak-logo-small.svg';
+    this._dom.logo = document.createElement('IMG');
+    this._dom.logo.src = this._imageSrc ;
+    this._dom.container.appendChild(this._dom.logo);
   }
 
 
@@ -156,7 +157,7 @@ class FrequencyCircle extends VisuComponentMono {
 
 
   _animateOscilloscope(times) {
-    var tick = 0.05;
+    let tick = 0.05;
     if (this._averageHit) {
       this._waveformRotation += tick;
       this._ctx.strokeStyle = 'rgba(157, 242, 157, 0.8)';
@@ -183,7 +184,6 @@ class FrequencyCircle extends VisuComponentMono {
       point.dy = point.y + times[i] * Math.cos((Math.PI / 180) * point.angle);
       let xc = (point.dx + this._points[i + 1].dx) / 2;
       let yc = (point.dy + this._points[i + 1].dy) / 2;
-
       this._ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
     }
     // Handle last point manually
@@ -193,7 +193,6 @@ class FrequencyCircle extends VisuComponentMono {
     point.dy = point.y + value * Math.cos((Math.PI / 180) * point.angle);
     let xc = (point.dx + this._points[0].dx) / 2;
     let yc = (point.dy +this._points[0].dy) / 2;
-
     this._ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
     this._ctx.quadraticCurveTo(xc, yc, this._points[0].dx, this._points[0].dy);
     // Fill context for current path
@@ -201,7 +200,7 @@ class FrequencyCircle extends VisuComponentMono {
     this._ctx.fill();
     this._ctx.restore();
     this._ctx.closePath();
-    // If breakpoint is reached, we draw stillized oscilloscope
+    // If breakpoint is reached, we draw stillized horizontal oscilloscope
     if (this._averageHit) {
       this._ctx.beginPath();
 
@@ -220,7 +219,8 @@ class FrequencyCircle extends VisuComponentMono {
   }
 
 
-  _onResizeOverride() {
+  _onResize() {
+    super._onResize();
     this._circleStrokeWidth = 2;
     this._barCount = this._nodes.analyser.frequencyBinCount;
     this._centerX = this._canvas.width / 2;

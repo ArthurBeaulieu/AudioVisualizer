@@ -26,6 +26,7 @@ class VisuComponentStereo {
     this._dom = {
       container: null
     };
+    // Render to original dimension for fullscreen
     this._parentDimension = {
       position: null,
       height: null,
@@ -70,7 +71,6 @@ class VisuComponentStereo {
     this._ctxR = this._canvasR.getContext('2d');
     this._ctxL.translate(0.5, 0.5);
     this._ctxR.translate(0.5, 0.5);
-
     this._dom.container.appendChild(this._canvasL);
     this._dom.container.appendChild(this._canvasR);
     this._renderTo.appendChild(this._dom.container);
@@ -125,9 +125,7 @@ class VisuComponentStereo {
 
 
   _onResize() {
-    if (this._onResizeOverride) {
-      this._onResizeOverride();
-    }
+    // Resize must be handled in each sub class
   }
 
 

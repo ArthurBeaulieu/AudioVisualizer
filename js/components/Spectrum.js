@@ -6,6 +6,17 @@ class Spectrum extends VisuComponentStereo {
 
   constructor(options) {
     super(options);
+    this._updateDimensions();
+    this._createLogarithmicScaleHeights();
+  }
+
+
+  _fillAttributes(options) {
+    super._fillAttributes(options);
+    // Spectrum specific attributes
+    this._scaleType = options.scale || 'linear';
+    this._colorSmoothing = options.colorSmoothing || false;
+    this._canvasSpeed = 1; // Canvas offset per bin
     // Used to animate canvas on audio bins analysis
     this._bufferCanvas = null;
     this._bufferCtx = null;
@@ -17,29 +28,15 @@ class Spectrum extends VisuComponentStereo {
       canvasHeight: null,
       width: null
     };
-    this._scaleType = null;
-    this._colorSmoothing = null
-    this._canvasSpeed = null;
     this._logScale = [];
     // Event binding
     this._settingsClicked = this._settingsClicked.bind(this);
     this._clickedElsewhere = this._clickedElsewhere.bind(this);
-    // Complementary building
-    this._setupSpectrum(options);
-    this._buildSettingsUI();
   }
 
 
-  _setupSpectrum(options) {
-    this._scaleType = options.scale || 'linear';
-    this._colorSmoothing = options.colorSmoothing || false;
-    this._canvasSpeed = 1; // Canvas offset per bin
-    this._updateDimensions();
-    this._createLogarithmicScaleHeights();
-  }
-
-
-  _buildSettingsUI() {
+  _buildUI() {
+    super._buildUI();
     this._bufferCanvas = document.createElement('CANVAS');
     this._bufferCtx = this._bufferCanvas.getContext('2d');
     // Update canvas dimensions
@@ -91,6 +88,12 @@ class Spectrum extends VisuComponentStereo {
     this._dom.container.appendChild(this._dom.settingsPanel); // Append panel before to emulate z-index under settings button w/ no css rules of z-index
     this._dom.container.appendChild(this._dom.settings);
     this._dom.settings.addEventListener('click', this._settingsClicked, false);
+  }
+
+
+  _removeEvents() {
+    super._removeEvents();
+    document.body.removeEventListener('click', this._clickedElsewhere, false);
   }
 
 
@@ -229,7 +232,8 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
-  _onResizeOverride() {
+  _onResize() {
+    super._onResize();
     this._updateDimensions();
     this._createLogarithmicScaleHeights();
     // Update canvas dimensions

@@ -1,6 +1,8 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 
 
+// https://github.com/esonderegger/web-audio-peak-meter
+
 class PeakMeter extends VisuComponentStereo {
 
 
@@ -128,9 +130,8 @@ class PeakMeter extends VisuComponentStereo {
 
 
   _processAudioBin() {
-    this._clearCanvas();
-
     if (this._isPlaying === true) {
+      this._clearCanvas();
       var dataL = new Float32Array(this._fftSize);
       var dataR = new Float32Array(this._fftSize);
       this._nodes.analyserL.getFloatTimeDomainData(dataL);
@@ -249,7 +250,8 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
-  _onResizeOverride() {
+  _onResize() {
+    super._onResize();
     if (this._orientation === 'horizontal') {
       this._canvasL.width = this._renderTo.offsetWidth - 30; // 2px borders + 28 px with for label
       this._canvasR.width = this._renderTo.offsetWidth - 30; // 2px borders + 28 px with for label

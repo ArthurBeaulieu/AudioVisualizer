@@ -54,48 +54,48 @@ folder keep the same tree structure (or change yourself pathes in classes).
     import MzkVisualizer from './js/MzkVisualizer.js';
 
     const spectrum = new MzkVisualizer({
-      type: 'spectrum',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-spectrum-to'),
-      fftSize: 2048, // Higher fft value require higher render to height to be properly apreciated (heavy CPU cost)
-      colorSmoothing: true, // Apply gradient between sample to smoothen visualization
-      scale: 'logarithmic' // 'linear' or 'logarithmic'
+      type: 'spectrum', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-spectrum-to'), // Mandatory, the HTML div to render component
+      fftSize: 2048, // Optional (default 1024), Higher fft values are best fullscreen, heavy CPU cost
+      colorSmoothing: true, // Optional (default true), Apply gradient between samples to smoothen visualization, uneffective on linear scale
+      scale: 'logarithmic' // Optional (default linear), 'linear' or 'logarithmic', the scale to display spectrum
     });
 
     const oscilloscope = new MzkVisualizer({
-      type: 'oscilloscope',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-oscilloscope-to'),
-      fftSize: 4096, // Higher is more precise for oscilloscope (doesn't consume much CPU)
-      color: '#56D45B'
+      type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-oscilloscope-to'), // Mandatory, the HTML div to render component
+      fftSize: 4096, // Optional (default 1024), Higher is more precise for oscilloscope, doesn't consume much CPU
+      color: '#56D45B' // Optional (default '#56D45B'), The oscilloscope line color
     });
 
     const frequencyBars = new MzkVisualizer({
-      type: 'frequencybars',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-frequencybars-to'),
-      fftSize: 1024,
-      color: '#56D45B'
+      type: 'frequencybars', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-frequencybars-to'), // Mandatory, the HTML div to render component
+      fftSize: 1024, // Optional (default 1024), FFT values higher than width may give artifacts.
+      color: '#56D45B' // Optional (default '#56D45B'), The bars color
     });
 
     const frequencyCircle = new MzkVisualizer({
-      type: 'frequencycircle',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-frequencycircle-to'),
-      fftSize: 512,
-      image: 'assets/img/manazeak-logo.svg'
+      type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-frequencycircle-to'), // Mandatory, the HTML div to render component
+      fftSize: 512, // Optional (default 1024), high FFT values can have a high impact on CPU load
+      image: 'assets/img/manazeak-logo-small.svg' // Optional (default 'assets/img/manazeak-logo-small.svg'), the logo to put inside main circle
     });
 
     const peakMeter = new MzkVisualizer({
-      type: 'peakmeter',
-      player: document.querySelector('#audio-player'),
-      renderTo: document.querySelector('#render-peakmeter-horizontal-to'),
+      type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-peakmeter-horizontal-to'), // Mandatory, the HTML div to render component
       fftSize: 8192, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
       orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
       dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
       dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
     });
-    // You can can call delete on those view when done consuming them
+    // You can can call delete on those components when done consuming them
     // spectrum.destroy();
     // oscilloscope.destroy();
     // frequencyBars.destroy();
