@@ -173,19 +173,22 @@ canvas {
 }
 
 .mzk-frequencycircle img {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
+  animation-play-state: running;
   bottom: 0;
-  margin: auto;
   height: calc((100% / 2) - 12.5%);
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  animation: rotate 64s linear infinite;
+}
+
+.mzk-frequencycircle img.paused {
+  animation-play-state: paused;
 }
 
 @keyframes rotate {
   to { transform: rotate(360deg); }
-}
-
-.mzk-frequencycircle img.rotate{
-  animation: rotate 64s linear infinite;
 }

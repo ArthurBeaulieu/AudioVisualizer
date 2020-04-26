@@ -3,6 +3,7 @@ import FrequencyCircle from './components/FrequencyCircle.js';
 import Oscilloscope from './components/Oscilloscope.js';
 import Spectrum from './components/Spectrum.js';
 import PeakMeter from './components/PeakMeter.js';
+import WaveformProgress from './components/WaveformProgress.js';
 
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -23,6 +24,8 @@ class MzkVisualizer {
       return new Spectrum(options);
     } else if (options.type === 'peakmeter') {
       return new PeakMeter(options);
+    } else if (options.type === 'waveformprogress') {
+      return new WaveformProgress(options);
     }
 
     return null;

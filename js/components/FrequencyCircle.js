@@ -10,7 +10,16 @@ class FrequencyCircle extends VisuComponentMono {
 
   constructor(options) {
     super(options);
+  }
 
+
+  /*  ----------  VisuComponentMono overrides  ----------  */
+
+
+
+  _fillAttributes(options) {
+    super._fillAttributes(options);
+    // Frequency circle specific attributes
     this._imageSrc = null;
     this._centerX = null;
     this._centerY = null;
@@ -21,201 +30,24 @@ class FrequencyCircle extends VisuComponentMono {
     this._circleStrokeWidth = null;
     this._stars = [];
     this._points = [];
-    this._waveformRotation = null;
+    this._oscilloscopeRotation = null;
     // Dom specific elements for frequency circle
     this._dom.logo = null;
     // Intensity modifier
-    this._averageBreakpoint = 128; // Putting breakpoint on mid amplitude [0, 255]
+    this._averageBreakpoint = 132; // Putting breakpoint on mid amplitude [0, 255]
     this._averageHit = false;
-    // Append only once the given logo if any
-    this._setupFrenquencyCircle(options);
-  }
 
-
-  _setupFrenquencyCircle(options) {
     this._imageSrc = options.image || 'assets/img/manazeak-logo-small.svg';
     this._dom.logo = document.createElement('IMG');
+    this._dom.logo.classList.add('paused');
     this._dom.logo.src = this._imageSrc ;
+  }
+
+
+  _buildUI() {
+    super._buildUI();
     this._dom.container.appendChild(this._dom.logo);
-  }
-
-
-  _buildCanvasUI() {
-    // Build background radial gradient
-    ColorUtils.drawRadialGradient(this._canvas, {
-      colors: ['#3C405D', '#060609'], // Color value according to ManaZeak's linear background colors
-      x0: this._centerX,
-      y0: this._centerY,
-      r0: this._radius,
-      x1: this._centerX,
-      y1: this._centerY,
-      r1: this._canvas.width / 2.66,
-    });
-    // Build logo circle border
-    CanvasUtils.drawCircle(this._canvas, {
-      centerX: this._centerX,
-      centerY: this._centerY,
-      radius: this._radius,
-      radStart: 0,
-      radEnd: Math.PI * 2,
-      width: this._circleStrokeWidth * 2 // Times two because stroke is centered on circle
-    });
-  }
-
-
-  _processAudioBin() {
-    this._clearCanvas();
-    this._buildCanvasUI();
-
-    if (this._isPlaying === true) {
-      const frequencies = new Uint8Array(this._nodes.analyser.frequencyBinCount);
-      const times = new Uint8Array(this._nodes.analyser.frequencyBinCount);
-      this._nodes.analyser.getByteFrequencyData(frequencies);
-      this._nodes.analyser.getByteTimeDomainData(times);
-      // Draw circle bars while retrieving aaverage amplitude
-      let average = this._animateCircleBars(frequencies);
-      // Compute frequencies average value
-      average = average / frequencies.length;
-      this._averageHit = (average > this._averageBreakpoint);
-      // Animate each star
-      this._animateStars(average);
-      // Draw average circle with its glow effect around center
-      this._animateCircleGlow(average);
-      // Draw circular oscilloscope
-      this._animateOscilloscope(times);
-      // Request for next frame
-      requestAnimationFrame(this._processAudioBin);
-    }
-  }
-
-
-  _animateCircleBars(frequencies) {
-    let average = 0; // Output average value
-    for (let i = 0; i < frequencies.length; ++i) {
-      // Compute current bar parameters
-      const barHeight = (frequencies[i] / 255) * this._barMaxHeight;
-      const barWidth = Math.round(this._radialSection * this._radius);
-      const xStart = this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth);
-      const yStart = this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth);
-      const xEnd = this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight);
-      const yEnd = this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight);
-      // Use CanvasUtils to draw bar
-      CanvasUtils.drawBar(this._canvas, {
-        x0: xStart,
-        y0: yStart,
-        x1: xEnd,
-        y1: yEnd,
-        width: barWidth,
-        color: '#37C340',
-        frequency: frequencies[i]
-      });
-      // Update average amplitude value
-      average += frequencies[i];
-    }
-    // Return average value of frequencies
-    return average;
-  }
-
-
-  _animateStars(average) {
-    let tick = (this._averageHit) ? average / 20 : average / 50;
-    for (let i = 0; i < this._stars.length; i++) {
-      let star = this._stars[i];
-      // Update star position and variation
-      star.addToPos(star.dx * tick, star.dy * tick, star.dz);
-      star.addToVar(star.ddx, star.ddy, 0.6);
-      // Create new star if current got out of canvas
-      if (star.x < -this._centerX || star.x > this._centerX || star.y < -this._centerY || star.y > this._centerY) {
-        star = new Star(this._centerX, this._centerY, average);
-        this._stars[i] = star;
-      }
-      // Use CanvasUtils to draw star disc
-      CanvasUtils.drawDisc(this._canvas, {
-        centerX: star.x + this._centerX,
-        centerY: star.y + this._centerY,
-        radius: star.radius,
-        radStart: Math.PI * 2,
-        radEnd: false,
-        color: star.color
-      });
-    }
-  }
-
-
-  _animateCircleGlow(average) {
-    let glowColor = (this._averageHit) ? '#56D45B' : '#48ABAF';
-    // Build average amplitude glow
-    CanvasUtils.drawCircleGlow(this._canvas, {
-      centerX: this._centerX,
-      centerY: this._centerY,
-      radius: ((this._radius * 1.33) + average) * 2, // Glow need twice radius to properly display gradient
-      radStart: 0,
-      radEnd: Math.PI * 2,
-      color: glowColor
-    });
-  }
-
-
-  _animateOscilloscope(times) {
-    let tick = 0.05;
-    if (this._averageHit) {
-      this._waveformRotation += tick;
-      this._ctx.strokeStyle = 'rgba(157, 242, 157, 0.8)';
-      this._ctx.fillStyle = 'rgba(0,0,0,0)';
-    } else {
-      this._waveformRotation += -tick;
-      this._ctx.strokeStyle = 'rgba(157, 242, 157, 0.11)';
-      this._ctx.fillStyle = 'rgba(29, 36, 57, 0.05)';
-    }
-
-    this._ctx.beginPath();
-    this._ctx.lineWidth = 1;
-    this._ctx.lineCap = 'round';
-
-    this._ctx.save();
-    this._ctx.translate(this._centerX, this._centerY);
-    this._ctx.rotate(this._waveformRotation)
-    this._ctx.translate(-this._centerX, -this._centerY);
-    this._ctx.moveTo(this._points[0].dx, this._points[0].dy);
-
-    for (let i = 0; i < (this._fftSize / 2) - 1; ++i) {
-      let point = this._points[i];
-      point.dx = point.x + times[i] * Math.sin((Math.PI / 180) * point.angle);
-      point.dy = point.y + times[i] * Math.cos((Math.PI / 180) * point.angle);
-      let xc = (point.dx + this._points[i + 1].dx) / 2;
-      let yc = (point.dy + this._points[i + 1].dy) / 2;
-      this._ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
-    }
-    // Handle last point manually
-    let value = times[(this._fftSize / 2) - 1];
-    let point = this._points[(this._fftSize / 2) - 1];
-    point.dx = point.x + value * Math.sin((Math.PI / 180) * point.angle);
-    point.dy = point.y + value * Math.cos((Math.PI / 180) * point.angle);
-    let xc = (point.dx + this._points[0].dx) / 2;
-    let yc = (point.dy +this._points[0].dy) / 2;
-    this._ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
-    this._ctx.quadraticCurveTo(xc, yc, this._points[0].dx, this._points[0].dy);
-    // Fill context for current path
-    this._ctx.stroke();
-    this._ctx.fill();
-    this._ctx.restore();
-    this._ctx.closePath();
-    // If breakpoint is reached, we draw stillized horizontal oscilloscope
-    if (this._averageHit) {
-      this._ctx.beginPath();
-
-      for (let i = 0; i < (this._fftSize / 2); i++) {
-        let height = this._canvas.height * (times[i] / 255);
-        let offset = (this._canvas.height - height - 1);
-        let barWidth = (this._canvas.width / (this._fftSize / 2));
-        this._ctx.fillStyle = 'rgba(86, 212, 91, 0.9)';
-        this._ctx.fillRect(i * barWidth, offset, 1, 1);
-      }
-
-      this._ctx.stroke();
-      this._ctx.fill();
-      this._ctx.closePath();
-    }
+    this._buildBackgroundBase();
   }
 
 
@@ -231,14 +63,12 @@ class FrequencyCircle extends VisuComponentMono {
     // Populating stars
     this._stars = [];
     for (let i = 0; i < 1500; ++i) {
-      this._stars.push(new Star(this._centerX, this._centerY));
+      this._stars.push(new Star(this._centerX, this._centerY, null, this._averageBreakpoint));
     }
-    // Define average circle
-    this._averageCircle = new AvgCircle(this._canvas.height, this._canvas.width);
-    // Populating circular waveform points
+    // Populating circular oscilloscope points
     this._points = [];
     for (let i = 0; i < (this._fftSize / 2); ++i) {
-      this._points.push(new Point({
+      this._points.push(new OscilloscopeRadialPoint({
         index: i,
         height: this._canvas.height,
         width: this._canvas.width,
@@ -246,19 +76,177 @@ class FrequencyCircle extends VisuComponentMono {
       }));
     }
     // Build canvas fixed base
-    this._buildCanvasUI();
+    this._buildBackgroundBase();
   }
 
 
   _play() {
     super._play();
-    this._dom.logo.classList.add('rotate');
+    this._dom.logo.classList.remove('paused'); // Resume css animation
   }
 
 
   _pause() {
     super._pause();
-    this._dom.logo.classList.remove('rotate');
+    this._dom.logo.classList.add('paused'); // Pause css animation
+  }
+
+
+  /*  ----------  FrequencyCircle internal methods  ----------  */
+
+
+  _processAudioBin() {
+    if (this._isPlaying === true) {
+      this._clearCanvas();
+      this._buildBackgroundBase();
+      // Extract frequencies and times data
+      const frequencies = new Uint8Array(this._nodes.analyser.frequencyBinCount);
+      const times = new Uint8Array(this._nodes.analyser.frequencyBinCount);
+      this._nodes.analyser.getByteFrequencyData(frequencies);
+      this._nodes.analyser.getByteTimeDomainData(times);
+      // Get average frequency for proccessed bin
+      let average = this._getAverageFrequency(frequencies);
+      this._averageHit = (average > this._averageBreakpoint);
+      // Draw circle bars while retrieving aaverage amplitude
+      this._animateCircleBars(frequencies);
+      // Animate each star
+      this._animateStars(average);
+      // Draw average circle with its glow effect around center
+      this._animateCircleGlow(average);
+      // Draw circular oscilloscope and horizontal one if average hit
+      this._animateOscilloscopes(times);
+      // Request for next frame
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  _buildBackgroundBase() {
+    // Build background radial gradient
+    // Color value according to ManaZeak's linear background colors
+    ColorUtils.drawRadialGradient(this._canvas, {
+      x0: this._centerX,
+      y0: this._centerY,
+      r0: this._radius,
+      x1: this._centerX,
+      y1: this._centerY,
+      r1: this._canvas.width / 2.66,
+      colors: [
+        { color: '#3C405D', center: 0 },
+        { color: '#060609', center: 1 }
+      ]
+    });
+    // Build logo circle border
+    CanvasUtils.drawCircle(this._canvas, {
+      centerX: this._centerX,
+      centerY: this._centerY,
+      radius: this._radius,
+      radStart: 0,
+      radEnd: Math.PI * 2,
+      width: this._circleStrokeWidth * 2 // Times two because stroke is centered on circle
+    });
+  }
+
+
+  _animateCircleBars(frequencies) {
+    // Compute radial width for each circular bar
+    const barWidth = Math.round(this._radialSection * this._radius);
+    // Iterate over frequencies to draw each correspondant frequency bin
+    for (let i = 0; i < frequencies.length; ++i) {
+      // Compute current bar height depending on intensity
+      const barHeight = (frequencies[i] / 255) * this._barMaxHeight;
+      // Use CanvasUtils to draw bar
+      CanvasUtils.drawRadialBar(this._canvas, {
+        x0: this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth),
+        y0: this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth),
+        x1: this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight),
+        y1: this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight),
+        width: barWidth,
+        color: this._averageHit ? /* Green */ '#56D45B' : /* Dark Green */ '#37C340',
+        frequency: frequencies[i]
+      });
+    }
+  }
+
+
+  _animateStars(average) {
+    let tick = this._averageHit ? average / 20 : average / 60;
+    for (let i = 0; i < this._stars.length; ++i) {
+      let star = this._stars[i];
+      // Update star position and variation
+      star.updatePosition(tick, 0.6);
+      // Replace star with new one if it went out canvas
+      if (star.x < -this._centerX || star.x > this._centerX || star.y < -this._centerY || star.y > this._centerY) {
+        star = new Star(this._centerX, this._centerY, average, this._averageBreakpoint); // Update local variable
+        this._stars[i] = star; // Save new reference
+      }
+      // Use CanvasUtils to draw star disc
+      CanvasUtils.drawDisc(this._canvas, {
+        centerX: star.x + this._centerX,
+        centerY: star.y + this._centerY,
+        radius: star.radius,
+        radStart: Math.PI * 2,
+        radEnd: false,
+        color: star.color
+      });
+    }
+  }
+
+
+  _animateCircleGlow(average) {
+    // Build average amplitude glow with color change when average breakpoint is hit
+    CanvasUtils.drawCircleGlow(this._canvas, {
+      centerX: this._centerX,
+      centerY: this._centerY,
+      radius: ((this._radius * 1.33) + average) * 2, // Glow need twice radius to properly display gradient
+      radStart: 0,
+      radEnd: Math.PI * 2,
+      colors: [
+        { color: 'rgba(0, 0, 0, 0)', center: 0.48 },
+        { color: (this._averageHit ? /* Green */ '#56D45B' : /* Blue */ '#48ABAF'), center: 0.5 },
+        { color: 'rgba(0, 0, 0, 0)', center: 0.52 }
+      ]
+    });
+  }
+
+
+  _animateOscilloscopes(times) {
+    let tick = 0.05;
+    if (this._averageHit) {
+      this._oscilloscopeRotation += tick;
+      this._ctx.strokeStyle = 'rgba(255, 193, 140, .7)'; // Orange
+    } else {
+      this._oscilloscopeRotation += -tick;
+      this._ctx.strokeStyle = 'rgba(125, 228, 132, 0.25)'; // Green
+    }
+    // Update radial oscilloscope with time values
+    CanvasUtils.drawRadialOscilloscope(this._canvas, {
+      points: this._points,
+      times: times,
+      length: this._fftSize / 2,
+      centerX: this._centerX,
+      centerY: this._centerY,
+      rotation: this._oscilloscopeRotation
+    });
+    // If breakpoint is reached, we draw stillized horizontal oscilloscope
+    if (this._averageHit) {
+      CanvasUtils.drawPointsOscilloscope(this._canvas, {
+        times: times,
+        length: this._fftSize / 2,
+        color: 'rgba(113, 201, 205, .7)'
+      });
+    }
+  }
+
+
+  _getAverageFrequency(frequencies) {
+    let average = 0; // Output average value
+    for (let i = 0; i < frequencies.length; ++i) {
+      // Update average amplitude value
+      average += frequencies[i];
+    }
+    // Return average value of frequencies
+    return average / frequencies.length;
   }
 
 
@@ -266,95 +254,72 @@ class FrequencyCircle extends VisuComponentMono {
 
 
 class Star {
-  constructor(centerX, centerY, average = 0) {
+
+
+  constructor(centerX, centerY, average = 0, breakpoint = 132) {
+    // Public attributes
+    this.radius = 0.4;
+    this.color = '#0F8489'; // Dark blue
     this.x = Math.random() * (centerX * 2) - centerX;
     this.y = Math.random() * (centerY * 2) - centerY;
-    this.z = this.max_depth = Math.max((centerX * 2) / (centerY * 2));
-    this.radius = 0.2;
-
-    var xc = (this.x > 0) ? 1 : -1;
-    var yc = (this.y > 0) ? 1 : -1;
-
+    // Private attributes
+    this._z = Math.max((centerX * 2) / (centerY * 2));
+    this._maxDepth = Math.max((centerX * 2) / (centerY * 2));
+    // Set star variation in space
     if (Math.abs(this.x) > Math.abs(this.y)) {
-      this.dx = 1.0;
-      this.dy = Math.abs(this.y / this.x);
+      this._dx = 1.0;
+      this._dy = Math.abs(this.y / this.x);
     } else {
-      this.dx = Math.abs(this.x / this.y);
-      this.dy = 1.0;
+      this._dx = Math.abs(this.x / this.y);
+      this._dy = 1.0;
     }
-
-    this.dx *= xc;
-    this.dy *= yc;
-    this.dz = -0.1;
-
-    this.ddx = .001 * this.dx;
-    this.ddy = .001 * this.dy;
-
+    // Set variation relative to center
+    this._dx *= (this.x > 0) ? 1 : -1;
+    this._dy *= (this.y > 0) ? 1 : -1;
+    this._dz = -0.1;
+    // Determine color according to center or average intensity
     if (this.y > (centerY / 2)) {
-      this.color = '#B5BFD4';
-    } else {
-      if (average > 145) {
-        this.color = '#FF6B67';
-      } else {
-        this.color = '#465677';
-      }
+      this.color = '#71C9CD'; // Light Blue
+    } else if (average > breakpoint) {
+      this.color = '#FF6B67'; // Red
     }
   }
 
-  addToPos(x, y, z) {
-    this.x += x;
-    this.y += y;
-    this.z += z;
-  }
 
-
-  addToVar(dx, dy, radiusFactor) {
-    this.dx += dx;
-    this.dy += dy;
-    this.radius = radiusFactor + ((this.max_depth - this.z) * .1);
+  updatePosition(tick, radiusFactor) {
+    // Update position
+    this.x += this._dx * tick;
+    this.y += this._dy * tick;
+    this._z += this._dz; // Constant z variation
+    // Update variation
+    this._dx += this._dx * .001;
+    this._dy += this._dy * .001;
+    this.radius = radiusFactor + ((this._maxDepth - this._z) * .1);
   }
 
 
 }
 
 
-class Point {
+class OscilloscopeRadialPoint {
 
 
   constructor(options) {
-    this.height = options.height;
-    this.width = options.width;
-    this.total = options.total;
-    this.index = options.index;
-    this.angle = (this.index * 360) / this.total;
-
-    this.updateDynamics();
-
-    this.value = Math.random() * 256;
-    this.dx = this.x + this.value * Math.sin((Math.PI / 180) * this.angle);
-    this.dy = this.y + this.value * Math.cos((Math.PI / 180) * this.angle);
-  }
-
-  updateDynamics() {
-    this.radius = Math.abs(this.width, this.height) / 8;
-    this.x = (this.width / 2) + this.radius * Math.sin((Math.PI / 180) * this.angle);
-    this.y = (this.height / 2) + this.radius * Math.cos((Math.PI / 180) * this.angle);
+    this._height = options.height;
+    this._width = options.width;
+    this._total = options.total;
+    this._index = options.index;
+    this._value = Math.random() * 256;
+    this._radius = Math.abs(this._width, this._height) / 8;
+    // Public attributes
+    this.angle = (this._index * 360) / this._total;
+    this.x = (this._width / 2) + this._radius * Math.sin((Math.PI / 180) * this.angle);
+    this.y = (this._height / 2) + this._radius * Math.cos((Math.PI / 180) * this.angle);
+    this.dx = this.x + this._value * Math.sin((Math.PI / 180) * this.angle);
+    this.dy = this.y + this._value * Math.cos((Math.PI / 180) * this.angle);
   }
 
 
-}
-
-
-class AvgCircle {
-  constructor(height, width) {
-    this._height = height;
-    this._width = width;
-    this.update();
-  }
-
-  update() {
-    this.radius = (Math.abs(this._width, this._height) / 6);
-  }
 }
 
 

@@ -7,14 +7,18 @@ class Oscilloscope extends VisuComponentStereo {
 
   constructor(options) {
     super(options);
-
+    // Init oscilloscope dimensions
     this._updateDimensions();
   }
 
 
+  /*  ----------  VisuComponentStereo overrides  ----------  */
+
+
+
   _fillAttributes(options) {
     super._fillAttributes(options)
-    this._color = options.color || '#56D45B';
+    this._color = options.color || '#56D45B'; // Green
     // Dimensions will be computed when canvas have been created
     this._dimension = {
       height: null,
@@ -24,19 +28,28 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
+  _onResize() {
+    super._onResize();
+    this._updateDimensions();
+  }
+
+
+  /*  ----------  Oscilloscope internal methods  ----------  */  
+
+
   _processAudioBin() {
     if (this._isPlaying === true) {
       this._clearCanvas();
       // Create TimeDomain array with freqency bin length
       let timeDomain = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
-      /* Left part */
+      // Left channel
       this._nodes.analyserL.getByteTimeDomainData(timeDomain);
       CanvasUtils.drawOscilloscope(this._canvasL, {
         samples: this._nodes.analyserL.frequencyBinCount,
         timeDomain: timeDomain,
         color: this._color
       });
-      /* Right part */
+      // Right channel
       this._nodes.analyserR.getByteTimeDomainData(timeDomain);
       CanvasUtils.drawOscilloscope(this._canvasR, {
         samples: this._nodes.analyserL.frequencyBinCount,
@@ -57,12 +70,6 @@ class Oscilloscope extends VisuComponentStereo {
     this._canvasL.height = this._dimension.canvasHeight;
     this._canvasR.width = this._dimension.width;
     this._canvasR.height = this._dimension.canvasHeight;
-  }
-
-
-  _onResize() {
-    super._onResize();
-    this._updateDimensions();
   }
 
 

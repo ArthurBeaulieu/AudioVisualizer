@@ -7,20 +7,19 @@ class CanvasUtils {
   constructor() {}
 
 
-  static drawBar(canvas, options) {
+  static drawRadialBar(canvas, options) {
     const ctx = canvas.getContext('2d');
     let amount = options.frequency / 255;
     if (amount < 0.05) {
       amount = -amount;
     } else {
-      amount = amount * 2;
+      amount = amount * 1.33;
     }
 
-    const lineColor = ColorUtils.lightenDarkenColor(options.color, amount * 100);
     ctx.beginPath();
     ctx.moveTo(options.x0, options.y0);
     ctx.lineTo(options.x1, options.y1);
-    ctx.strokeStyle = lineColor;
+    ctx.strokeStyle = ColorUtils.lightenDarkenColor(options.color, amount * 100);
     ctx.lineWidth = options.width;
     ctx.stroke();
     ctx.closePath();
@@ -57,11 +56,12 @@ class CanvasUtils {
   }
 
 
-  static drawVerticalBar(canvas, options) {
+  static drawVerticalFrequencyBar(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.fillStyle = options.color;
+    //ctx.fillStyle = options.color;
     ctx.fillRect(options.originX, canvas.height - options.frequencyHeight, options.frequencyWidth, options.frequencyHeight);
+    ColorUtils.drawVerticalFrequencyGradient(canvas, options);
     ctx.closePath();
   }
 
@@ -89,6 +89,89 @@ class CanvasUtils {
     ctx.strokeStyle = options.color;
     ctx.stroke();
     ctx.closePath();
+  }
+
+
+  static drawPointsOscilloscope(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+
+    for (let i = 0; i < options.length; ++i) {
+      let height = canvas.height * (options.times[i] / 255);
+      let offset = canvas.height - height - 1;
+      let barWidth = canvas.width / options.length;
+      ctx.fillStyle = options.color;
+      ctx.fillRect(i * barWidth, offset, 2, 2);
+    }
+
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+  }
+
+
+  static drawRadialOscilloscope(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(options.centerX, options.centerY);
+    ctx.rotate(options.rotation)
+    ctx.translate(-options.centerX, -options.centerY);
+    ctx.moveTo(options.points[0].dx, options.points[0].dy);
+
+    for (let i = 0; i < options.length - 1; ++i) {
+      let point = options.points[i];
+      point.dx = point.x + options.times[i] * Math.sin((Math.PI / 180) * point.angle);
+      point.dy = point.y + options.times[i] * Math.cos((Math.PI / 180) * point.angle);
+      let xc = (point.dx + options.points[i + 1].dx) / 2;
+      let yc = (point.dy + options.points[i + 1].dy) / 2;
+      ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
+    }
+    // Handle last point manually
+    let value = options.times[options.length - 1];
+    let point = options.points[options.length - 1];
+    point.dx = point.x + value * Math.sin((Math.PI / 180) * point.angle);
+    point.dy = point.y + value * Math.cos((Math.PI / 180) * point.angle);
+    let xc = (point.dx + options.points[0].dx) / 2;
+    let yc = (point.dy + options.points[0].dy) / 2;
+    ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
+    ctx.quadraticCurveTo(xc, yc, options.points[0].dx, options.points[0].dy);
+    // Fill context for current path
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+    ctx.closePath();
+  }
+
+
+  static drawPeakMeter(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ColorUtils.peakMeterGradient(canvas, options);
+
+    if (options.orientation === 'horizontal') {
+      const ledWidth = canvas.width - options.amplitude;
+      ctx.fillRect(0, 0, ledWidth, canvas.height);
+    } else if (options.orientation === 'vertical') {
+      const ledHeight = canvas.height - options.amplitude;
+      ctx.fillRect(0, canvas.height - ledHeight, canvas.width, ledHeight);
+    }
+
+    ctx.fillStyle = '#FF6B67';
+    if (options.orientation === 'horizontal') {
+      const ledWidth = canvas.width - options.peak;
+      ctx.fillRect(ledWidth, 0, 1, canvas.height);
+    } else if (options.orientation === 'vertical') {
+      const ledHeight = canvas.height - options.peak;
+      ctx.fillRect(0, canvas.height - ledHeight, canvas.width, 1);
+    }
+
+  }
+
+
+  static precisionRound(value, precision) {
+    const multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
   }
 
 
