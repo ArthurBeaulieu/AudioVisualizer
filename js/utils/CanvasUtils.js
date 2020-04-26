@@ -59,7 +59,6 @@ class CanvasUtils {
   static drawVerticalFrequencyBar(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    //ctx.fillStyle = options.color;
     ctx.fillRect(options.originX, canvas.height - options.frequencyHeight, options.frequencyWidth, options.frequencyHeight);
     ColorUtils.drawVerticalFrequencyGradient(canvas, options);
     ctx.closePath();

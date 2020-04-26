@@ -197,7 +197,7 @@ class PeakMeter extends VisuComponentStereo {
       peakLabelL.style.top = '14px';
       peakLabelR.style.width = '28px';
       peakLabelR.style.height = `${this._canvasL.height + 2}px`; // 2 px borders
-      peakLabelR.style.top = `${this._canvasL.height + 16} + 'px`; // 2px borders + 14px height
+      peakLabelR.style.top = `${this._canvasL.height + 16}px`; // 2px borders + 14px height
     } else {
       peakLabelL.style.width = `${this._canvasL.width + 2}px`; // 2 px borders
       peakLabelL.style.left = '18px';

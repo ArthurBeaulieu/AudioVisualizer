@@ -41,7 +41,7 @@ folder keep the same tree structure (or change yourself pathes in classes).
     <h3>Signal peak meter (horizontal)</h3>
     <div id="render-peakmeter-horizontal-to" style="width:90%;height:86px;"></div> <!-- Best to have even height -->
     <h3>Signal waveform</h3>
-    <div id="render-waveformprogress-to" style="width:90%;height:86px;"></div>
+    <div id="render-waveformprogress-to" style="width:90%;height:300px;"></div>
   </div>
   <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
   <!-- Module tested for mp3, ogg, flac and wav audio files. -->
@@ -102,7 +102,8 @@ folder keep the same tree structure (or change yourself pathes in classes).
       type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
-      fftSize: 8192 // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+      fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+      merged: false
     });
     // You can can call delete on those components when done consuming them
     // spectrum.destroy();
