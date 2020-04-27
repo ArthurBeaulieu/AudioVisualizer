@@ -11,6 +11,7 @@ body { font-family: sans-serif; overflow: auto; padding: 0; position: absolute; 
 h1, h3 { margin: 10px 0; }
 audio { position: fixed; right: 0; top: 0; }
 .mzkvisualizer-demo { align-items: center; display: flex; flex-direction: column; font-size: 1em; }
+.mzkvisualizer-demo div:last-child { margin-bottom: 10px; }
   </style>
 </head>
 <!--
@@ -39,9 +40,9 @@ folder keep the same tree structure (or change yourself pathes in classes).
     <h3>Signal frequencies (circle)</h3>
     <div id="render-frequencycircle-to" style="height:calc(37em);width:90%;"></div>
     <h3>Signal peak meter (horizontal)</h3>
-    <div id="render-peakmeter-horizontal-to" style="width:90%;height:86px;"></div> <!-- Best to have even height -->
+    <div id="render-peakmeter-horizontal-to" style="height:86px;width:90%;"></div> <!-- Best to have even height -->
     <h3>Signal waveform</h3>
-    <div id="render-waveformprogress-to" style="width:90%;height:300px;"></div>
+    <div id="render-waveformprogress-to" style="height:calc(9em - 8px);width:90%;"></div>
   </div>
   <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
   <!-- Module tested for mp3, ogg, flac and wav audio files. -->
@@ -103,7 +104,8 @@ folder keep the same tree structure (or change yourself pathes in classes).
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
       fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
-      merged: true
+      merged: true,// Optional (default true), merge left/right channel into one
+      animation: 'fade' // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
     });
     // You can can call delete on those components when done consuming them
     // spectrum.destroy();

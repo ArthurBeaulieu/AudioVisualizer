@@ -81,6 +81,7 @@ class ColorUtils {
       usePound = true;
     }
 
+    amount += 16;
     const num = parseInt(color, 16);
     // Red channel bounding
     let r = (num >> 16) + amount;
