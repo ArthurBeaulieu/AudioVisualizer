@@ -7,6 +7,10 @@ class WaveformProgress extends VisuComponentMono {
 
   constructor(options) {
     super(options);
+
+    if (this._player.src !== '') {
+      this._getPlayerSourceFile();
+    }
   }
 
 
