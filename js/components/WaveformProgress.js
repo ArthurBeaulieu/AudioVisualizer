@@ -22,6 +22,7 @@ class WaveformProgress extends VisuComponentMono {
     this._dataL = [];
     this._dataR = [];
     // Event binding
+    this._trackLoaded = this._trackLoaded.bind(this);
     this._seekPlayer = this._seekPlayer.bind(this);
   }
 
@@ -33,21 +34,24 @@ class WaveformProgress extends VisuComponentMono {
 
   _setAudioNodes() {
     super._setAudioNodes();
-    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._nodes.source.channelCount * 10, this._audioCtx.sampleRate);
+    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
     this._offlineSource = this._offlineCtx.createBufferSource();
   }
 
 
   _addEvents() {
     super._addEvents();
+    this._player.addEventListener('loadedmetadata', this._trackLoaded, false); // Add loaded track listener
     this._dom.container.addEventListener('click', this._seekPlayer, false);
   }
 
 
   _removeEvents() {
     super._removeEvents();
+    this._player.removeEventListener('loadedmetadata', this._trackLoaded, false); // Add loaded track listener
     this._dom.container.removeEventListener('click', this._seekPlayer, false);
   }
+
 
   _onResize() {
     super._onResize();
@@ -56,8 +60,20 @@ class WaveformProgress extends VisuComponentMono {
     this._drawFileWaveform(this._player.currentTime / this._player.duration);
   }
 
+
   _dblClick() {
     // Required to revoke fullscreen toggle from parent class, as it interfers with seek feature
+  }
+
+
+  _trackLoaded() {
+    cancelAnimationFrame(this._processAudioBin);
+    this._clearCanvas(); // Clear previous canvas
+    // Set offline context according to track duration to get its full samples
+    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
+    this._offlineSource = this._offlineCtx.createBufferSource();
+    // Do XHR to request file and parse it
+    this._getPlayerSourceFile();
   }
 
 
@@ -66,7 +82,7 @@ class WaveformProgress extends VisuComponentMono {
     const xOffset = event.clientX - boundingBox.left;
     this._player.currentTime = (xOffset / this._canvas.width) * this._player.duration;
     this._clearCanvas();
-    this._drawFileWaveform(this._player.currentTime / this._player.duration);    
+    this._drawFileWaveform(this._player.currentTime / this._player.duration);
   }
 
 
@@ -76,7 +92,7 @@ class WaveformProgress extends VisuComponentMono {
       this._offlineSource.connect(this._offlineCtx.destination);
       this._offlineSource.start();
       this._offlineCtx.startRendering().then(renderedBuffer => {
-        this._bars = this._canvas.width / 5;
+        this._bars = this._canvas.width / 3;
         this._offlineBuffer = renderedBuffer;
         this._fillData();
         this._drawFileWaveform(0);
@@ -84,23 +100,6 @@ class WaveformProgress extends VisuComponentMono {
         console.log('Rendering failed: ' + err);
       });
     });
-  }
-
-
-  _genScaledData(data) {
-    const subSampleSize = Math.floor(data.length / this._bars);
-    const output = [];
-    // We need to sub sample raw data according to the bar number. We average fq values
-    for (let i = 0; i <= data.length - subSampleSize; i += subSampleSize) {
-      let sum = 0;
-      for (let j = 0; j < subSampleSize; ++j) {
-        sum += Math.abs(data[i + j]);
-      }
-
-      output.push(sum / subSampleSize);
-    }
-
-    return this._scaleDataToHeight(output);
   }
 
 
@@ -114,6 +113,23 @@ class WaveformProgress extends VisuComponentMono {
         this._dataR = this._genScaledData(this._offlineBuffer.getChannelData(1));
       }
     }
+  }
+
+
+  _genScaledData(data) {
+    const subSampleSize = Math.floor(data.length / this._bars);
+    const output = [];
+    // We need to sub sample raw data according to the bar number. We average fq values
+    for (let i = 0; i <= (data.length - subSampleSize); i += subSampleSize) {
+      let sum = 0;
+      for (let j = 0; j < subSampleSize; ++j) {
+        sum += Math.abs(data[i + j]);
+      }
+
+      output.push(sum / subSampleSize);
+    }
+
+    return this._scaleDataToHeight(output);
   }
 
 

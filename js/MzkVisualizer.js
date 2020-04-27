@@ -9,7 +9,7 @@ import WaveformProgress from './components/WaveformProgress.js';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
-/* MzkVisualizer version 0.6 */
+/* MzkVisualizer version 0.7 */
 class MzkVisualizer {
 
 

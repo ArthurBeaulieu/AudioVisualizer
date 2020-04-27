@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.6</title>
+  <title>MzkVisualizer 0.7</title>
   <link rel="stylesheet" href="css/style.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <style>
@@ -31,6 +31,11 @@ folder keep the same tree structure (or change yourself pathes in classes).
     <!-- Each component has its own optional options (refer to each component instanciation in this example) -->
     <!-- Exotic heights are used on purpose to demonstrate dynamic dimension scaling of each component -->
     <h1>MzkVisualizer</h1>
+    <button id="demo-change-src">Change source</button>
+    <h3>Signal peak meter (horizontal)</h3>
+    <div id="render-peakmeter-horizontal-to" style="height:86px;width:90%;"></div> <!-- Best to have even height -->
+    <h3>Signal waveform (seek audio)</h3>
+    <div id="render-waveformprogress-to" style="height:calc(9em - 8px);width:90%;"></div>
     <h3>Signal spectrum</h3>
     <div id="render-spectrum-to" style="height:calc(13em - 2px);width:90%;"></div>
     <h3>Signal oscilloscope</h3>
@@ -39,10 +44,6 @@ folder keep the same tree structure (or change yourself pathes in classes).
     <div id="render-frequencybars-to" style="height:calc(17em - 8px);width:90%;"></div>
     <h3>Signal frequencies (circle)</h3>
     <div id="render-frequencycircle-to" style="height:calc(37em);width:90%;"></div>
-    <h3>Signal peak meter (horizontal)</h3>
-    <div id="render-peakmeter-horizontal-to" style="height:86px;width:90%;"></div> <!-- Best to have even height -->
-    <h3>Signal waveform</h3>
-    <div id="render-waveformprogress-to" style="height:calc(9em - 8px);width:90%;"></div>
   </div>
   <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
   <!-- Module tested for mp3, ogg, flac and wav audio files. -->
@@ -55,6 +56,25 @@ folder keep the same tree structure (or change yourself pathes in classes).
   <script type="module">
     // FFT size must be included in [128, 4096], powers of 2 only
     import MzkVisualizer from './js/MzkVisualizer.js';
+
+    const peakMeter = new MzkVisualizer({
+      type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-peakmeter-horizontal-to'), // Mandatory, the HTML div to render component
+      fftSize: 8192, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+      orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
+      dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
+      dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
+    });
+
+    const waveformProgress = new MzkVisualizer({
+      type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
+      fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+      merged: true,// Optional (default true), merge left/right channel into one
+      animation: 'fade' // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
+    });
 
     const spectrum = new MzkVisualizer({
       type: 'spectrum', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
@@ -89,31 +109,22 @@ folder keep the same tree structure (or change yourself pathes in classes).
       image: 'assets/img/manazeak-logo-small.svg' // Optional (default 'assets/img/manazeak-logo-small.svg'), the logo to put inside main circle
     });
 
-    const peakMeter = new MzkVisualizer({
-      type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
-      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
-      renderTo: document.querySelector('#render-peakmeter-horizontal-to'), // Mandatory, the HTML div to render component
-      fftSize: 8192, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
-      orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
-      dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
-      dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
-    });
-
-    const waveformProgress = new MzkVisualizer({
-      type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
-      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
-      renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
-      fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
-      merged: true,// Optional (default true), merge left/right channel into one
-      animation: 'fade' // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
-    });
     // You can can call delete on those components when done consuming them
+    // peakMeter.destroy();
+    // waveformProgress.destroy();
     // spectrum.destroy();
     // oscilloscope.destroy();
     // frequencyBars.destroy();
     // frequencyCircle.destroy();
-    // peakMeter.destroy();
-    // waveformProgress.destroy();
+
+    /* Following code only concerns the demo */
+    const sources = ['FrequencyTest.wav', 'FrequencyTest.flac', 'FrequencyTest.ogg', 'FrequencyTest.mp3'];
+    let currentIndex = 2;
+    const changeSrc = document.getElementById('demo-change-src');
+    changeSrc.addEventListener('click', () => {
+      document.getElementById('audio-player').src = `assets/audio/${sources[currentIndex]}`;
+      currentIndex = (currentIndex + 1) % sources.length;
+    });
   </script>
 </body>
 </html>

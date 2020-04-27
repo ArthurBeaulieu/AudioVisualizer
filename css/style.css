@@ -192,3 +192,7 @@ canvas {
 @keyframes rotate {
   to { transform: rotate(360deg); }
 }
+
+.mzk-waveformprogress canvas {
+  background-color: #1D1E25;
+}
