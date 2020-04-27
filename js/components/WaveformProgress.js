@@ -15,15 +15,21 @@ class WaveformProgress extends VisuComponentMono {
     this._merged = options.merged;
     this._bars = null;
     this._offlineCtx = null;
+    // Raw channel data for whole audio file
+    this._dataL = [];
+    this._dataR = [];
+    // Raw waveform canvas (not rendered on DOM)
+    this._waveformCanvas = document.createElement('CANVAS');
+    this._waveformCtx = this._waveformCanvas.getContext('2d');
   }
 
 
   _buildUI() {
     super._buildUI();
-    this._bufferCanvas = document.createElement('CANVAS');
-    this._bufferCtx = this._bufferCanvas.getContext('2d');
-    this._bufferCanvas.width = this._canvas.width;
-    this._bufferCanvas.height = this._canvas.height;
+    this._waveformCanvas = document.createElement('CANVAS');
+    this._waveformCtx = this._waveformCanvas.getContext('2d');
+    this._waveformCanvas.width = this._canvas.width;
+    this._waveformCanvas.height = this._canvas.height;
   }
 
 
@@ -39,35 +45,12 @@ class WaveformProgress extends VisuComponentMono {
       this._offlineSource.buffer = buffer;
       this._offlineSource.connect(this._offlineCtx.destination);
       this._offlineSource.start();
-      this._offlineCtx.startRendering().then((renderedBuffer) => {
-        this._bars = this._canvas.width / 4;
-
-        this._ctx.fillStyle = '#F00';
-        this._ctx.beginPath();
-
-        let dataL = [];
-        let dataR = [];
-
-        if (this._merged === true) {
-          dataL = this._genScaledMonoData(renderedBuffer);
-        } else {
-          dataL = this._genScaledData(renderedBuffer.getChannelData(0));
-          dataR = this._genScaledData(renderedBuffer.getChannelData(1));
-        }
-
-        var x = this._canvas.width / this._bars;
-        const margin = x / 16;
-
-        for (let i = 0; i < dataL.length; ++i) {
-           var yL = dataL[i] / 2;
-           var yR = (this._merged === true) ? dataL[i] / 2 : dataR[i] / 2;
-           this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yL, x - margin * 2, yL);
-           this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yR);
-        }
-        this._ctx.closePath();
+      this._offlineCtx.startRendering().then(renderedBuffer => {
+        this._bars = this._canvas.width / 6;
+        this._fillData(renderedBuffer);
+        this._drawFileWaveform(0);
       }).catch(function(err) {
-          console.log('Rendering failed: ' + err);
-          // Note: The promise should reject when startRendering is called a second time on an OfflineAudioContext
+        console.log('Rendering failed: ' + err);
       });
     });
   }
@@ -87,6 +70,17 @@ class WaveformProgress extends VisuComponentMono {
     }
 
     return this._scaleDataToHeight(output);
+  }
+
+
+  _fillData(renderedBuffer) {
+    if (this._merged === true) {
+      // Mono output will only use L array to store L/R averages
+      this._dataL = this._genScaledMonoData(renderedBuffer);
+    } else {
+      this._dataL = this._genScaledData(renderedBuffer.getChannelData(0));
+      this._dataR = this._genScaledData(renderedBuffer.getChannelData(1));
+    }
   }
 
 
@@ -131,6 +125,55 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  _drawFileWaveform(progressPercentage) {
+    var x = this._canvas.width / this._bars;
+    const margin = x / 6;
+
+    this._ctx.beginPath();
+    // Iterate bar data
+    for (let i = 0; i < this._dataL.length; ++i) {
+      // Determine Y pos for Up and Down rectangles to draw (in mono, we only use merged data in dataL array)
+      const yU = this._dataL[i] / 2;
+      const yD = (this._merged === true) ? this._dataL[i] / 2 : this._dataR[i] / 2;
+      // Determine bar color according to progress.
+      this._ctx.fillStyle = '#FFF'; // White by default (un-read yet)
+      if ((x * (i + 1)) / this._canvas.width > progressPercentage && (x * i) / this._canvas.width < progressPercentage) {
+        // Create linear gradient on bar X dimension
+        const gradient = this._ctx.createLinearGradient(
+          x * i + margin, 0, // Bar X start
+          x * (i + 1) - margin, 0 // Bar X end
+        );
+        // Get bar range in px
+        let barRange = ((x * (i + 1))) - ((x * i));
+        // We get progress X position according to canvas width
+        let progressX = progressPercentage * this._canvas.width;
+        // Convert this width into a percentage of barWidth progression
+        let barProgressPercentage = (Math.abs(progressX - (x * i))) / (barRange);
+        // All except last gradient values
+        if (barProgressPercentage + 0.01 < 1) {
+          gradient.addColorStop(0, '#0F0');
+          gradient.addColorStop(barProgressPercentage, '#0F0');
+          gradient.addColorStop(barProgressPercentage + 0.01, '#FFF'); // Not progressive gradient
+          gradient.addColorStop(1, '#FFF');
+          this._ctx.fillStyle = gradient; // Gradient from green to white with correct progression in bar
+        } else {
+          this._ctx.fillStyle = '#0F0'; // Green full for last position in bars
+        }
+
+     } else if (i / this._dataL.length < progressPercentage) {
+        this._ctx.fillStyle = '#0F0'; // Green for already played bars
+      }
+      // Draw up and down rectangles for current bar
+      this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);
+      this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yD);
+    }
+
+    this._ctx.closePath();
+    // Save waveform without any progress to properly restore view without computation on resize/seek
+    this._waveformCtx.drawImage(this._canvas, 0, 0, this._canvas.width, this._canvas.height);
+  }
+
+
 
   _getPlayerSourceFile() {
     const request = new XMLHttpRequest();
@@ -143,13 +186,15 @@ class WaveformProgress extends VisuComponentMono {
 
   _processAudioBin() {
     if (this._isPlaying === true) {
+      this._clearCanvas();
+      const percentage = this._player.currentTime / this._player.duration;
+      this._drawFileWaveform(percentage);
       // this._ctx.beginPath();
-      // this._ctx.globalCompositeOperation = "source-atop";
+      // this._ctx.globalCompositeOperation = 'source-atop';
       // this._ctx.fillStyle = '#00D';
-      // const percentage = this._player.currentTime / this._player.duration;
-      // this._ctx.fillRect(0, 0, (percentage * this._canvas.width), this._canvas.height)
-      // this._ctx.beginPath();
-      // requestAnimationFrame(this._processAudioBin);
+      // this._ctx.fillRect(0, 0, (percentage * this._canvas.width), this._canvas.height);
+      // this._ctx.closePath();
+      requestAnimationFrame(this._processAudioBin);
     }
   }
 
