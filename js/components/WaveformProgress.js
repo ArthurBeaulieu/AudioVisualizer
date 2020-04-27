@@ -7,7 +7,6 @@ class WaveformProgress extends VisuComponentMono {
 
   constructor(options) {
     super(options);
-    this._getPlayerSourceFile();
   }
 
 
@@ -30,13 +29,6 @@ class WaveformProgress extends VisuComponentMono {
   _buildUI() {
     super._buildUI();
     this._bars = this._canvas.width / 3;
-  }
-
-
-  _setAudioNodes() {
-    super._setAudioNodes();
-    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
-    this._offlineSource = this._offlineCtx.createBufferSource();
   }
 
 
@@ -71,9 +63,6 @@ class WaveformProgress extends VisuComponentMono {
   _trackLoaded() {
     cancelAnimationFrame(this._processAudioBin);
     this._clearCanvas(); // Clear previous canvas
-    // Set offline context according to track duration to get its full samples
-    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
-    this._offlineSource = this._offlineCtx.createBufferSource();
     // Do XHR to request file and parse it
     this._getPlayerSourceFile();
   }
@@ -89,6 +78,9 @@ class WaveformProgress extends VisuComponentMono {
 
 
   _processAudioFile(response) {
+    // Set offline context according to track duration to get its full samples
+    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
+    this._offlineSource = this._offlineCtx.createBufferSource();
     this._audioCtx.decodeAudioData(response, buffer => {
       this._offlineSource.buffer = buffer;
       this._offlineSource.connect(this._offlineCtx.destination);
