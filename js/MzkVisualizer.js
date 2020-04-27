@@ -6,10 +6,11 @@ import PeakMeter from './components/PeakMeter.js';
 import WaveformProgress from './components/WaveformProgress.js';
 
 
+/* MzkWorldMap version 0.9 */
+const MzkWorldMapVersion = '0.9';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
-/* MzkVisualizer version 0.7 */
 class MzkVisualizer {
 
 
@@ -35,4 +36,5 @@ class MzkVisualizer {
 }
 
 
+window.MzkVisualizer = MzkVisualizer; // Global scope attachment will be made when bundling this file
 export default MzkVisualizer;
