@@ -29,6 +29,7 @@ class WaveformProgress extends VisuComponentMono {
 
   _buildUI() {
     super._buildUI();
+    this._bars = this._canvas.width / 3;
   }
 
 
@@ -55,6 +56,7 @@ class WaveformProgress extends VisuComponentMono {
 
   _onResize() {
     super._onResize();
+    this._bars = this._canvas.width / 3;    
     this._fillData();
     this._clearCanvas();
     this._drawFileWaveform(this._player.currentTime / this._player.duration);
@@ -92,7 +94,6 @@ class WaveformProgress extends VisuComponentMono {
       this._offlineSource.connect(this._offlineCtx.destination);
       this._offlineSource.start();
       this._offlineCtx.startRendering().then(renderedBuffer => {
-        this._bars = this._canvas.width / 3;
         this._offlineBuffer = renderedBuffer;
         this._fillData();
         this._drawFileWaveform(0);
