@@ -42,21 +42,21 @@ class WaveformProgress extends VisuComponentMono {
 
   _addEvents() {
     super._addEvents();
-    this._player.addEventListener('loadedmetadata', this._trackLoaded, false); // Add loaded track listener
+    this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
     this._dom.container.addEventListener('click', this._seekPlayer, false);
   }
 
 
   _removeEvents() {
     super._removeEvents();
-    this._player.removeEventListener('loadedmetadata', this._trackLoaded, false); // Add loaded track listener
+    this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
     this._dom.container.removeEventListener('click', this._seekPlayer, false);
   }
 
 
   _onResize() {
     super._onResize();
-    this._bars = this._canvas.width / 3;    
+    this._bars = this._canvas.width / 3;
     this._fillData();
     this._clearCanvas();
     this._drawFileWaveform(this._player.currentTime / this._player.duration);
@@ -219,6 +219,8 @@ class WaveformProgress extends VisuComponentMono {
       // Draw up and down rectangles for current bar
       this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);
       this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yD);
+      // Add tiny centered line
+      this._ctx.fillRect(x * i + margin, this._canvas.height / 2 - 0.15, x - margin * 2, 0.15);
     }
 
     this._ctx.closePath();
