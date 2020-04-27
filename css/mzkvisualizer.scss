@@ -1,0 +1,198 @@
+canvas {
+  background-color: black;
+  border: solid 1px #2c2c30;
+  display: block;
+  box-sizing: border-box;
+}
+
+.mzk-spectrum {
+  font-family: Segoe UI, Helvetica, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.mzkspectrum-settings {
+  cursor: pointer;
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  width: 25px;
+
+  transition: left .4s ease-in-out;
+}
+
+.mzkspectrum-settings.opened {
+  left: calc(140px - 35px);
+}
+
+.mzkspectrum-settings-panel {
+  background-color: #1D1E25;
+  border-bottom-right-radius: 5px;
+  box-sizing: border-box;
+  color: #E7E9E7;
+  font-size: .9rem;
+  height: auto;
+  left: -140px;
+  opacity: 0;
+  padding: 0 10px;
+  position: absolute;
+  top: 0;
+  width: 140px;
+
+  transition: left .4s ease-in-out, opacity .4s ease-in;
+}
+
+.mzkspectrum-settings-panel h3 {
+  margin: 5px 0 1rem 0;
+}
+
+.mzkspectrum-settings-panel p.legend {
+  font-style: italic;
+  font-weight: bold;
+  margin: 0;
+}
+
+.mzkspectrum-settings-panel p.smooth-color {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.mzkspectrum-settings-panel input {
+  float: right;
+}
+
+.mzkspectrum-settings-panel.opened {
+  left: 0;
+  opacity: 1;
+}
+
+/* PeakMeter */
+
+.mzk-peakmeter {
+  background-color: #1D1E25;
+  height: 100%; /* Required for vertical layout */
+  position: relative;
+}
+
+.mzk-peakmeter:not(.horizontal-peakmeter) canvas:first-of-type {
+  bottom: 0;
+  left: 18px;
+  position: absolute;
+}
+
+.mzk-peakmeter:not(.horizontal-peakmeter) canvas:last-of-type {
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.mzk-peakmeter:not(.horizontal-peakmeter) .scale-container {
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  width: 18px;
+  position: absolute;
+}
+
+.mzk-peakmeter.horizontal-peakmeter .scale-container {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 14px;
+  position: relative;
+}
+
+.mzk-peakmeter:not(.horizontal-peakmeter) .peak-value-container {
+  color: #E7E9E7;
+  display: flex;
+  font-size: 10px;
+  justify-content: center;
+  position: absolute;
+  top: 2px;
+}
+
+.mzk-peakmeter.horizontal-peakmeter .peak-value-container {
+  align-items: center;
+  color: #E7E9E7;
+  display: flex;
+  font-size: 10px;
+  padding-left: 1px;
+  position: absolute;
+  right: 0;
+}
+
+.mzk-peakmeter:not(.horizontal-peakmeter) .scale-container div {
+  align-items: flex-start;
+  color: #E7E9E7;
+  display: flex;
+  font-size: 10px;
+  justify-content: flex-end;
+  padding-top: 2px;
+  position: relative;
+}
+
+.mzk-peakmeter.horizontal-peakmeter .scale-container div {
+  align-items: flex-end;
+  color: #E7E9E7;
+  display: flex;
+  font-size: 10px;
+  justify-content: flex-end;
+  padding-right: 5px;
+  position: relative;
+}
+
+.mzk-peakmeter:not(.horizontal-peakmeter) .scale-container div::before {
+  background-color: #AAAABE;
+  top: 0;
+  content: '';
+  display: block;
+  height: 1px;
+  position: absolute;
+  right: 0;
+  width: 50%;
+}
+
+.mzk-peakmeter.horizontal-peakmeter .scale-container div::before {
+  background-color: #AAAABE;
+  bottom: 0;
+  content: '';
+  display: block;
+  height: 50%;
+  position: absolute;
+  right: 0;
+  width: 1px;
+}
+
+/* FrenquecyCircle */
+
+.mzk-frequencycircle {
+  position: relative;
+}
+
+.mzk-frequencycircle img {
+  animation-play-state: running;
+  bottom: 0;
+  height: calc((100% / 2) - 12.5%);
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  animation: rotate 64s linear infinite;
+}
+
+.mzk-frequencycircle img.paused {
+  animation-play-state: paused;
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+.mzk-waveformprogress canvas {
+  background-color: #1D1E25;
+}
