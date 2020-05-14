@@ -9,6 +9,7 @@ class VisuComponentMono {
     this._fftSize = null;
     // The Web Audio API context
     this._audioCtx = null;
+    this._inputNode = null; // Optionnal, the source node to chain from
     // Audio nodes
     this._nodes = {
       source: null, // HTML audio element
@@ -54,6 +55,8 @@ class VisuComponentMono {
     this._player = options.player;
     this._renderTo = options.renderTo;
     this._fftSize = options.fftSize;
+    this._audioCtx = options.audioContext;
+    this._inputNode = options.input;
   }
 
 
@@ -71,13 +74,23 @@ class VisuComponentMono {
 
 
   _setAudioNodes() {
-    this._audioCtx = new AudioContext();
-    this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
+    let audioCtxSent = false;
+    if (!this._audioCtx) {
+      this._audioCtx = new AudioContext();
+      this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
+    } else {
+      audioCtxSent = true;
+      this._nodes.source = this._inputNode;
+    }
+
     this._nodes.analyser = this._audioCtx.createAnalyser();
     this._nodes.analyser.fftSize = this._fftSize;
 
     this._nodes.source.connect(this._nodes.analyser);
-    this._nodes.analyser.connect(this._audioCtx.destination);
+
+    if (!audioCtxSent) {
+      this._nodes.analyser.connect(this._audioCtx.destination);
+    }
   }
 
 

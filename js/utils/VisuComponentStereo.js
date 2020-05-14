@@ -9,11 +9,15 @@ class VisuComponentStereo {
     this._fftSize = null; // FFT size used to analyse audio stream
     // The Web Audio API context
     this._audioCtx = null;
+    this._inputNode = null; // Optionnal, the source node to chain from
+    // Merge L and R channel on output
+    this._merged = null;
     // Audio nodes
     this._nodes = {
       source: null, // HTML audio element
       splitter: null, // Stereo channel splitting
       merger: null, // Merge channels into one
+      analyser: null, // Merged stereo channels analysis
       analyserL: null, // Left channel analysis
       analyserR: null // Right channel analysis
     };
@@ -59,6 +63,9 @@ class VisuComponentStereo {
     this._player = options.player;
     this._renderTo = options.renderTo;
     this._fftSize = options.fftSize || 1024;
+    this._audioCtx = options.audioContext;
+    this._inputNode = options.input;
+    this._merged = options.merged || false;
   }
 
 
@@ -78,22 +85,47 @@ class VisuComponentStereo {
 
 
   _setAudioNodes() {
-    this._audioCtx = new AudioContext();
+    let audioCtxSent = false;
+    if (!this._audioCtx) {
+      this._audioCtx = new AudioContext();
+      this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
+    } else {
+      audioCtxSent = true;
+      this._nodes.source = this._inputNode;
+    }
 
-    this._nodes.source = this._audioCtx.createMediaElementSource(this._player);
-    this._nodes.splitter = this._audioCtx.createChannelSplitter(this._nodes.source.channelCount);
-    this._nodes.merger = this._audioCtx.createChannelMerger(this._nodes.source.channelCount);
-    this._nodes.analyserL = this._audioCtx.createAnalyser();
-    this._nodes.analyserR = this._audioCtx.createAnalyser();
-    this._nodes.analyserR.fftSize = this._fftSize;
-    this._nodes.analyserL.fftSize = this._fftSize;
-    // Nodes chaining
-    this._nodes.source.connect(this._nodes.splitter);
-    this._nodes.splitter.connect(this._nodes.analyserL, 0);
-    this._nodes.splitter.connect(this._nodes.analyserR, 1);
-    this._nodes.analyserL.connect(this._nodes.merger, 0, 0);
-    this._nodes.analyserR.connect(this._nodes.merger, 0, 1);
-    this._nodes.merger.connect(this._audioCtx.destination);
+    let outputNode = null;
+    if (this._merged === true) {
+      this._nodes.analyser = this._audioCtx.createAnalyser();
+      this._nodes.analyser.fftSize = this._fftSize;
+      // Nodes chaining
+      this._nodes.source.connect(this._nodes.analyser);
+      outputNode = this._nodes.analyser;
+    } else {
+      this._nodes.splitter = this._audioCtx.createChannelSplitter(this._nodes.source.channelCount);
+      this._nodes.merger = this._audioCtx.createChannelMerger(this._nodes.source.channelCount);
+      this._nodes.analyserL = this._audioCtx.createAnalyser();
+      this._nodes.analyserR = this._audioCtx.createAnalyser();
+      this._nodes.analyserR.fftSize = this._fftSize;
+      this._nodes.analyserL.fftSize = this._fftSize;
+      // Nodes chaining
+      this._nodes.source.connect(this._nodes.splitter);
+      this._nodes.splitter.connect(this._nodes.analyserL, 0);
+      this._nodes.splitter.connect(this._nodes.analyserR, 1);
+      this._nodes.analyserL.connect(this._nodes.merger, 0, 0);
+      this._nodes.analyserR.connect(this._nodes.merger, 0, 1);
+      outputNode = this._nodes.merger;
+    }
+
+    if (!audioCtxSent) {
+      outputNode.connect(this._audioCtx.destination);
+    } else {
+      // If any previous context exists, we mute this channel to not disturb any playback
+      const gainNode = this._audioCtx.createGain();
+      gainNode.gain.value = 0;
+      outputNode.connect(gainNode);
+      gainNode.connect(this._audioCtx.destination);
+    }
   }
 
 
