@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.7</title>
+  <title>MzkVisualizer 0.8</title>
   <link rel="stylesheet" href="css/mzkvisualizer.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <style>
@@ -16,7 +16,7 @@ audio { position: fixed; right: 0; top: 0; }
 <!--
 
 
-MzkVisualizer 2020
+MzkVisualizer 0.8 - 2020
 @author Arthur Beaulieu - https://github.com/ArthurBeaulieu
 
 To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
@@ -47,55 +47,52 @@ folder keep the same tree structure (or change yourself pathes in classes).
   <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
   <!-- Module tested for mp3, ogg, flac and wav audio files. -->
   <audio id="audio-player" src="assets/audio/FrequencyTest.flac" controls loop></audio>
-  <!-- <audio id="audio-player" src="assets/audio/FrequencyTest.wav" controls loop></audio> -->
-  <!-- <audio id="audio-player" src="assets/audio/FrequencyTest.ogg" controls loop></audio> -->
-  <!-- <audio id="audio-player" src="assets/audio/FrequencyTest.mp3" controls loop></audio> -->
-
   <!-- Usage as a JavaScript module -->
   <script type="module">
-    // FFT size must be included in [128, 4096], powers of 2 only
     import MzkVisualizer from './js/MzkVisualizer.js';
 
     const peakMeter = new MzkVisualizer({
-      type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-peakmeter-horizontal-to'), // Mandatory, the HTML div to render component
-      fftSize: 8192, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+      fftSize: 8192, // Optional (default 1024), Higher is smoother for peakmeter (doesn't consume much CPU)
+      merged: false, // Optional (default false), Mix channel into single output
       orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
-      merged: true,
-      legend: true,
+      legend: true,  // Optional (default true), Peakmeter label
       dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
       dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
     });
 
     const waveformProgress = new MzkVisualizer({
-      type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
       fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
-      merged: true,// Optional (default true), merge left/right channel into one
+      merged: true,// Optional (default false), merge left/right channel into one
       animation: 'fade' // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
     });
 
     const spectrum = new MzkVisualizer({
-      type: 'spectrum', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      type: 'spectrum', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-spectrum-to'), // Mandatory, the HTML div to render component
       fftSize: 2048, // Optional (default 1024), Higher fft values are best fullscreen, heavy CPU cost
+      merged: true,// Optional (default false), merge left/right channel into one
       colorSmoothing: true, // Optional (default true), Apply gradient between samples to smoothen visualization, uneffective on linear scale
       scale: 'logarithmic' // Optional (default linear), 'linear' or 'logarithmic', the scale to display spectrum
     });
 
     const oscilloscope = new MzkVisualizer({
-      type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-oscilloscope-to'), // Mandatory, the HTML div to render component
       fftSize: 4096, // Optional (default 1024), Higher is more precise for oscilloscope, doesn't consume much CPU
+      merged: false,// Optional (default false), merge left/right channel into one
       color: '#56D45B' // Optional (default '#56D45B'), The oscilloscope line color
     });
 
     const frequencyBars = new MzkVisualizer({
-      type: 'frequencybars', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      type: 'frequencybars', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-frequencybars-to'), // Mandatory, the HTML div to render component
       fftSize: 1024, // Optional (default 1024), FFT values higher than width may give artifacts.
@@ -103,7 +100,7 @@ folder keep the same tree structure (or change yourself pathes in classes).
     });
 
     const frequencyCircle = new MzkVisualizer({
-      type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter' or 'spectrum'
+      type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-frequencycircle-to'), // Mandatory, the HTML div to render component
       fftSize: 512, // Optional (default 1024), high FFT values can have a high impact on CPU load

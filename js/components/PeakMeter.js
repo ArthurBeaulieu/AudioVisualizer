@@ -18,7 +18,7 @@ class PeakMeter extends VisuComponentStereo {
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._orientation = options.orientation || 'horizontal';
-    this._legend = options.legend || false;
+    this._legend = options.legend || true;
     this._dbScaleMin = options.dbScaleMin || 60;
     this._dbScaleTicks = options.dbScaleTicks || 15;
     this._amplitudeL = 0;

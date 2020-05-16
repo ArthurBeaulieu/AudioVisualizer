@@ -39,6 +39,10 @@ class Spectrum extends VisuComponentStereo {
     super._buildUI();
     this._bufferCanvas = document.createElement('CANVAS');
     this._bufferCtx = this._bufferCanvas.getContext('2d');
+
+    if (this._merged === true) {
+      this._dom.container.removeChild(this._canvasR);
+    }
     // Update canvas dimensions
     this._canvasL.width = this._dimension.width;
     this._canvasL.height = this._dimension.canvasHeight;
@@ -98,9 +102,15 @@ class Spectrum extends VisuComponentStereo {
 
 
   _updateDimensions() {
-    this._dimension.height = this._renderTo.offsetHeight - 4; // 2px borders times two channels
     this._dimension.width = this._renderTo.offsetWidth - 2;  // 2px borders
-    this._dimension.canvasHeight = this._dimension.height / 2;
+
+    if (this._merged === true) {
+      this._dimension.height = this._renderTo.offsetHeight - 2; // 2px borders
+      this._dimension.canvasHeight = this._dimension.height;
+    } else {
+      this._dimension.height = this._renderTo.offsetHeight - 4; // 2px borders times two channels
+      this._dimension.canvasHeight = this._dimension.height / 2;
+    }
   }
 
 
@@ -125,14 +135,31 @@ class Spectrum extends VisuComponentStereo {
 
   _processAudioBin(event) {
     if (this._isPlaying === true) {
-      const frequenciesL = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
-      const frequenciesR = new Uint8Array(this._nodes.analyserR.frequencyBinCount);
-      this._nodes.analyserL.getByteFrequencyData(frequenciesL);
-      this._nodes.analyserR.getByteFrequencyData(frequenciesR);
-      this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
-      this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
+      if (this._merged === true) {
+        this._mergedStereoAnalysis();
+      } else {
+        this._stereoAnalysis();
+      }
+
       requestAnimationFrame(this._processAudioBin);
     }
+  }
+
+
+  _mergedStereoAnalysis() {
+    const frequencies = new Uint8Array(this._nodes.analyser.frequencyBinCount);
+    this._nodes.analyser.getByteFrequencyData(frequencies);
+    this._drawSpectrogramForFrequencyBin(this._canvasL, frequencies);
+  }
+
+
+  _stereoAnalysis() {
+    const frequenciesL = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
+    const frequenciesR = new Uint8Array(this._nodes.analyserR.frequencyBinCount);
+    this._nodes.analyserL.getByteFrequencyData(frequenciesL);
+    this._nodes.analyserR.getByteFrequencyData(frequenciesR);
+    this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
+    this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
   }
 
 
@@ -239,8 +266,12 @@ class Spectrum extends VisuComponentStereo {
     // Update canvas dimensions
     this._canvasL.width = this._dimension.width;
     this._canvasL.height = this._dimension.canvasHeight;
-    this._canvasR.width = this._dimension.width;
-    this._canvasR.height = this._dimension.canvasHeight;
+
+    if (this._merged === false) {
+      this._canvasR.width = this._dimension.width;
+      this._canvasR.height = this._dimension.canvasHeight;
+    }
+
     this._bufferCanvas.width = this._dimension.width;
     this._bufferCanvas.height = this._dimension.canvasHeight;
   }
