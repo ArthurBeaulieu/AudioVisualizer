@@ -2,13 +2,30 @@ import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 
 
-// https://github.com/esonderegger/web-audio-peak-meter
+// Modified https://github.com/esonderegger/web-audio-peak-meter to fit MzkVIsualizer needs
+
 
 class PeakMeter extends VisuComponentStereo {
 
 
   constructor(options) {
     super(options);
+    // Peak gradient
+    this._peakGradient = [
+      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], center: 0 }, // Green
+      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], center: 0.7 }, // Light Green
+      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], center: 0.833 }, // Orange
+      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], center: 0.9 }, // Red
+      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], center: 1 } // Light Red
+    ];
+    // Update canvas CSS background color
+    const bgColor = (options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor);
+    if (this._merged === true) {
+      this._canvas.style.backgroundColor = bgColor;
+    } else {
+      this._canvasL.style.backgroundColor = bgColor;
+      this._canvasR.style.backgroundColor = bgColor;
+    }
   }
 
 
@@ -18,9 +35,16 @@ class PeakMeter extends VisuComponentStereo {
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._orientation = options.orientation || 'horizontal';
-    this._legend = options.legend || true;
-    this._dbScaleMin = options.dbScaleMin || 60;
-    this._dbScaleTicks = options.dbScaleTicks || 15;
+    this._legend = options.legend || null;
+
+    if (this._legend) {
+      this._dbScaleMin = options.legend.dbScaleMin || 60;
+      this._dbScaleTicks = options.legend.dbScaleTicks || 15;
+    } else {
+      this._dbScaleMin = 60;
+      this._dbScaleTicks = 15;
+    }
+
     this._amplitudeL = 0;
     this._amplitudeR = 0;
     this._peakL = 0;
@@ -39,7 +63,7 @@ class PeakMeter extends VisuComponentStereo {
       this._dom.container.classList.add('horizontal-peakmeter');
     }
 
-    if (this._legend === true) {
+    if (this._legend) {
       this._dom.scaleContainer = document.createElement('DIV');
       this._dom.scaleContainer.classList.add('scale-container');
       this._dom.container.insertBefore(this._dom.scaleContainer, this._dom.container.firstChild);
@@ -51,7 +75,7 @@ class PeakMeter extends VisuComponentStereo {
 
     this._updateDimensions();
 
-    if (this._legend === true) {
+    if (this._legend) {
       this._createPeakLabel();
       this._createScaleTicks();
     }
@@ -67,7 +91,7 @@ class PeakMeter extends VisuComponentStereo {
 
   _pause() {
     super._pause();
-    if (this._legend === true) {
+    if (this._legend) {
       this._dom.labels[0].textContent = '-∞';
       this._dom.labels[1].textContent = '-∞';
     }
@@ -78,7 +102,7 @@ class PeakMeter extends VisuComponentStereo {
     super._onResize();
     this._updateDimensions();
 
-    if (this._legend === true) {
+    if (this._legend) {
       this._createPeakLabel();
       this._createScaleTicks();
     }
@@ -126,31 +150,23 @@ class PeakMeter extends VisuComponentStereo {
       this._peakL = this._amplitudeL;
       this._peakSetTimeL = this._audioCtx.currentTime;
       // Update peak label
-      if (this._legend === true) {
+      if (this._legend) {
         avgPowerDecibels !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibels, 1) : null;
       }
     } else if (this._audioCtx.currentTime - this._peakSetTimeL > 1) {
       this._peakL = this._amplitudeL;
       this._peakSetTimeL = this._audioCtx.currentTime;
       // Update peak label
-      if (this._legend === true) {
+      if (this._legend) {
         avgPowerDecibels !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibels, 1) : null;
       }
     }
-    // Peak gradient
-    const peakGradient = [
-      { color: '#56D45B', center: 0 }, // Green
-      { color: '#AFF2B3', center: 0.7 }, // Light Green
-      { color: '#FFAD67', center: 0.833 }, // Orange
-      { color: '#FF6B67', center: 0.9 }, // Red
-      { color: '#FFBAB8', center: 1 } // Light Red
-    ];
     // Draw left and right peak meters
     CanvasUtils.drawPeakMeter(this._canvasL, {
       amplitude: this._amplitudeL,
       peak: this._peakL,
       orientation: this._orientation,
-      colors: peakGradient
+      colors: this._peakGradient
     });
   }
 
@@ -184,14 +200,14 @@ class PeakMeter extends VisuComponentStereo {
       this._peakL = this._amplitudeL;
       this._peakSetTimeL = this._audioCtx.currentTime;
       // Update peak label
-      if (this._legend === true) {
+      if (this._legend) {
         avgPowerDecibelsL !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibelsL, 1) : null;
       }
     } else if (this._audioCtx.currentTime - this._peakSetTimeL > 1) {
       this._peakL = this._amplitudeL;
       this._peakSetTimeL = this._audioCtx.currentTime;
       // Update peak label
-      if (this._legend === true) {
+      if (this._legend) {
         avgPowerDecibelsL !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibelsL, 1) : null;
       }
     }
@@ -201,37 +217,29 @@ class PeakMeter extends VisuComponentStereo {
       this._peakR = this._amplitudeR;
       this._peakSetTimeR = this._audioCtx.currentTime;
       // Update peak label
-      if (this._legend === true) {
+      if (this._legend) {
         avgPowerDecibelsR !== -Infinity ? this._dom.labels[1].textContent = CanvasUtils.precisionRound(avgPowerDecibelsR, 1) : null;
       }
     } else if (this._audioCtx.currentTime - this._peakSetTimeR > 1) {
       this._peakR = this._amplitudeL;
       this._peakSetTimeR = this._audioCtx.currentTime;
       // Update peak label
-      if (this._legend === true) {
+      if (this._legend) {
         avgPowerDecibelsR !== -Infinity ? this._dom.labels[1].textContent = CanvasUtils.precisionRound(avgPowerDecibelsR, 1) : null;
       }
     }
-    // Peak gradient
-    const peakGradient = [
-      { color: '#56D45B', center: 0 }, // Green
-      { color: '#AFF2B3', center: 0.7 }, // Light Green
-      { color: '#FFAD67', center: 0.833 }, // Orange
-      { color: '#FF6B67', center: 0.9 }, // Red
-      { color: '#FFBAB8', center: 1 } // Light Red
-    ];
     // Draw left and right peak meters
     CanvasUtils.drawPeakMeter(this._canvasL, {
       amplitude: this._amplitudeL,
       peak: this._peakL,
       orientation: this._orientation,
-      colors: peakGradient
+      colors: this._peakGradient
     });
     CanvasUtils.drawPeakMeter(this._canvasR, {
       amplitude: this._amplitudeR,
       peak: this._peakR,
       orientation: this._orientation,
-      colors: peakGradient
+      colors: this._peakGradient
     });
   }
 
@@ -302,7 +310,7 @@ class PeakMeter extends VisuComponentStereo {
     let heightOffset = 0;
 
     if (this._orientation === 'horizontal') {
-      if (this._legend === true) {
+      if (this._legend) {
         widthOffset = 30;
         heightOffset = 14;
       }
@@ -318,11 +326,11 @@ class PeakMeter extends VisuComponentStereo {
         this._canvasR.height = (this._renderTo.offsetHeight - heightOffset) / 2 - 2; // 2px border + scale height 14px
       }
 
-      if (this._legend === true) {
+      if (this._legend) {
         this._dom.scaleContainer.style.width = `${this._canvasL.width}px`;
       }
     } else if (this._orientation === 'vertical') {
-      if (this._legend === true) {
+      if (this._legend) {
         widthOffset = 18;
         heightOffset = 16;
       } else {
@@ -340,7 +348,7 @@ class PeakMeter extends VisuComponentStereo {
         this._canvasR.width = (this._renderTo.offsetWidth - widthOffset) / 2 - 2; // 2px border + scale width 18px
       }
 
-      if (this._legend === true) {
+      if (this._legend) {
         this._dom.scaleContainer.style.height = `${this._canvasL.height}px`;
         this._dom.scaleContainer.style.width = '18px';
       }

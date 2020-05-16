@@ -8,6 +8,16 @@ class FrequencyBars extends VisuComponentMono {
 
   constructor(options) {
     super(options);
+    // Peak gradient
+    this._barGradient = [
+      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], center: 0 }, // Green
+      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], center: 0.7 }, // Light Green
+      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], center: 0.833 }, // Orange
+      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], center: 0.9 }, // Red
+      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], center: 1 } // Light Red
+    ];
+    // Update canvas CSS background color
+    this._canvas.style.backgroundColor = options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor;
   }
 
 
@@ -16,8 +26,6 @@ class FrequencyBars extends VisuComponentMono {
 
   _fillAttributes(options) {
     super._fillAttributes(options);
-    // Frequency bars specific attributes
-    this._color = options.color || '#56D45B';
   }
 
 
@@ -41,13 +49,7 @@ class FrequencyBars extends VisuComponentMono {
         CanvasUtils.drawVerticalFrequencyBar(this._canvas, {
           frequencyHeight: frequencyHeight,
           frequencyWidth: frequencyWidth,
-          colors: [
-            { color: this._color, center: 0 },
-            { color: ColorUtils.lightenDarkenColor(this._color, 50), center: 0.4 },
-            { color: '#FFAD67', center: 0.8 },
-            { color: '#FF6B67', center: 0.95 },
-            { color: '#FFBAB8', center: 1 }
-          ],
+          colors: this._barGradient,
           originX: cursorX
         });
         // Update cursor position

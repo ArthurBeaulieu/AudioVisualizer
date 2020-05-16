@@ -8,6 +8,14 @@ class WaveformProgress extends VisuComponentMono {
   constructor(options) {
     super(options);
 
+    this._colors = {
+      background: options.colors.background || ColorUtils.defaultBackgroundColor,
+      track: options.colors.track || ColorUtils.defaultTextColor,
+      progress: options.colors.progress || ColorUtils.defaultPrimaryColor
+    };
+
+    this._canvas.style.backgroundColor = this._colors.background;
+
     if (this._player.src !== '') {
       this._getPlayerSourceFile();
     }
@@ -182,7 +190,7 @@ class WaveformProgress extends VisuComponentMono {
       const yU = this._dataL[i] / 2;
       const yD = (this._merged === true) ? this._dataL[i] / 2 : this._dataR[i] / 2;
       // Determine bar color according to progress.
-      this._ctx.fillStyle = '#E7E9E7'; // White by default (un-read yet)
+      this._ctx.fillStyle = this._colors.track; // White by default (un-read yet)
       if ((x * (i + 1)) / this._canvas.width > progressPercentage && (x * i) / this._canvas.width < progressPercentage) {
         // Create linear gradient on bar X dimension
         const gradient = this._ctx.createLinearGradient(
@@ -197,20 +205,20 @@ class WaveformProgress extends VisuComponentMono {
         let barProgressPercentage = (Math.abs(progressX - (x * i))) / (barRange);
         if (this._animation === 'gradient') {
           if (barProgressPercentage + 0.01 < 1) {
-            gradient.addColorStop(0, '#56D45B'); // Green
-            gradient.addColorStop(barProgressPercentage, '#56D45B'); // Green
-            gradient.addColorStop(barProgressPercentage + 0.01, '#E7E9E7'); // Not progressive gradient
-            gradient.addColorStop(1, '#E7E9E7');
+            gradient.addColorStop(0, this._colors.progress); // Green
+            gradient.addColorStop(barProgressPercentage, this._colors.progress); // Green
+            gradient.addColorStop(barProgressPercentage + 0.01, this._colors.track); // Not progressive gradient
+            gradient.addColorStop(1, this._colors.track);
             this._ctx.fillStyle = gradient; // Gradient from green to white with correct progression in bar
           } else {
-            this._ctx.fillStyle = '#56D45B'; // Green full for last position in bars
+            this._ctx.fillStyle = this._colors.progress; // Green full for last position in bars
           }
         } else {
           const amount = Math.round(barProgressPercentage * 255);
-          this._ctx.fillStyle = ColorUtils.lightenDarkenColor('#56D45B', 255 - amount); // Green full for last position in bars
+          this._ctx.fillStyle = ColorUtils.lightenDarkenColor(this._colors.progress, 255 - amount); // Green full for last position in bars
         }
      } else if (i / this._dataL.length < progressPercentage) {
-        this._ctx.fillStyle = '#56D45B'; // Green for already played bars
+        this._ctx.fillStyle = this._colors.progress; // Green for already played bars
       }
       // Draw up and down rectangles for current bar
       this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);

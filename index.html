@@ -58,9 +58,18 @@ folder keep the same tree structure (or change yourself pathes in classes).
       fftSize: 8192, // Optional (default 1024), Higher is smoother for peakmeter (doesn't consume much CPU)
       merged: false, // Optional (default false), Mix channel into single output
       orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
-      legend: true,  // Optional (default true), Peakmeter label
-      dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
-      dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
+      legend: { // Optional (default true), Peakmeter label
+        dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
+        dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
+      },
+      colors: { // Optional
+        background: '#1D1E25', // (default #1D1E25)
+        min: '#56D45B', // (default #56D45B)
+        step0: '#AFF2B3', // (default #AFF2B3)
+        step1: '#FFAD67', // (default #FFAD67)
+        step2: '#FF6B67', // (default #FF6B67)
+        max: '#FFBAB8' // (default #FFBAB8)
+      }
     });
 
     const waveformProgress = new MzkVisualizer({
@@ -69,7 +78,12 @@ folder keep the same tree structure (or change yourself pathes in classes).
       renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
       fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
       merged: true,// Optional (default false), merge left/right channel into one
-      animation: 'fade' // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
+      animation: 'fade', // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
+      colors: { // Optional
+        background: '#1D1E25', // (default #1D1E25)
+        track: '#E7E9E7', // (default #E7E9E7)
+        progress: '#56D45B' // (default #56D45B)
+      }
     });
 
     const spectrum = new MzkVisualizer({
@@ -88,7 +102,10 @@ folder keep the same tree structure (or change yourself pathes in classes).
       renderTo: document.querySelector('#render-oscilloscope-to'), // Mandatory, the HTML div to render component
       fftSize: 4096, // Optional (default 1024), Higher is more precise for oscilloscope, doesn't consume much CPU
       merged: false,// Optional (default false), merge left/right channel into one
-      color: '#56D45B' // Optional (default '#56D45B'), The oscilloscope line color
+      colors: { // Optional
+        background: '#1D1E25', // (default #1D1E25)
+        signal: '#56D45B' // (default #56D45B)
+      }
     });
 
     const frequencyBars = new MzkVisualizer({
@@ -96,7 +113,15 @@ folder keep the same tree structure (or change yourself pathes in classes).
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-frequencybars-to'), // Mandatory, the HTML div to render component
       fftSize: 1024, // Optional (default 1024), FFT values higher than width may give artifacts.
-      color: '#56D45B' // Optional (default '#56D45B'), The bars color
+      color: '#56D45B', // Optional (default '#56D45B'), The bars color
+      colors: { // Optional
+        background: '#1D1E25', // (default #1D1E25)
+        min: '#56D45B', // (default #56D45B)
+        step0: '#AFF2B3', // (default #AFF2B3)
+        step1: '#FFAD67', // (default #FFAD67)
+        step2: '#FF6B67', // (default #FF6B67)
+        max: '#FFBAB8' // (default #FFBAB8)
+      }
     });
 
     const frequencyCircle = new MzkVisualizer({

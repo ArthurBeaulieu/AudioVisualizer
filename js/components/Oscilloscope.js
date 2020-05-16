@@ -7,6 +7,18 @@ class Oscilloscope extends VisuComponentStereo {
 
   constructor(options) {
     super(options);
+    // Save color
+    this._colors = {
+      signal: options.colors.signal || ColorUtils.defaultPrimaryColor
+    };
+    // Update canvas CSS background color
+    const bgColor = (options.colors.background || ColorUtils.defaultBackgroundColor);
+    if (this._merged === true) {
+      this._canvas.style.backgroundColor = bgColor;
+    } else {
+      this._canvasL.style.backgroundColor = bgColor;
+      this._canvasR.style.backgroundColor = bgColor;
+    }
     // Init oscilloscope dimensions
     this._updateDimensions();
   }
@@ -18,7 +30,7 @@ class Oscilloscope extends VisuComponentStereo {
 
   _fillAttributes(options) {
     super._fillAttributes(options)
-    this._color = options.color || '#56D45B'; // Green
+
     // Dimensions will be computed when canvas have been created
     this._dimension = {
       height: null,
@@ -30,6 +42,7 @@ class Oscilloscope extends VisuComponentStereo {
 
   _buildUI() {
     super._buildUI();
+
     if (this._merged === true) {
       this._dom.container.removeChild(this._canvasR);
     }
@@ -68,7 +81,7 @@ class Oscilloscope extends VisuComponentStereo {
     CanvasUtils.drawOscilloscope(this._canvasL, {
       samples: this._nodes.analyser.frequencyBinCount,
       timeDomain: timeDomain,
-      color: this._color
+      color: this._colors.signal
     });
   }
 
@@ -81,14 +94,14 @@ class Oscilloscope extends VisuComponentStereo {
     CanvasUtils.drawOscilloscope(this._canvasL, {
       samples: this._nodes.analyserL.frequencyBinCount,
       timeDomain: timeDomain,
-      color: this._color
+      color: this._colors.signal
     });
     // Right channel
     this._nodes.analyserR.getByteTimeDomainData(timeDomain);
     CanvasUtils.drawOscilloscope(this._canvasR, {
       samples: this._nodes.analyserR.frequencyBinCount,
       timeDomain: timeDomain,
-      color: this._color
+      color: this._colors.signal
     });
   }
 

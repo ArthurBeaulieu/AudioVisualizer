@@ -109,6 +109,27 @@ class ColorUtils {
   }
 
 
+  static get defaultBackgroundColor() {
+    return '#1D1E25';
+  }
+
+
+  static get defaultTextColor() {
+    return '#E7E9E7';
+  }
+
+
+  static get defaultPrimaryColor() {
+    return '#56D45B';
+  }
+
+
+  static get defaultAudioGradient() {
+    // Green, Light Green, Orange, Red, Light Red
+    return ['#56D45B', '#AFF2B3', '#FFAD67', '#FF6B67', '#FFBAB8'];
+  }
+
+
 }
 
 
