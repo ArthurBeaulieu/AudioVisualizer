@@ -8,6 +8,14 @@ class Spectrum extends VisuComponentStereo {
     super(options);
     this._updateDimensions();
     this._createLogarithmicScaleHeights();
+    // Update canvas CSS background color
+    const bgColor = 'black';
+    if (this._merged === true) {
+      this._canvasL.style.backgroundColor = bgColor;
+    } else {
+      this._canvasL.style.backgroundColor = bgColor;
+      this._canvasR.style.backgroundColor = bgColor;
+    }
   }
 
 

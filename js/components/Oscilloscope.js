@@ -9,10 +9,10 @@ class Oscilloscope extends VisuComponentStereo {
     super(options);
     // Save color
     this._colors = {
-      signal: options.colors.signal || ColorUtils.defaultPrimaryColor
+      signal: options.colors ? options.colors.signal || ColorUtils.defaultPrimaryColor : ColorUtils.defaultPrimaryColor
     };
     // Update canvas CSS background color
-    const bgColor = (options.colors.background || ColorUtils.defaultBackgroundColor);
+    const bgColor = (options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor);
     if (this._merged === true) {
       this._canvas.style.backgroundColor = bgColor;
     } else {
