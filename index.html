@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.8</title>
+  <title>MzkVisualizer 0.8.1</title>
   <link rel="stylesheet" href="css/mzkvisualizer.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <style>
@@ -16,11 +16,14 @@ audio { position: fixed; right: 0; top: 0; }
 <!--
 
 
-MzkVisualizer 0.8 - 2020
+MzkVisualizer 0.8.1 - 2020
 @author Arthur Beaulieu - https://github.com/ArthurBeaulieu
 
 To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
 folder keep the same tree structure (or change yourself pathes in classes).
+Main purpose of this is to display a given visualisation using an audio element.
+If you want to put this in your existing Web audio API project, you can also send
+your audio context when building a component.
 
 
 -->
@@ -58,17 +61,17 @@ folder keep the same tree structure (or change yourself pathes in classes).
       fftSize: 8192, // Optional (default 1024), Higher is smoother for peakmeter (doesn't consume much CPU)
       merged: false, // Optional (default false), Mix channel into single output
       orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
-      legend: { // Optional (default true), Peakmeter label
+      legend: { // Optional
         dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
         dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
       },
       colors: { // Optional
-        background: '#1D1E25', // (default #1D1E25)
-        min: '#56D45B', // (default #56D45B)
-        step0: '#AFF2B3', // (default #AFF2B3)
-        step1: '#FFAD67', // (default #FFAD67)
-        step2: '#FF6B67', // (default #FF6B67)
-        max: '#FFBAB8' // (default #FFBAB8)
+        background: '#1D1E25', // Optional (default #1D1E25, dark grey), The canvas bg color
+        min: '#56D45B', // Optional (default #56D45B, green), index 0
+        step0: '#AFF2B3', // (default #AFF2B3, light green), index 0.7
+        step1: '#FFAD67', // (default #FFAD67, orange), index 0.833
+        step2: '#FF6B67', // (default #FF6B67, red), index 0.9
+        max: '#FFBAB8' // (default #FFBAB8, light red), index 1
       }
     });
 
@@ -77,12 +80,16 @@ folder keep the same tree structure (or change yourself pathes in classes).
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.querySelector('#render-waveformprogress-to'), // Mandatory, the HTML div to render component
       fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
-      merged: true,// Optional (default false), merge left/right channel into one
-      animation: 'fade', // Optional (default fade), 'fade' or 'gradient', the animation on bar on progress
+      animation: 'gradient', // Optional (default gradient), 'fade' or 'gradient', the animation on bar on progress
+      wave: { // Optional
+        align: 'bottom', // Optional (default center), how to display waveform : top, center, bottom
+        barMarginScale: 0, // Optional (default 0.25), The bar margin percentage from to bar width in range [0, 1]
+        merged: true // Optional (default true), For center align only, merge left/right channel into symetry
+      },
       colors: { // Optional
-        background: '#1D1E25', // (default #1D1E25)
-        track: '#E7E9E7', // (default #E7E9E7)
-        progress: '#56D45B' // (default #56D45B)
+        background: '#1D1E25', // The canvas bg color (default #1D1E25)
+        track: '#E7E9E7', // The waveform color (default #E7E9E7)
+        progress: '#56D45B' // The progressed waveform color (default #56D45B)
       }
     });
 
@@ -103,8 +110,8 @@ folder keep the same tree structure (or change yourself pathes in classes).
       fftSize: 4096, // Optional (default 1024), Higher is more precise for oscilloscope, doesn't consume much CPU
       merged: false,// Optional (default false), merge left/right channel into one
       colors: { // Optional
-        background: '#1D1E25', // (default #1D1E25)
-        signal: '#56D45B' // (default #56D45B)
+        background: '#1D1E25', // The canvas bg color (default #1D1E25)
+        signal: '#56D45B' // The oscilloscope color (default #56D45B)
       }
     });
 
@@ -115,12 +122,12 @@ folder keep the same tree structure (or change yourself pathes in classes).
       fftSize: 1024, // Optional (default 1024), FFT values higher than width may give artifacts.
       color: '#56D45B', // Optional (default '#56D45B'), The bars color
       colors: { // Optional
-        background: '#1D1E25', // (default #1D1E25)
-        min: '#56D45B', // (default #56D45B)
-        step0: '#AFF2B3', // (default #AFF2B3)
-        step1: '#FFAD67', // (default #FFAD67)
-        step2: '#FF6B67', // (default #FF6B67)
-        max: '#FFBAB8' // (default #FFBAB8)
+        background: '#1D1E25', // The canvas bg color (default #1D1E25)
+        min: '#56D45B', // Optional (default #56D45B, green), index 0
+        step0: '#AFF2B3', // (default #AFF2B3, light green), index 0.7
+        step1: '#FFAD67', // (default #FFAD67, orange), index 0.833
+        step2: '#FF6B67', // (default #FF6B67, red), index 0.9
+        max: '#FFBAB8' // (default #FFBAB8, light red), index 1
       }
     });
 

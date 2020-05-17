@@ -25,7 +25,11 @@ class WaveformProgress extends VisuComponentMono {
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._animation = options.animation;
-    this._merged = options.merged;
+    this._wave = {
+      align: options.wave ? options.wave.align || 'center' : 'center',
+      barMarginScale: options.wave ? (options.wave.barMarginScale / 2) : 0.125, // Divide by 2 because true range is [0, 0.5]
+      merged: options.wave ? options.wave.merged || true : true
+    };
     this._bars = null;
     this._offlineCtx = null;
     this._offlineBuffer = null;
@@ -110,7 +114,7 @@ class WaveformProgress extends VisuComponentMono {
 
   _fillData() {
     if (this._offlineBuffer) {
-      if (this._merged === true) {
+      if (this._wave.merged === true) {
         // Mono output will only use L array to store L/R averages
         this._dataL = this._genScaledMonoData(this._offlineBuffer);
       } else {
@@ -181,14 +185,14 @@ class WaveformProgress extends VisuComponentMono {
 
   _drawFileWaveform(progressPercentage) {
     var x = this._canvas.width / this._bars;
-    const margin = x / 8;
+    const margin = x * this._wave.barMarginScale;
 
     this._ctx.beginPath();
     // Iterate bar data
     for (let i = 0; i < this._dataL.length; ++i) {
       // Determine Y pos for Up and Down rectangles to draw (in mono, we only use merged data in dataL array)
       const yU = this._dataL[i] / 2;
-      const yD = (this._merged === true) ? this._dataL[i] / 2 : this._dataR[i] / 2;
+      const yD = (this._wave.merged === true) ? this._dataL[i] / 2 : this._dataR[i] / 2;
       // Determine bar color according to progress.
       this._ctx.fillStyle = this._colors.track; // White by default (un-read yet)
       if ((x * (i + 1)) / this._canvas.width > progressPercentage && (x * i) / this._canvas.width < progressPercentage) {
@@ -221,10 +225,18 @@ class WaveformProgress extends VisuComponentMono {
         this._ctx.fillStyle = this._colors.progress; // Green for already played bars
       }
       // Draw up and down rectangles for current bar
-      this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);
-      this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yD);
-      // Add tiny centered line
-      this._ctx.fillRect(x * i + margin, this._canvas.height / 2 - 0.15, x - margin * 2, 0.15);
+      if (this._wave.align === 'center') {
+        this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);
+        this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yD);
+        // Add tiny centered line
+        this._ctx.fillRect(x * i + margin, this._canvas.height / 2 - 0.15, x - margin * 2, 0.15);
+      } else if (this._wave.align === 'bottom') {
+        this._ctx.fillRect(x * i + margin, this._canvas.height - yU, x - margin * 2, yU);
+        this._ctx.fillRect(x * i + margin, this._canvas.height - yU - yD + 1, x - margin * 2, yD); // Offset one pixel origin to blend channel properly
+      } else if (this._wave.align === 'top') { // Stack L/R on each other
+        this._ctx.fillRect(x * i + margin, 0, x - margin * 2, yU);
+        this._ctx.fillRect(x * i + margin, yU - 1, x - margin * 2, yD); // Offset one pixel origin to blend channel properly
+      }
     }
 
     this._ctx.closePath();
