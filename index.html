@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.8.1</title>
+  <title>MzkVisualizer 0.8.2</title>
   <link rel="stylesheet" href="css/mzkvisualizer.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <style>
@@ -16,7 +16,7 @@ audio { position: fixed; right: 0; top: 0; }
 <!--
 
 
-MzkVisualizer 0.8.1 - 2020
+MzkVisualizer 0.8.2 - 2020
 @author Arthur Beaulieu - https://github.com/ArthurBeaulieu
 
 To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
@@ -83,6 +83,7 @@ your audio context when building a component.
       animation: 'gradient', // Optional (default gradient), 'fade' or 'gradient', the animation on bar on progress
       wave: { // Optional
         align: 'bottom', // Optional (default center), how to display waveform : top, center, bottom
+        barWidth: 1, // Optional (default 1), the bar width. in range [1, 100]
         barMarginScale: 0, // Optional (default 0.25), The bar margin percentage from to bar width in range [0, 1]
         merged: true // Optional (default true), For center align only, merge left/right channel into symetry
       },

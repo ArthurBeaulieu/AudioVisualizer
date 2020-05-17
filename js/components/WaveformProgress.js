@@ -27,10 +27,11 @@ class WaveformProgress extends VisuComponentMono {
     this._animation = options.animation;
     this._wave = {
       align: options.wave ? options.wave.align || 'center' : 'center',
+      barWidth: options.wave ? options.wave.barWidth || 1 : 1,
       barMarginScale: options.wave ? (options.wave.barMarginScale / 2) : 0.125, // Divide by 2 because true range is [0, 0.5]
       merged: options.wave ? options.wave.merged || true : true
     };
-    this._bars = null;
+    this._bars = null; // Computed on build or resize
     this._offlineCtx = null;
     this._offlineBuffer = null;
     // Raw channel data for whole audio file
@@ -44,7 +45,7 @@ class WaveformProgress extends VisuComponentMono {
 
   _buildUI() {
     super._buildUI();
-    this._bars = this._canvas.width / 3;
+    this._bars = this._canvas.width / this._wave.barWidth;
   }
 
 
@@ -64,7 +65,7 @@ class WaveformProgress extends VisuComponentMono {
 
   _onResize() {
     super._onResize();
-    this._bars = this._canvas.width / 3;
+    this._bars = this._canvas.width / this._wave.barWidth;
     this._fillData();
     this._clearCanvas();
     this._drawFileWaveform(this._player.currentTime / this._player.duration);
