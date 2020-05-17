@@ -130,7 +130,8 @@ class VisuComponentStereo {
 
 
   _addEvents() {
-    this._resizeObserver = new ResizeObserver(this._onResize).observe(this._renderTo);
+    this._resizeObserver = new ResizeObserver(this._onResize);
+    this._resizeObserver.observe(this._renderTo);
     this._player.addEventListener('play', this._play, false);
     this._player.addEventListener('pause', this._pause, false);
     this._dom.container.addEventListener('dblclick', this._dblClick, false);

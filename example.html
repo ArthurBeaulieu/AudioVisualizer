@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MzkVisualizer 0.8.3</title>
+  <link rel="stylesheet" href="css/mzkvisualizer.css">
+  <!-- Style rules only needed for demo, no need to copy those in your project -->
+  <link rel="stylesheet" href="css/demo.css">
+</head>
+<!--
+
+
+MzkVisualizer 0.8.3 - 2020
+@author Arthur Beaulieu - https://github.com/ArthurBeaulieu
+
+To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
+folder keep the same tree structure (or change yourself pathes in classes).
+Main purpose of this is to display a given visualisation using an audio element.
+If you want to put this in your existing Web audio API project, you can also send
+your audio context when building a component.
+
+
+-->
+<body>
+  <!-- For any visual component you want to use, you must provide an HTML element to render in -->
+  <!-- Each component has its own optional options (refer to each component instanciation in this example) -->
+  <!-- Exotic heights are used on purpose to demonstrate dynamic dimension scaling of each component -->
+
+  <nav>
+    <h1>MzkVisualizer</h1>
+    <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
+    <!-- Module tested for mp3, ogg, flac and wav audio files. -->
+    <audio id="audio-player" src="assets/audio/FrequencyTest.flac" controls loop></audio>
+  </nav>
+  <section class="view-switcher">
+    <div id="oscilloscope" class="entry selected" data-type="oscilloscope"><p>Oscilloscope</p></div>
+    <div id="peakmeter" class="entry" data-type="peakmeter"><p>Peak meter</p></div>
+    <div id="bars" class="entry" data-type="bars"><p>Bars</p></div>
+    <div id="spectrum" class="entry" data-type="spectrum"><p>Spectrum</p></div>
+    <div id="waveform" class="entry" data-type="waveform"><p>Waveform</p></div>
+    <div id="circle" class="entry" data-type="circle"><p>Circle</p></div>
+    <button id="demo-change-src">Change source</button>
+  </section>
+  <section class="view-container">
+    <div id="view" class="view"></div>
+  </section>
+  <!-- Usage as a JavaScript module -->
+  <script type="module">
+    import MzkVisualizer from './js/MzkVisualizer.js';
+
+    const button = {
+      oscilloscopeButton: document.getElementById('oscilloscope'),
+      peakmeterButton: document.getElementById('peakmeter'),
+      barsButton: document.getElementById('bars'),
+      spectrumButton: document.getElementById('spectrum'),
+      waveformButton: document.getElementById('waveform'),
+      circleButton: document.getElementById('circle')
+    };
+
+    let component = null;
+    let selected = 'oscilloscope';
+    const buttonClicked = function() {
+      button[`${selected}Button`].classList.remove('selected');
+      if (component) {
+        component.destroy();
+      }
+
+      document.getElementById('view').innerHTML = '';
+      document.querySelector('#audio-player').pause();
+      this.classList.add('selected');
+      selected = this.dataset.type;
+
+      if (this.dataset.type === 'oscilloscope') {
+        component = new MzkVisualizer({
+          type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 4096, // Optional (default 1024), Higher is more precise for oscilloscope, doesn't consume much CPU
+          merged: false,// Optional (default false), merge left/right channel into one
+          colors: { // Optional
+            background: '#1D1E25', // The canvas bg color (default #1D1E25)
+            signal: '#56D45B' // The oscilloscope color (default #56D45B)
+          }
+        });
+      } else if (this.dataset.type === 'peakmeter') {
+        component = new MzkVisualizer({
+          type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 8192, // Optional (default 1024), Higher is smoother for peakmeter (doesn't consume much CPU)
+          merged: false, // Optional (default false), Mix channel into single output
+          orientation: 'horizontal', // Optional (default horizontal), 'vertical' or 'horizontal'
+          legend: { // Optional
+            dbScaleMin: 60, // Optional (default 60), The min db attenuation value to display
+            dbScaleTicks: 6 // Optional (default 15), The space between ticks, must be a multiple of scale min
+          },
+          colors: { // Optional
+            background: '#1D1E25', // Optional (default #1D1E25, dark grey), The canvas bg color
+            min: '#56D45B', // Optional (default #56D45B, green), index 0
+            step0: '#AFF2B3', // (default #AFF2B3, light green), index 0.7
+            step1: '#FFAD67', // (default #FFAD67, orange), index 0.833
+            step2: '#FF6B67', // (default #FF6B67, red), index 0.9
+            max: '#FFBAB8' // (default #FFBAB8, light red), index 1
+          }
+        });
+
+      } else if (this.dataset.type === 'bars') {
+        component = new MzkVisualizer({
+          type: 'frequencybars', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 1024, // Optional (default 1024), FFT values higher than width may give artifacts.
+          color: '#56D45B', // Optional (default '#56D45B'), The bars color
+          colors: { // Optional
+            background: '#1D1E25', // The canvas bg color (default #1D1E25)
+            min: '#56D45B', // Optional (default #56D45B, green), index 0
+            step0: '#AFF2B3', // (default #AFF2B3, light green), index 0.7
+            step1: '#FFAD67', // (default #FFAD67, orange), index 0.833
+            step2: '#FF6B67', // (default #FF6B67, red), index 0.9
+            max: '#FFBAB8' // (default #FFBAB8, light red), index 1
+          }
+        });
+      } else if (this.dataset.type === 'spectrum') {
+        component = new MzkVisualizer({
+          type: 'spectrum', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 2048, // Optional (default 1024), Higher fft values are best fullscreen, heavy CPU cost
+          merged: true,// Optional (default false), merge left/right channel into one
+          colorSmoothing: true, // Optional (default true), Apply gradient between samples to smoothen visualization, uneffective on linear scale
+          scale: 'logarithmic' // Optional (default linear), 'linear' or 'logarithmic', the scale to display spectrum
+        });
+      } else if (this.dataset.type === 'waveform') {
+        component = new MzkVisualizer({
+          type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+          animation: 'gradient', // Optional (default gradient), 'fade' or 'gradient', the animation on bar on progress
+          wave: { // Optional
+            align: 'center', // Optional (default center), how to display waveform : top, center, bottom
+            barWidth: 1, // Optional (default 1), the bar width. in range [1, 100]
+            barMarginScale: 0, // Optional (default 0.25), The bar margin percentage from to bar width in range [0, 1]
+            merged: true // Optional (default true), For center align only, merge left/right channel into symetry
+          },
+          colors: { // Optional
+            background: '#1D1E25', // The canvas bg color (default #1D1E25)
+            track: '#E7E9E7', // The waveform color (default #E7E9E7)
+            progress: '#56D45B' // The progressed waveform color (default #56D45B)
+          }
+        });
+      } else if (this.dataset.type === 'circle') {
+        component = new MzkVisualizer({
+          type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 512, // Optional (default 1024), high FFT values can have a high impact on CPU load
+          image: 'assets/img/manazeak-logo-small.svg' // Optional (default 'assets/img/manazeak-logo-small.svg'), the logo to put inside main circle
+        });
+      }
+    };
+
+    button.oscilloscopeButton.addEventListener('click', buttonClicked, false);
+    button.peakmeterButton.addEventListener('click', buttonClicked, false);
+    button.barsButton.addEventListener('click', buttonClicked, false);
+    button.spectrumButton.addEventListener('click', buttonClicked, false);
+    button.waveformButton.addEventListener('click', buttonClicked, false);
+    button.circleButton.addEventListener('click', buttonClicked, false);
+    // Init demo with Oscilloscope
+    component = new MzkVisualizer({
+      type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+      player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+      renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+      fftSize: 4096, // Optional (default 1024), Higher is more precise for oscilloscope, doesn't consume much CPU
+      merged: false,// Optional (default false), merge left/right channel into one
+      colors: { // Optional
+        background: '#1D1E25', // The canvas bg color (default #1D1E25)
+        signal: '#56D45B' // The oscilloscope color (default #56D45B)
+      }
+    });
+    /* Switch source type */
+    const sources = ['FrequencyTest.wav', 'FrequencyTest.flac', 'FrequencyTest.ogg', 'FrequencyTest.mp3'];
+    let currentIndex = 2;
+    const changeSrc = document.getElementById('demo-change-src');
+    changeSrc.addEventListener('click', () => {
+      document.getElementById('audio-player').src = `assets/audio/${sources[currentIndex]}`;
+      currentIndex = (currentIndex + 1) % sources.length;
+    });
+  </script>
+</body>
+</html>

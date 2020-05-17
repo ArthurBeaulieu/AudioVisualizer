@@ -1,0 +1,83 @@
+/* Demo stylesheet, not required to make MzVisualizer work */
+html, body {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+}
+
+nav {
+  align-items: center;
+  background-color: #181818;
+  border-bottom: solid 1px grey;
+  color: white;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+nav h1 {
+  margin: 0;
+  padding-left: 10px;
+}
+
+audio { position: fixed; right: 0; top: 0; }
+
+.view-switcher {
+  align-items: center;
+  border-bottom: solid 1px grey;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  position: absolute;
+  top: 40px;
+  width: 100%;
+}
+
+.view-switcher .entry {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  padding: 0 10px;
+}
+
+.view-switcher .entry p {
+  color: #1D1E25;
+  margin: 0;
+  transition: color .4s;
+}
+
+.view-switcher .entry.selected p {
+  color: #56D45B;
+}
+
+.view-switcher button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 80%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+}
+
+.view-container {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  height: calc(100% - 70px);
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+}
+
+.view {
+  height: 70%;
+  width: 80%;
+}
