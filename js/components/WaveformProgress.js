@@ -9,9 +9,9 @@ class WaveformProgress extends VisuComponentMono {
     super(options);
 
     this._colors = {
-      background: options.colors.background || ColorUtils.defaultBackgroundColor,
-      track: options.colors.track || ColorUtils.defaultTextColor,
-      progress: options.colors.progress || ColorUtils.defaultPrimaryColor
+      background: options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor,
+      track: options.colors ? options.colors.track || ColorUtils.defaultTextColor : ColorUtils.defaultTextColor,
+      progress: options.colors ? options.colors.progress || ColorUtils.defaultPrimaryColor : ColorUtils.defaultPrimaryColor
     };
 
     this._canvas.style.backgroundColor = this._colors.background;

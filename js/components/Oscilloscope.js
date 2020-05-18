@@ -1,5 +1,6 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
+import ColorUtils from '../utils/ColorUtils.js';
 
 
 class Oscilloscope extends VisuComponentStereo {

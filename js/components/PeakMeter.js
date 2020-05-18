@@ -1,5 +1,6 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
+import ColorUtils from '../utils/ColorUtils.js';
 
 
 // Modified https://github.com/esonderegger/web-audio-peak-meter to fit MzkVIsualizer needs
@@ -21,7 +22,7 @@ class PeakMeter extends VisuComponentStereo {
     // Update canvas CSS background color
     const bgColor = (options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor);
     if (this._merged === true) {
-      this._canvas.style.backgroundColor = bgColor;
+      this._canvasL.style.backgroundColor = bgColor;
     } else {
       this._canvasL.style.backgroundColor = bgColor;
       this._canvasR.style.backgroundColor = bgColor;
