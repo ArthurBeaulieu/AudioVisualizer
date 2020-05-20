@@ -4,10 +4,11 @@ import Oscilloscope from './components/Oscilloscope.js';
 import Spectrum from './components/Spectrum.js';
 import PeakMeter from './components/PeakMeter.js';
 import WaveformProgress from './components/WaveformProgress.js';
+import Timeline from './components/Timeline.js';
 
 
-/* MzkWorldMap version 0.9 */
-const MzkWorldMapVersion = '0.9';
+/* MzkVisualizer version 0.8.4 */
+const MzkVisualizerVersion = '0.8.4';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
@@ -27,8 +28,10 @@ class MzkVisualizer {
       return new PeakMeter(options);
     } else if (options.type === 'waveformprogress') {
       return new WaveformProgress(options);
+    } else if (options.type === 'timeline') {
+      return new Timeline(options);
     }
-
+    // Visualizer factory return null by default -> unexisting component name
     return null;
   }
 
@@ -36,5 +39,6 @@ class MzkVisualizer {
 }
 
 
-window.MzkVisualizer = MzkVisualizer; // Global scope attachment will be made when bundling this file
+// Global scope attachment will be made when bundling this file
+window.MzkVisualizer = MzkVisualizer;
 export default MzkVisualizer;

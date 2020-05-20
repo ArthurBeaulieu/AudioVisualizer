@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.8.3</title>
+  <title>MzkVisualizer 0.8.4</title>
   <link rel="stylesheet" href="css/mzkvisualizer.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <link rel="stylesheet" href="css/demo.css">
@@ -10,7 +10,7 @@
 <!--
 
 
-MzkVisualizer 0.8.3 - 2020
+MzkVisualizer 0.8.4 - 2020
 @author Arthur Beaulieu - https://github.com/ArthurBeaulieu
 
 To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
@@ -38,6 +38,7 @@ your audio context when building a component.
     <div id="bars" class="entry" data-type="bars"><p>Bars</p></div>
     <div id="spectrum" class="entry" data-type="spectrum"><p>Spectrum</p></div>
     <div id="waveform" class="entry" data-type="waveform"><p>Waveform</p></div>
+    <div id="timeline" class="entry" data-type="timeline"><p>Timeline</p></div>
     <div id="circle" class="entry" data-type="circle"><p>Circle</p></div>
     <button id="demo-change-src">Change source</button>
   </section>
@@ -54,6 +55,7 @@ your audio context when building a component.
       barsButton: document.getElementById('bars'),
       spectrumButton: document.getElementById('spectrum'),
       waveformButton: document.getElementById('waveform'),
+      timelineButton: document.getElementById('timeline'),
       circleButton: document.getElementById('circle')
     };
 
@@ -149,6 +151,23 @@ your audio context when building a component.
             progress: '#56D45B' // The progressed waveform color (default #56D45B)
           }
         });
+      } else if (this.dataset.type === 'timeline') {
+        component = new MzkVisualizer({
+          type: 'timeline', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum', 'timeline' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
+          speed: 10, // Optional (default 5), how many seconds does the canvas fit at once
+          beat: {
+            offset: 0.27, // Optional (default null), the offset time in s for first beat
+            bpm: 120, // Optional (default null), the track bpm
+            timeSignature: 4 // Optional (default null), the track time signature
+          },
+          colors: {
+            background: '#1D1E25', // Optional (default #1D1E25), the canvas bg color (default #1D1E25)
+            track: '#56D45B' // Optional (default #E7E9E7), the waveform color (default #E7E9E7)
+          }
+        });
       } else if (this.dataset.type === 'circle') {
         component = new MzkVisualizer({
           type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
@@ -165,6 +184,7 @@ your audio context when building a component.
     button.barsButton.addEventListener('click', buttonClicked, false);
     button.spectrumButton.addEventListener('click', buttonClicked, false);
     button.waveformButton.addEventListener('click', buttonClicked, false);
+    button.timelineButton.addEventListener('click', buttonClicked, false);
     button.circleButton.addEventListener('click', buttonClicked, false);
     // Init demo with Oscilloscope
     component = new MzkVisualizer({

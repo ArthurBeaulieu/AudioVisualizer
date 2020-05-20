@@ -21,14 +21,6 @@ class FrequencyBars extends VisuComponentMono {
   }
 
 
-  /*  ----------  VisuComponentMono overrides  ----------  */
-
-
-  _fillAttributes(options) {
-    super._fillAttributes(options);
-  }
-
-
   /*  ----------  FrequencyBars internal methods  ----------  */
 
 

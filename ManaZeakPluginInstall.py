@@ -8,7 +8,7 @@ import shutil
 import argparse
 # Globals
 global pluginVersion
-pluginVersion = '0.8.3'
+pluginVersion = '0.8.4'
 
 
 # To install this plugin, refer to ManaZeak wiki (https://github.com/ManaZeak/ManaZeak/wiki)
