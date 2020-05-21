@@ -1,6 +1,6 @@
 # MzkVisualizer
 
-![](https://badgen.net/badge/version/0.8.5/blue)
+![](https://badgen.net/badge/version/0.8.6/blue)
 
 Audio visualization using WebAudioAPI
 
