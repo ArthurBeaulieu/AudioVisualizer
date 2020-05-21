@@ -1,6 +1,6 @@
 # MzkVisualizer
 
-![](https://badgen.net/badge/version/0.8.4/blue)
+![](https://badgen.net/badge/version/0.8.5/blue)
 
 Audio visualization using WebAudioAPI
 
@@ -28,10 +28,16 @@ Audio visualization using WebAudioAPI
   <img src="/assets/screenshots/Spectrum.png" width="960" />
 </p>
 
-## waveform
+## Waveform
 
 <p>
   <img src="/assets/screenshots/Waveform.png" width="960" />
+</p>
+
+## Timeline
+
+<p>
+  <img src="/assets/screenshots/Timeline.png" width="960" />
 </p>
 
 ## Circle

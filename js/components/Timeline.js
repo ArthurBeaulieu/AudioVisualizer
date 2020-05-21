@@ -13,7 +13,9 @@ class Timeline extends VisuComponentMono {
 
     this._colors = {
       background: options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor,
-      track: options.colors ? options.colors.track || ColorUtils.defaultTextColor : ColorUtils.defaultTextColor
+      track: options.colors ? options.colors.track || ColorUtils.defaultDarkPrimaryColor : ColorUtils.defaultDarkPrimaryColor,
+      mainBeat: options.colors ? options.colors.mainBeat || ColorUtils.defaultPrimaryColor : ColorUtils.defaultPrimaryColor,
+      subBeat: options.colors ? options.colors.subBeat || ColorUtils.defaultAntiPrimaryColor : ColorUtils.defaultAntiPrimaryColor
     };
 
     this._canvas.style.backgroundColor = this._colors.background;
@@ -21,9 +23,9 @@ class Timeline extends VisuComponentMono {
     this._canvasSpeed = options.speed ? options.speed : 5.0; // Time in seconds
 
     this._beat = {
-      offset: options.beat ? options.beat.offset || null : null,
-      bpm: options.beat ? options.beat.bpm || null : null,
-      timeSignature: options.beat ? options.beat.timeSignature || null : null,
+      offset: options.beat ? options.beat.offset : null,
+      bpm: options.beat ? options.beat.bpm : null,
+      timeSignature: options.beat ? options.beat.timeSignature : null,
     };
 
     this._canvases = [];
@@ -172,8 +174,8 @@ class Timeline extends VisuComponentMono {
       const step = (this._canvasSpeed * this._offlineBuffer.sampleRate) / this._canvas.width;
       const totalLength = Math.floor((this._offlineBuffer.duration / this._canvasSpeed) * this._canvas.width);
       // Beat bar variables
-      const beatStart = Math.floor((this._beat.offset / this._canvasSpeed) * this._canvas.width); // TODO remove floor and properly handle offset
       const beatWidth = Math.floor(((1 / (this._beat.bpm / 60)) / this._canvasSpeed) * this._canvas.width);
+      const beatOffset = (this._beat.offset / this._canvasSpeed) * this._canvas.width;
       // Beat bar type (modulo time signature give strong beats)
       let beatCount = 0;
       // Draw full track on offline canvas
@@ -200,28 +202,29 @@ class Timeline extends VisuComponentMono {
           // Set waveform color according to sample intensity
           ctx.fillStyle = ColorUtils.lightenDarkenColor(this._colors.track, (max * 100)); // 100, not 255 to avoid full white on sample at max value
           // Update max to scale in half canvas height
-          max = Math.floor(max * ((this._canvas.height * .95) / 2)); // Scale on 95% height max
+          max = Math.floor(max * ((this._canvas.height * .9) / 2)); // Scale on 90% height max
           // Fill up and down side of timeline
           ctx.fillRect(j, this._canvas.height / 2, 1, -max);
           ctx.fillRect(j, this._canvas.height / 2, 1, +max);
+          // Add tiny centered line
+          ctx.fillRect((i + j), (this._canvas.height / 2) - 0.5, 1, 1);
           // Draw beat bar
           if (this._beat.bpm !== null && this._beat.offset !== null) {
-            if (j >= beatStart && (j + beatStart) % beatWidth === 0) {
+            if (j >= Math.floor(beatOffset) && (j + Math.floor(beatOffset)) % beatWidth === 0) {
               // Determine beat bar color
               let width = 1;
               if (beatCount % this._beat.timeSignature === 0) {
                 ctx.fillStyle = 'white';
-                width = 2; // Major beats are thicker
               } else {
                 ctx.fillStyle = 'grey';
               }
               // Beat bar drawing
-              ctx.fillRect(j - (width / 2), 9, width, this._canvas.height - 18);
+              ctx.fillRect(j, 9, width, this._canvas.height - 18);
               // Determine beat triangle color
               if (beatCount % this._beat.timeSignature === 0) {
-                ctx.fillStyle = 'red';
+                ctx.fillStyle = this._colors.mainBeat;
               } else {
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = this._colors.subBeat;
               }
               // Upper triangle
               ctx.beginPath();
@@ -262,9 +265,6 @@ class Timeline extends VisuComponentMono {
 
 
   _drawTimeline(time) {
-    // Add tiny centered line
-    this._ctx.fillRect(0, this._canvas.height / 2 - 0.15, this._canvas.width, 0.15);
-
     const center = Math.floor(time * this._canvas.width / this._canvasSpeed);
     let leftEdgeIndex = Math.floor((center - (this._canvas.width / 2)) / MAX_CANVAS_WIDTH);
     if (leftEdgeIndex < 0) {
@@ -280,7 +280,11 @@ class Timeline extends VisuComponentMono {
       this._ctx.drawImage(this._canvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
     }
     // Draw centered vertical bar
-    this._ctx.fillRect(this._canvas.width / 2, 0, 1, this._canvas.height);
+    this._ctx.fillStyle = ColorUtils.defaultAntiPrimaryColor;
+    this._ctx.fillRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
+    this._ctx.strokeStyle = 'black';
+    this._ctx.lineWidth = 1;
+    this._ctx.strokeRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
   }
 
 
@@ -299,6 +303,15 @@ class Timeline extends VisuComponentMono {
       this._drawTimeline(this._player.currentTime);
       requestAnimationFrame(this._processAudioBin);
     }
+  }
+
+
+  updateBeatInfo(options) {
+    this._beat = {
+      offset: options.offset,
+      bpm: options.bpm,
+      timeSignature: options.timeSignature
+    };
   }
 
 

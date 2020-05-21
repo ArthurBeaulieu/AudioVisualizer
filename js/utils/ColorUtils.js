@@ -124,6 +124,16 @@ class ColorUtils {
   }
 
 
+  static get defaultAntiPrimaryColor() {
+    return '#FF6B67';
+  }
+
+
+  static get defaultDarkPrimaryColor() {
+    return '#12B31D';
+  }
+
+
   static get defaultAudioGradient() {
     // Green, Light Green, Orange, Red, Light Red
     return ['#56D45B', '#AFF2B3', '#FFAD67', '#FF6B67', '#FFBAB8'];
