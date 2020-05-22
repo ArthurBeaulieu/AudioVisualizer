@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.8.6</title>
+  <title>MzkVisualizer 0.8.7</title>
   <link rel="stylesheet" href="css/mzkvisualizer.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <link rel="stylesheet" href="css/demo.css">
@@ -10,7 +10,7 @@
 <!--
 
 
-MzkVisualizer 0.8.6 - 2020
+MzkVisualizer 0.8.7 - 2020
 @author Arthur Beaulieu - https://github.com/ArthurBeaulieu
 
 To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
@@ -112,7 +112,6 @@ your audio context when building a component.
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
           fftSize: 1024, // Optional (default 1024), FFT values higher than width may give artifacts.
-          color: '#56D45B', // Optional (default '#56D45B'), The bars color
           colors: { // Optional
             background: '#1D1E25', // The canvas bg color (default #1D1E25)
             min: '#56D45B', // Optional (default #56D45B, green), index 0
@@ -159,7 +158,7 @@ your audio context when building a component.
           fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
           speed: 5, // Optional (default 5), how many seconds does the canvas fit at once
           beat: {
-            offset: 0.5, // Optional (default null), the offset time in s for first beat
+            offset: 0, // Optional (default null), the offset time in s for first beat
             bpm: 120, // Optional (default null), the track bpm
             timeSignature: 4 // Optional (default null), the track time signature
           },

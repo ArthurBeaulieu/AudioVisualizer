@@ -64,7 +64,7 @@ class VisuComponentStereo {
     this._renderTo = options.renderTo;
     this._fftSize = options.fftSize || 1024;
     this._audioCtx = options.audioContext;
-    this._inputNode = options.input;
+    this._inputNode = options.inputNode;
     this._merged = options.merged || false;
   }
 
