@@ -1,6 +1,6 @@
 # MzkVisualizer
 
-![](https://badgen.net/badge/version/0.8.7/blue)
+![](https://badgen.net/badge/version/0.8.8/blue)
 ![License](https://img.shields.io/github/license/ManaZeak/MzkVisualizer.svg)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.

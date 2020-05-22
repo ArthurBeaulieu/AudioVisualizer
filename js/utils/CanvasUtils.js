@@ -164,7 +164,17 @@ class CanvasUtils {
       const ledHeight = canvas.height - options.peak;
       ctx.fillRect(0, canvas.height - ledHeight, canvas.width, 1);
     }
+  }
 
+
+  static drawTriangle(canvas, x, y, radius, top) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(x - radius, y);
+    ctx.lineTo(x + radius, y);
+    ctx.lineTo(x, top);
+    ctx.fill();
+    ctx.closePath();
   }
 
 

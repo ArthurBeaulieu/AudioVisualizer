@@ -7,8 +7,8 @@ import WaveformProgress from './components/WaveformProgress.js';
 import Timeline from './components/Timeline.js';
 
 
-/* MzkVisualizer version 0.8.7 */
-const MzkVisualizerVersion = '0.8.7';
+/* MzkVisualizer version 0.8.8 */
+const MzkVisualizerVersion = '0.8.8';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 

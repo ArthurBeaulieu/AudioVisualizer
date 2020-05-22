@@ -1,4 +1,5 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
+import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
 
 
@@ -134,7 +135,7 @@ class Timeline extends VisuComponentMono {
     this._startDrag.y = 0;
     this._player.currentTime = this._draggedTime || this._player.currentTime;
     this._draggedTime = null;
-    // restore playback status
+    // Restore playback status
     if (this._wasPlaying === true) {
       this._wasPlaying = false;
       this._player.play();
@@ -178,8 +179,6 @@ class Timeline extends VisuComponentMono {
       const beatWidth = Math.floor(((1 / (this._beat.bpm / 60)) / this._canvasSpeed) * this._canvas.width); // Computed after first bar is added
       // Beat bar type (modulo time signature give strong beats)
       let beatCount = 0;
-
-
       let firstBarDrawn = false;
       // Draw full track on offline canvas
       for (let i = 0; i < totalLength; i += MAX_CANVAS_WIDTH) {
@@ -214,69 +213,12 @@ class Timeline extends VisuComponentMono {
           // Draw beat bar
           if (this._beat.bpm !== null && this._beat.offset !== null) {
             if (j >= Math.floor(beatOffset)) {
-
               if (firstBarDrawn === false) {
                 firstBarDrawn = true;
-                // Determine beat bar color
-                let width = 1;
-                if (beatCount % this._beat.timeSignature === 0) {
-                  ctx.fillStyle = 'white';
-                } else {
-                  ctx.fillStyle = 'grey';
-                }
-                // Beat bar drawing
-                ctx.fillRect(j, 9, width, this._canvas.height - 18);
-                // Determine beat triangle color
-                if (beatCount % this._beat.timeSignature === 0) {
-                  ctx.fillStyle = this._colors.mainBeat;
-                } else {
-                  ctx.fillStyle = this._colors.subBeat;
-                }
-                // Upper triangle
-                ctx.beginPath();
-                ctx.moveTo(j - 6, 4);
-                ctx.lineTo(j + 6, 4);
-                ctx.lineTo(j, 12);
-                ctx.fill();
-                ctx.closePath();
-                // Down triangle
-                ctx.beginPath();
-                ctx.moveTo(j - 6, this._canvas.height - 4);
-                ctx.lineTo(j + 6, this._canvas.height - 4);
-                ctx.lineTo(j, this._canvas.height - 12);
-                ctx.fill();
-                ctx.closePath();
+                this._drawBeatBar(beatCount, canvas, ctx, j);
                 ++beatCount;
               } else if ((j - Math.floor(beatOffset)) % beatWidth === 0) {
-                // Determine beat bar color
-                let width = 1;
-                if (beatCount % this._beat.timeSignature === 0) {
-                  ctx.fillStyle = 'white';
-                } else {
-                  ctx.fillStyle = 'grey';
-                }
-                // Beat bar drawing
-                ctx.fillRect(j, 9, width, this._canvas.height - 18);
-                // Determine beat triangle color
-                if (beatCount % this._beat.timeSignature === 0) {
-                  ctx.fillStyle = this._colors.mainBeat;
-                } else {
-                  ctx.fillStyle = this._colors.subBeat;
-                }
-                // Upper triangle
-                ctx.beginPath();
-                ctx.moveTo(j - 6, 4);
-                ctx.lineTo(j + 6, 4);
-                ctx.lineTo(j, 12);
-                ctx.fill();
-                ctx.closePath();
-                // Down triangle
-                ctx.beginPath();
-                ctx.moveTo(j - 6, this._canvas.height - 4);
-                ctx.lineTo(j + 6, this._canvas.height - 4);
-                ctx.lineTo(j, this._canvas.height - 12);
-                ctx.fill();
-                ctx.closePath();
+                this._drawBeatBar(beatCount, canvas, ctx, j);
                 ++beatCount;
               }
             }
@@ -286,6 +228,28 @@ class Timeline extends VisuComponentMono {
         this._canvases.push(canvas);
       }
     }
+  }
+
+
+  _drawBeatBar(beatCount, canvas, ctx, j) {
+    // Determine beat bar color
+    if (beatCount % this._beat.timeSignature === 0) {
+      ctx.fillStyle = 'white';
+    } else {
+      ctx.fillStyle = 'grey';
+    }
+    // Beat bar drawing
+    ctx.fillRect(j, 9, 1, this._canvas.height - 18);
+    // Determine beat triangle color
+    if (beatCount % this._beat.timeSignature === 0) {
+      ctx.fillStyle = this._colors.mainBeat;
+    } else {
+      ctx.fillStyle = this._colors.subBeat;
+    }
+    // Upper triangle
+    CanvasUtils.drawTriangle(canvas, j, 4, 6, 12);
+    // Down triangle
+    CanvasUtils.drawTriangle(canvas, j, this._canvas.height - 4, 6, this._canvas.height - 12);
   }
 
 
