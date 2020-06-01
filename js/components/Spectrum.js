@@ -60,10 +60,10 @@ class Spectrum extends VisuComponentStereo {
     this._bufferCanvas.height = this._dimension.canvasHeight;
     // Create option button
     this._dom.settings = document.createElement('IMG');
-    this._dom.settings.classList.add('mzkspectrum-settings');
+    this._dom.settings.classList.add('audio-spectrum-settings');
     this._dom.settings.src = './assets/img/settings.svg';
     this._dom.settingsPanel = document.createElement('DIV');
-    this._dom.settingsPanel.classList.add('mzkspectrum-settings-panel');
+    this._dom.settingsPanel.classList.add('audio-spectrum-settings-panel');
     this._dom.settingsPanel.innerHTML = `
       <h3>Settings</h3>
       <form>
@@ -133,7 +133,7 @@ class Spectrum extends VisuComponentStereo {
 
 
   _clickedElsewhere(event) {
-    if (!event.target.closest('.mzkspectrum-settings') && !event.target.closest('.mzkspectrum-settings-panel')) {
+    if (!event.target.closest('.audio-spectrum-settings') && !event.target.closest('.audio-spectrum-settings-panel')) {
       this._dom.settings.classList.remove('opened');
       this._dom.settingsPanel.classList.remove('opened');
       document.body.removeEventListener('click', this._clickedElsewhere, false);

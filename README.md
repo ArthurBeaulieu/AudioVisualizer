@@ -1,11 +1,11 @@
-# MzkVisualizer
+# AudioVisualizer
 
-![](https://badgen.net/badge/version/0.8.8/blue)
-![License](https://img.shields.io/github/license/ManaZeak/MzkVisualizer.svg)
+![](https://badgen.net/badge/version/0.8.9/blue)
+![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
 
-To get started, simply include the bundled files in the `dist` folder and reference them in your project HTML. If you want to bundle it yourself, just reference `MzkVisualizer.js` and `mzkvisualizer.scss` as entry points. You can now access this module using the `window.MzkVisualizer` object to build the following visualizations.
+To get started, simply include the bundled files in the `dist` folder and reference them in your project HTML. If you want to bundle it yourself, just reference `audiovisualizer.js` and `audiovisualizer.scss` as entry points. You can now access this module using the `window.AudioVisualizer` object to build the following visualizations.
 
 *NB: You must provide a HTML audio element and a DOM element with the dimension you need to render visualization in.*
 
@@ -16,7 +16,7 @@ To get started, simply include the bundled files in the `dist` folder and refere
 </p>
 
 ```javascript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'oscilloscope',
   player: document.querySelector('audio'),
   renderTo: document.body,
@@ -26,8 +26,8 @@ const component = new MzkVisualizer({
   inputNode: null,
   merged: false,
   colors: {
-    background: '#1D1E25', // Mzk background
-    signal: '#56D45B' // Mzk green
+    background: '#1D1E25',
+    signal: '#56D45B'
   }
 });
 ```
@@ -39,7 +39,7 @@ const component = new MzkVisualizer({
 </p>
 
 ```javaScript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'peakmeter',
   player: document.querySelector('audio'),
   renderTo: document.body,
@@ -71,7 +71,7 @@ const component = new MzkVisualizer({
 </p>
 
 ```javascript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'frequencybars',
   player: document.querySelector('audio'),
   renderTo: document.body,
@@ -97,7 +97,7 @@ const component = new MzkVisualizer({
 </p>
 
 ```javascript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'spectrum',
   player: document.querySelector('audio'),
   renderTo: document.body,
@@ -119,7 +119,7 @@ const component = new MzkVisualizer({
 
 
 ```javascript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'waveformprogress',
   player: document.querySelector('audio'),
   renderTo: document.body,
@@ -135,9 +135,9 @@ const component = new MzkVisualizer({
     merged: true // For center align only
   },
   colors: {
-    background: '#1D1E25', // Mzk background
-    track: '#E7E9E7', // Light grey
-    progress: '#56D45B' // Mzk green
+    background: '#1D1E25',
+    track: '#E7E9E7',
+    progress: '#56D45B'
   }
 });
 ```
@@ -149,7 +149,7 @@ const component = new MzkVisualizer({
 </p>
 
 ```javascript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'timeline',
   player: document.querySelector('audio'),
   renderTo: document.body,
@@ -164,10 +164,10 @@ const component = new MzkVisualizer({
     timeSignature: null
   },
   colors: {
-    background: '#1D1E25', // Mzk background
-    track: '#12B31D', // Dark green
-    mainBeat: '#FF6B67', // Mzk red
-    subBeat: '#56D45B' // Light grey
+    background: '#1D1E25',
+    track: '#12B31D',
+    mainBeat: '#FF6B67',
+    subBeat: '#56D45B'
   }
 });
 ```
@@ -179,7 +179,7 @@ const component = new MzkVisualizer({
 </p>
 
 ```javascript
-const component = new MzkVisualizer({
+const component = new AudioVisualizer({
   type: 'frequencycircle',
   player: document.querySelector('audio'),
   renderTo: document.body,

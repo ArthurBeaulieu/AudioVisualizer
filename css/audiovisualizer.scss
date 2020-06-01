@@ -1,0 +1,193 @@
+.audio-spectrum {
+  font-family: Segoe UI, Helvetica, sans-serif;
+  overflow: hidden;
+  position: relative;
+
+  .audio-spectrum-settings {
+    cursor: pointer;
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    width: 25px;
+
+    transition: left .4s ease-in-out;
+
+    &.opened {
+      left: calc(140px - 35px);
+    }
+  }
+
+  .audio-spectrum-settings-panel {
+    background-color: #1D1E25;
+    border-bottom-right-radius: 5px;
+    box-sizing: border-box;
+    color: #E7E9E7;
+    font-size: .9rem;
+    height: auto;
+    left: -140px;
+    opacity: 0;
+    padding: 0 10px;
+    position: absolute;
+    top: 0;
+    width: 140px;
+
+    transition: left .4s ease-in-out, opacity .4s ease-in;
+
+    h3 {
+      margin: 5px 0 1rem 0;
+    }
+
+    p {
+      &.legend {
+        font-style: italic;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      &.smooth-color {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+      }
+    }
+
+    input {
+      float: right;
+    }
+
+    &.opened {
+      left: 0;
+      opacity: 1;
+    }
+  }
+}
+
+/* PeakMeter */
+
+.audio-peakmeter {
+  background-color: #1D1E25;
+  height: 100%; /* Required for vertical layout */
+  position: relative;
+
+  &:not(.horizontal-peakmeter) {
+    canvas:first-of-type {
+      bottom: 0;
+      left: 18px;
+      position: absolute;
+    }
+
+    canvas:last-of-type {
+      bottom: 0;
+      right: 0;
+      position: absolute;
+    }
+
+    .scale-container {
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      left: 0;
+      width: 18px;
+      position: absolute;
+
+      div {
+        align-items: flex-start;
+        color: #E7E9E7;
+        display: flex;
+        font-size: 10px;
+        justify-content: flex-end;
+        padding-top: 2px;
+        position: relative;
+
+        &::before {
+          background-color: #AAAABE;
+          top: 0;
+          content: '';
+          display: block;
+          height: 1px;
+          position: absolute;
+          right: 0;
+          width: 50%;
+        }
+      }
+    }
+
+    .peak-value-container {
+      color: #E7E9E7;
+      display: flex;
+      font-size: 10px;
+      justify-content: center;
+      position: absolute;
+      top: 2px;
+    }
+  }
+
+  &.horizontal-peakmeter {
+    .scale-container {
+      display: flex;
+      flex-direction: row-reverse;
+      height: 14px;
+      position: relative;
+
+      div {
+        align-items: flex-end;
+        color: #E7E9E7;
+        display: flex;
+        font-size: 10px;
+        justify-content: flex-end;
+        padding-right: 5px;
+        position: relative;
+
+        &::before {
+          background-color: #AAAABE;
+          bottom: 0;
+          content: '';
+          display: block;
+          height: 50%;
+          position: absolute;
+          right: 0;
+          width: 1px;
+        }
+      }
+    }
+
+    .peak-value-container {
+      align-items: center;
+      color: #E7E9E7;
+      display: flex;
+      font-size: 10px;
+      padding-left: 1px;
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+
+/* FrenquecyCircle */
+
+.audio-frequencycircle {
+  position: relative;
+
+  img {
+    animation-play-state: running;
+    bottom: 0;
+    height: calc((100% / 2) - 12.5%);
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    animation: rotate 64s linear infinite;
+
+    &.paused {
+      animation-play-state: paused;
+    }
+  }
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}

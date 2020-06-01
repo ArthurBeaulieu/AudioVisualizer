@@ -1,10 +1,27 @@
 /* Demo stylesheet, not required to make MzVisualizer work */
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   box-sizing: border-box;
   font-family: sans-serif;
   height: 100vh;
   margin: 0;
   width: 100vw;
+}
+
+audio {
+  border-radius: 0;
+  height: 40px;
+}
+
+button {
+  border: solid 1px #1D1E25;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px 15px;
+  padding: 5px 15px;
 }
 
 nav {
@@ -20,12 +37,30 @@ nav {
   width: 100%;
 }
 
+nav a {
+  cursor: pointer;
+  fill: white;
+  height: 80%;
+  position: absolute;
+  right: 10px;
+
+  transition: fill .4s;
+}
+
+nav a:active,
+nav a:focus,
+nav a:hover {
+  fill: #56D45B;
+}
+
 nav h1 {
   margin: 0;
   padding-left: 10px;
 }
 
-audio { position: fixed; right: 0; top: 0; }
+audio { position: fixed; right: 0; bottom: 0; }
+.demo-change-src { position: fixed; right: 300px; bottom: 0; }
+@-moz-document url-prefix() { .demo-change-src { right: 270px; } }
 
 .view-switcher {
   align-items: center;
@@ -68,16 +103,17 @@ audio { position: fixed; right: 0; top: 0; }
 }
 
 .view-container {
-  align-items: center;
+  align-items: flex-start;
   bottom: 0;
   display: flex;
   height: calc(100% - 70px);
   justify-content: center;
+  padding: 40px;
   position: absolute;
   width: 100%;
 }
 
 .view {
-  height: 70%;
-  width: 80%;
+  height: calc(100% - 30px);
+  width: 100%;
 }

@@ -2,18 +2,18 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>MzkVisualizer 0.8.8</title>
-  <link rel="stylesheet" href="css/mzkvisualizer.css">
+  <title>AudioVisualizer 0.8.9</title>
+  <link rel="stylesheet" href="css/audiovisualizer.css">
   <!-- Style rules only needed for demo, no need to copy those in your project -->
   <link rel="stylesheet" href="css/demo.css">
 </head>
 <!--
 
 
-MzkVisualizer 0.8.8 - 2020
+AudioVisualizer 0.8.9 - 2020
 @author Arthur Beaulieu - https://github.com/ArthurBeaulieu
 
-To use MzkVisualizer as an ES6 Module, you must ensure that assets, css and js
+To use AudioVisualizer as an ES6 Module, you must ensure that assets, css and js
 folder keep the same tree structure (or change yourself pathes in classes).
 Main purpose of this is to display a given visualisation using an audio element.
 If you want to put this in your existing Web audio API project, you can also send
@@ -27,10 +27,8 @@ your audio context when building a component.
   <!-- Exotic heights are used on purpose to demonstrate dynamic dimension scaling of each component -->
 
   <nav>
-    <h1>MzkVisualizer</h1>
-    <!-- MzkVisualizer also need an HTML audio tag to rely on for computation. -->
-    <!-- Module tested for mp3, ogg, flac and wav audio files. -->
-    <audio id="audio-player" src="assets/audio/FrequencyTest.flac" controls loop></audio>
+    <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" target="_blank"><svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"></path></svg></a>
+    <h1>AudioVisualizer 0.8.9</h1>
   </nav>
   <section class="view-switcher">
     <div id="oscilloscope" class="entry selected" data-type="oscilloscope"><p>Oscilloscope</p></div>
@@ -40,14 +38,17 @@ your audio context when building a component.
     <div id="waveform" class="entry" data-type="waveform"><p>Waveform</p></div>
     <div id="timeline" class="entry" data-type="timeline"><p>Timeline</p></div>
     <div id="circle" class="entry" data-type="circle"><p>Circle</p></div>
-    <button id="demo-change-src">Change source</button>
   </section>
   <section class="view-container">
     <div id="view" class="view"></div>
   </section>
+  <!-- AudioVisualizer also need an HTML audio tag to rely on for computation. -->
+  <!-- Module tested for mp3, ogg, flac and wav audio files. -->
+  <audio id="audio-player" src="assets/audio/FrequencyTest.flac" controls loop></audio>
+  <button id="demo-change-src" class="demo-change-src">Change source</button>
   <!-- Usage as a JavaScript module -->
   <script type="module">
-    import MzkVisualizer from './js/MzkVisualizer.js';
+    import AudioVisualizer from './js/AudioVisualizer.js';
 
     const button = {
       oscilloscopeButton: document.getElementById('oscilloscope'),
@@ -55,8 +56,8 @@ your audio context when building a component.
       barsButton: document.getElementById('bars'),
       spectrumButton: document.getElementById('spectrum'),
       waveformButton: document.getElementById('waveform'),
-      timelineButton: document.getElementById('timeline'),
-      circleButton: document.getElementById('circle')
+      circleButton: document.getElementById('circle'),
+      timelineButton: document.getElementById('timeline')
     };
 
     let component = null;
@@ -73,7 +74,7 @@ your audio context when building a component.
       selected = this.dataset.type;
 
       if (this.dataset.type === 'oscilloscope') {
-        component = new MzkVisualizer({
+        component = new AudioVisualizer({
           type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
@@ -85,7 +86,7 @@ your audio context when building a component.
           }
         });
       } else if (this.dataset.type === 'peakmeter') {
-        component = new MzkVisualizer({
+        component = new AudioVisualizer({
           type: 'peakmeter', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
@@ -107,7 +108,7 @@ your audio context when building a component.
         });
 
       } else if (this.dataset.type === 'bars') {
-        component = new MzkVisualizer({
+        component = new AudioVisualizer({
           type: 'frequencybars', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
@@ -122,7 +123,7 @@ your audio context when building a component.
           }
         });
       } else if (this.dataset.type === 'spectrum') {
-        component = new MzkVisualizer({
+        component = new AudioVisualizer({
           type: 'spectrum', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
@@ -132,7 +133,7 @@ your audio context when building a component.
           scale: 'logarithmic' // Optional (default linear), 'linear' or 'logarithmic', the scale to display spectrum
         });
       } else if (this.dataset.type === 'waveform') {
-        component = new MzkVisualizer({
+        component = new AudioVisualizer({
           type: 'waveformprogress', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
@@ -150,15 +151,23 @@ your audio context when building a component.
             progress: '#56D45B' // The progressed waveform color (default #56D45B)
           }
         });
-      } else if (this.dataset.type === 'timeline') {
-        component = new MzkVisualizer({
+      } else if (this.dataset.type === 'circle') {
+        component = new AudioVisualizer({
+          type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
+          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
+          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
+          fftSize: 512, // Optional (default 1024), high FFT values can have a high impact on CPU load
+          image: 'assets/img/manazeak-logo-small.svg' // Optional (default 'assets/img/manazeak-logo-small.svg'), the logo to put inside main circle
+        });
+      } else if (this.dataset.type === 'timeline') { // WIP view
+        component = new AudioVisualizer({
           type: 'timeline', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum', 'timeline' or 'waveformprogress'
           player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
           renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
           fftSize: 1024, // Optional (default 1024), Higher is smoother for vuemeter (doesn't consume much CPU)
           speed: 5, // Optional (default 5), how many seconds does the canvas fit at once
           beat: {
-            offset: 0, // Optional (default null), the offset time in s for first beat
+            offset: 0.5, // Optional (default null), the offset time in s for first beat
             bpm: 120, // Optional (default null), the track bpm
             timeSignature: 4 // Optional (default null), the track time signature
           },
@@ -169,14 +178,6 @@ your audio context when building a component.
             subBeat: '#56D45B' // Optional (default #56D45B), the sub beat mark color
           }
         });
-      } else if (this.dataset.type === 'circle') {
-        component = new MzkVisualizer({
-          type: 'frequencycircle', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
-          player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
-          renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component
-          fftSize: 512, // Optional (default 1024), high FFT values can have a high impact on CPU load
-          image: 'assets/img/manazeak-logo-small.svg' // Optional (default 'assets/img/manazeak-logo-small.svg'), the logo to put inside main circle
-        });
       }
     };
     // Visualization switcher demo
@@ -185,10 +186,10 @@ your audio context when building a component.
     button.barsButton.addEventListener('click', buttonClicked, false);
     button.spectrumButton.addEventListener('click', buttonClicked, false);
     button.waveformButton.addEventListener('click', buttonClicked, false);
-    button.timelineButton.addEventListener('click', buttonClicked, false);
     button.circleButton.addEventListener('click', buttonClicked, false);
+    button.timelineButton.addEventListener('click', buttonClicked, false);
     // Init demo with Oscilloscope
-    component = new MzkVisualizer({
+    component = new AudioVisualizer({
       type: 'oscilloscope', // Mandatory, either 'frequencybars', 'frequencycircle', 'oscilloscope', 'peakmeter', 'spectrum' or 'waveformprogress'
       player: document.querySelector('#audio-player'), // Mandatory, the play to wire visualisation to
       renderTo: document.getElementById('view'), // Mandatory, the HTML div to render component

@@ -3,7 +3,7 @@ import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
 
 
-// Modified https://github.com/esonderegger/web-audio-peak-meter to fit MzkVIsualizer needs
+// Modified https://github.com/esonderegger/web-audio-peak-meter to fit AudioVIsualizer needs
 
 
 class PeakMeter extends VisuComponentStereo {

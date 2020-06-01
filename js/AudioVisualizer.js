@@ -7,12 +7,12 @@ import WaveformProgress from './components/WaveformProgress.js';
 import Timeline from './components/Timeline.js';
 
 
-/* MzkVisualizer version 0.8.8 */
-const MzkVisualizerVersion = '0.8.8';
+/* AudioVisualizer version 0.8.9 */
+const AudioVisualizerVersion = '0.8.9';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
-class MzkVisualizer {
+class AudioVisualizer {
 
 
   constructor(options) {
@@ -40,5 +40,5 @@ class MzkVisualizer {
 
 
 // Global scope attachment will be made when bundling this file
-window.MzkVisualizer = MzkVisualizer;
-export default MzkVisualizer;
+window.AudioVisualizer = AudioVisualizer;
+export default AudioVisualizer;

@@ -62,8 +62,9 @@ class VisuComponentMono {
 
   _buildUI() {
     this._dom.container = document.createElement('DIV');
-    this._dom.container.classList.add(`mzk-${this._type}`);
+    this._dom.container.classList.add(`audio-${this._type}`);
     this._canvas = document.createElement('CANVAS');
+    this._canvas.style.cssText = 'background-color:black;border: solid 1px #2c2c30;display:block;box-sizing:border-box;';
     this._ctx = this._canvas.getContext('2d');
     this._ctx.translate(0.5, 0.5);
     this._canvas.width = this._renderTo.offsetWidth - 2;

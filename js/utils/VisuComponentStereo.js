@@ -71,9 +71,11 @@ class VisuComponentStereo {
 
   _buildUI() {
     this._dom.container = document.createElement('DIV');
-    this._dom.container.classList.add(`mzk-${this._type}`);
+    this._dom.container.classList.add(`audio-${this._type}`);
     this._canvasL = document.createElement('canvas');
     this._canvasR = document.createElement('canvas');
+    this._canvasL.style.cssText = 'background-color:black;border: solid 1px #2c2c30;display:block;box-sizing:border-box;';
+    this._canvasR.style.cssText = 'background-color:black;border: solid 1px #2c2c30;display:block;box-sizing:border-box;';
     this._ctxL = this._canvasL.getContext('2d');
     this._ctxR = this._canvasR.getContext('2d');
     this._ctxL.translate(0.5, 0.5);
