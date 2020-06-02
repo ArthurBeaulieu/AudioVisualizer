@@ -131,7 +131,7 @@ const component = new AudioVisualizer({
   wave: {
     align: 'center', // top/center/bottom
     barWidth: 1, // Parent percentage [1, 100]
-    barMarginScale: 0.25 // Bar margin percentage from width [0, 1]
+    barMarginScale: 0.25, // Bar margin percentage from width [0, 1]
     merged: true // For center align only
   },
   colors: {
