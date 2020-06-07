@@ -7,8 +7,8 @@ import WaveformProgress from './components/WaveformProgress.js';
 import Timeline from './components/Timeline.js';
 
 
-/* AudioVisualizer version 0.8.9 */
-const AudioVisualizerVersion = '0.8.9';
+/* AudioVisualizer version 0.9.0 */
+const AudioVisualizerVersion = '0.9.0';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 

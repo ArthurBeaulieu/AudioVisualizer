@@ -109,6 +109,24 @@ class ColorUtils {
   }
 
 
+  static rainbowGradient(canvas, vertical = false) {
+    const ctx = canvas.getContext("2d");
+    let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    if (vertical === true) {
+      gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    }
+    gradient.addColorStop(0, 'red');
+    gradient.addColorStop(1 / 7, 'orange');
+    gradient.addColorStop(2 / 7, 'yellow');
+    gradient.addColorStop(3 / 7, 'green');
+    gradient.addColorStop(4 / 7, 'blue');
+    gradient.addColorStop(5 / 7, 'indigo');
+    gradient.addColorStop(6 / 7, 'violet');
+    gradient.addColorStop(1, 'red');
+    return gradient;
+  }
+
+
   static get defaultBackgroundColor() {
     return '#1D1E25';
   }

@@ -1,0 +1,47 @@
+{
+  "name": "audiovisualizer",
+  "version": "0.9.0",
+  "description": "",
+  "main": "src/js/Start.js",
+  "scripts": {
+    "build": "webpack  --env.version=0.9.0 --progress"
+  },
+  "homepage": "https://github.com/ArthurBeaulieu/AudioVisualizer/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurBeaulieu/AudioVisualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArthurBeaulieu/AudioVisualizer/issues"
+  },
+  "author": "Arthur Beaulieu",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@babel/core": ">=7.1.2",
+    "autoprefixer": ">=9.3.0",
+    "babel-loader": ">=8.0.4",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": ">=1.0.0",
+    "cssnano": ">=4.1.7",
+    "jasmine": ">=3.2.0",
+    "jasmine-core": ">=3.3.0",
+    "jsdoc": ">=3.5.5",
+    "karma": ">=5.0.9",
+    "karma-chrome-launcher": ">=2.2.0",
+    "karma-coverage": ">=1.1.2",
+    "karma-firefox-launcher": ">=1.1.0",
+    "karma-jasmine": ">=1.1.2",
+    "karma-sourcemap-loader": ">=0.3.7",
+    "karma-webpack": ">=4.0.0",
+    "mini-css-extract-plugin": ">=0.4.4",
+    "node-sass": ">=4.9.4",
+    "optimize-css-assets-webpack-plugin": ">=5.0.1",
+    "postcss-loader": ">=3.0.0",
+    "sass-loader": ">=7.1.0",
+    "style-loader": ">=0.23.1",
+    "terser-webpack-plugin": "*",
+    "tui-jsdoc-template": ">=1.2.2",
+    "webpack": ">=4.16.5",
+    "webpack-cli": ">=3.1.0"
+  }
+}

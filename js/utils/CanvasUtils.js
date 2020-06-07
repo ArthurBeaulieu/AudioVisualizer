@@ -85,7 +85,12 @@ class CanvasUtils {
       cursorX += frequencyWidth;
     }
 
-    ctx.strokeStyle = options.color;
+    if (options.color === 'rainbow') {
+      ctx.strokeStyle = ColorUtils.rainbowGradient(canvas);
+    } else {
+      ctx.strokeStyle = options.color;
+    }
+
     ctx.stroke();
     ctx.closePath();
   }

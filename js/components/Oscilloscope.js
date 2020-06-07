@@ -77,7 +77,7 @@ class Oscilloscope extends VisuComponentStereo {
   _mergedStereoAnalysis() {
     // Create TimeDomain array with freqency bin length
     let timeDomain = new Uint8Array(this._nodes.analyser.frequencyBinCount);
-    // Left channel
+    // Left/Right channel
     this._nodes.analyser.getByteTimeDomainData(timeDomain);
     CanvasUtils.drawOscilloscope(this._canvasL, {
       samples: this._nodes.analyser.frequencyBinCount,

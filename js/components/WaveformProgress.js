@@ -105,7 +105,7 @@ class WaveformProgress extends VisuComponentMono {
       this._offlineCtx.startRendering().then(renderedBuffer => {
         this._offlineBuffer = renderedBuffer;
         this._fillData();
-        this._drawFileWaveform(0);
+        this._drawFileWaveform(this._player.currentTime / this._player.duration);
       }).catch(function(err) {
         console.log('Rendering failed: ' + err);
       });
