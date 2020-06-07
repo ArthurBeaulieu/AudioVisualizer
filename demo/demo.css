@@ -53,6 +53,16 @@ nav a h1 {
   padding-left: 10px;
 }
 
+nav a.about {
+  left: 10px;
+  height: 80%;
+  position: absolute;
+}
+
+nav a.about img {
+  height: 100%;
+}
+
 audio {
   position: fixed;
   right: 0;

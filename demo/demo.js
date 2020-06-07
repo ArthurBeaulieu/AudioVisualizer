@@ -13,7 +13,7 @@ const buttons = {
 };
 // Current AudioVisualizer component and type
 let component = null;
-let selected = 'bars';
+let selected = 'circle';
 // Change AudioVisualizer callback, needs to keep button scope
 const buttonClicked = function() {
   buttons[`${selected}Button`].classList.remove('selected');
@@ -137,20 +137,13 @@ const buttonClicked = function() {
 for (const key in buttons) {
   buttons[key].addEventListener('click', buttonClicked, false);
 }
-// Init demo with Bars
+// Init demo with Circle
 component = new AudioVisualizer({
-  type: 'bars',
+  type: 'circle',
   player: document.querySelector('#audio-player'),
   renderTo: document.getElementById('view'),
-  fftSize: 1024,
-  colors: {
-    background: '#1D1E25',
-    min: '#56D45B',
-    step0: '#AFF2B3',
-    step1: '#FFAD67',
-    step2: '#FF6B67',
-    max: '#FFBAB8'
-  }
+  fftSize: 512,
+  image: 'demo/logo.png'
 });
 // Switch source type events
 const sources = ['FrequencyTest.flac', 'FrequencyTest.mp3', 'FrequencyTest.ogg', 'FrequencyTest.wav'];

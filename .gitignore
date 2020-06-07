@@ -1,4 +1,6 @@
 .idea
 doc
 node_modules
+scss/*.css.map
+scss/*.css
 package-lock.json
