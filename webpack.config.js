@@ -24,10 +24,10 @@ module.exports = env => {
       ]
     }
   }];
-  let entry = { audiovisualizer: ['./js/AudioVisualizer.js', './css/audiovisualizer.scss'] };
+  let entry = { audiovisualizer: ['./js/AudioVisualizer.js', './scss/audiovisualizer.scss'] };
   return {
     mode: 'production',
-    watch: false,
+    watch: true,
     entry: entry,
     stats: {
       warnings: false,

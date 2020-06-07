@@ -1,4 +1,4 @@
-/* Demo stylesheet, not required to make MzVisualizer work */
+/* Not required to include in your project, only for example.html demo */
 * {
   box-sizing: border-box;
 }
@@ -43,26 +43,47 @@ nav a {
   height: 80%;
   position: absolute;
   right: 10px;
-
-  transition: fill .4s;
+  transition: fill 0.4s;
 }
-
-nav a:active,
-nav a:focus,
-nav a:hover {
+nav a:active, nav a:focus, nav a:hover {
   fill: #56D45B;
 }
-
-nav h1 {
+nav a h1 {
   margin: 0;
   padding-left: 10px;
 }
 
-audio { position: fixed; right: 0; bottom: 0; }
-.demo-change-src { position: fixed; right: 300px; bottom: 0; height: 30px; }
-.demo-current-src { position: fixed; right: 450px; bottom: 0; line-height: 40px; height: 40px; margin: 0; }
-@-moz-document url-prefix() { .demo-change-src { right: 270px; } .demo-current-src { right: 410px; } }
+audio {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
 
+.demo-change-src {
+  position: fixed;
+  right: 300px;
+  bottom: 0;
+  height: 30px;
+}
+
+.demo-current-src {
+  position: fixed;
+  right: 450px;
+  bottom: 0;
+  line-height: 40px;
+  height: 40px;
+  margin: 0;
+}
+
+@-moz-document url-prefix() {
+  .demo-change-src {
+    right: 270px;
+  }
+
+  .demo-current-src {
+    right: 410px;
+  }
+}
 .view-switcher {
   align-items: center;
   border-bottom: solid 1px grey;
@@ -85,7 +106,7 @@ audio { position: fixed; right: 0; bottom: 0; }
 .view-switcher .entry p {
   color: #1D1E25;
   margin: 0;
-  transition: color .4s;
+  transition: color 0.4s;
 }
 
 .view-switcher .entry.selected p {

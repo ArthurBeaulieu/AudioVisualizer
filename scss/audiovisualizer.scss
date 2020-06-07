@@ -6,6 +6,7 @@
   .audio-spectrum-settings {
     cursor: pointer;
     position: absolute;
+    fill: #E7E9E7;
     left: 5px;
     right: 5px;
     top: 5px;
@@ -167,7 +168,7 @@
 
 /* FrenquecyCircle */
 
-.audio-frequencycircle {
+.audio-circle {
   position: relative;
 
   img {

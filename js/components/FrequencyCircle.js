@@ -37,7 +37,7 @@ class FrequencyCircle extends VisuComponentMono {
     this._averageBreakpoint = 132; // Putting breakpoint on mid amplitude [0, 255]
     this._averageHit = false;
 
-    this._imageSrc = options.image || 'assets/img/manazeak-logo-small.svg';
+    this._imageSrc = options.image;
     this._dom.logo = document.createElement('IMG');
     this._dom.logo.classList.add('paused');
     this._dom.logo.src = this._imageSrc ;
@@ -46,7 +46,7 @@ class FrequencyCircle extends VisuComponentMono {
 
   _buildUI() {
     super._buildUI();
-    this._dom.container.appendChild(this._dom.logo);
+    if (this._imageSrc) { this._dom.container.appendChild(this._dom.logo); }
     this._buildBackgroundBase();
   }
 
@@ -82,13 +82,13 @@ class FrequencyCircle extends VisuComponentMono {
 
   _play() {
     super._play();
-    this._dom.logo.classList.remove('paused'); // Resume css animation
+    this._dom.logo.classList.remove('paused'); // Resume scss animation
   }
 
 
   _pause() {
     super._pause();
-    this._dom.logo.classList.add('paused'); // Pause css animation
+    this._dom.logo.classList.add('paused'); // Pause scss animation
   }
 
 

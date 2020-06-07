@@ -1,10 +1,11 @@
 {
   "name": "audiovisualizer",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "",
   "main": "src/js/Start.js",
   "scripts": {
-    "build": "webpack  --env.version=0.9.0 --progress"
+    "build": "webpack  --env.version=0.9.1 --progress",
+    "doc": "jsdoc -c jsDoc.json"
   },
   "homepage": "https://github.com/ArthurBeaulieu/AudioVisualizer/README.md",
   "repository": {
@@ -38,6 +39,7 @@
     "optimize-css-assets-webpack-plugin": ">=5.0.1",
     "postcss-loader": ">=3.0.0",
     "sass-loader": ">=7.1.0",
+    "scss-loader": "0.0.1",
     "style-loader": ">=0.23.1",
     "terser-webpack-plugin": "*",
     "tui-jsdoc-template": ">=1.2.2",
