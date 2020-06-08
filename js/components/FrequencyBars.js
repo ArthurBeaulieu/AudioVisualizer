@@ -1,6 +1,7 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
+'use strict';
 
 
 class FrequencyBars extends VisuComponentMono {
@@ -10,11 +11,11 @@ class FrequencyBars extends VisuComponentMono {
     super(options);
     // Peak gradient
     this._barGradient = [
-      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], center: 0 }, // Green
-      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], center: 0.7 }, // Light Green
-      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], center: 0.833 }, // Orange
-      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], center: 0.9 }, // Red
-      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], center: 1 } // Light Red
+      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], index: 0 }, // Green
+      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], index: 0.7 }, // Light Green
+      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], index: 0.833 }, // Orange
+      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], index: 0.9 }, // Red
+      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], index: 1 } // Light Red
     ];
     // Update canvas CSS background color
     this._canvas.style.backgroundColor = options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor;
@@ -38,7 +39,7 @@ class FrequencyBars extends VisuComponentMono {
       for (let i = 0; i < this._nodes.analyser.frequencyBinCount; ++i) {
         // Compute frequency height in px, relative to the canvas height
         let frequencyHeight = (frequencyData[i] / 255) * (this._canvas.height);
-        CanvasUtils.drawVerticalFrequencyBar(this._canvas, {
+        CanvasUtils.drawVerticalBar(this._canvas, {
           frequencyHeight: frequencyHeight,
           frequencyWidth: frequencyWidth,
           colors: this._barGradient,

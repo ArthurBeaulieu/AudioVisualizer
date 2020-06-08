@@ -33,8 +33,7 @@ class AudioVisualizer {
    * @param {object} [options.audioContext=null] - A WebAudioAPI audio context to chain the processing nodes in your audio routing. You must provide an inputNode
    * @param {object} [options.inputNode=null] - The WebAudioAPI audio node to be the audio source for processing, You must provide an audioContext
    * @param {number} [options.fftSize=1024] - The FFT size to use in processing, must be a power of 2. High values cost more CPU
-   * @returns {object|null} - The custom visualisation object according to options, null for unknown type
-   **/
+   * @returns {object|null} - The custom visualisation object according to options, null for unknown type */
   constructor(options) {
     if (options.type === 'bars') {
       return new FrequencyBars(options);

@@ -28,7 +28,7 @@ class ColorUtils {
     );
 
     for (let i = 0; i < options.colors.length; ++i) {
-      gradient.addColorStop(options.colors[i].center, options.colors[i].color);
+      gradient.addColorStop(options.colors[i].index, options.colors[i].color);
     }
 
     ctx.fillStyle = gradient;

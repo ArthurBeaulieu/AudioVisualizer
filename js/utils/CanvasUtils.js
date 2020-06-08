@@ -4,18 +4,40 @@ import ColorUtils from './ColorUtils.js';
 class CanvasUtils {
 
 
+  /** @summary CanvasUtils provide several method to manipulate basic geometries in canvas
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
+   * make those utils methods available with constraints. Refer to each method for their associated documentation.</blockquote> */
   constructor() {}
 
 
+  /** @method
+   * @name drawRadialBar
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a radial bar with its height and color being computed from the frequency intensity.</blockquote>
+   * @param {object} canvas - The canvas to draw radial bar in
+   * @param {object} options - Radial bar options
+   * @param {object} options.frequencyValue - The frequency value in Int[0,255]
+   * @param {number} options.x0 - The x origin in canvas dimension
+   * @param {number} options.y0 - The y origin in canvas dimension
+   * @param {number} options.x1 - The x endpoint in canvas dimension
+   * @param {number} options.y1 - The y endpoint in canvas dimension
+   * @param {number} options.width - The bar line width in N
+   * @param {string} options.color - The bar base color (will be lighten/darken according to frequency value) in Hex/RGB/HSL **/
   static drawRadialBar(canvas, options) {
     const ctx = canvas.getContext('2d');
-    let amount = options.frequency / 255;
+    let amount = options.frequencyValue / 255;
     if (amount < 0.05) {
       amount = -amount;
     } else {
       amount = amount * 1.33;
     }
-
+    // Draw on canvas context
     ctx.beginPath();
     ctx.moveTo(options.x0, options.y0);
     ctx.lineTo(options.x1, options.y1);
@@ -26,17 +48,51 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawCircle
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a circle in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw circle in
+   * @param {object} options - Circle options
+   * @param {number} options.centerX - The circle x origin in canvas dimension
+   * @param {number} options.centerY - The circle y origin in canvas dimension
+   * @param {number} options.radius - The circle radius
+   * @param {number} options.radStart - The rotation start angle in rad
+   * @param {number} options.radEnd - The rotation end angle in rad
+   * @param {number} options.width - The circle line width in N
+   * @param {string} options.color - The circle color in Hex/RGB/HSL **/
   static drawCircle(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
     ctx.lineWidth = options.width;
-    ctx.strokeStyle = options.color || '#FFF';
+    ctx.strokeStyle = options.color;
     ctx.stroke();
     ctx.closePath();
   }
 
 
+  /** @method
+   * @name drawCircleGlow
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a circle with glow effect made with radial gradients in inner and outer circle.</blockquote>
+   * @param {object} canvas - The canvas to draw circle glow in
+   * @param {object} options - Circle glow options
+   * @param {number} options.centerX - The circle x origin in canvas dimension
+   * @param {number} options.centerY - The circle y origin in canvas dimension
+   * @param {number} options.radius - The circle radius
+   * @param {number} options.radStart - The rotation start angle in rad
+   * @param {number} options.radEnd - The rotation end angle in rad
+   * @param {number} options.width - The circle line width in N
+   * @param {object[]} options.colors - the glow color, must be objects with color and center (0.5 being the circle line) properties **/
   static drawCircleGlow(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -46,17 +102,47 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawDisc
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a disc in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Disc options
+   * @param {number} options.centerX - The circle x origin in canvas dimension
+   * @param {number} options.centerY - The circle y origin in canvas dimension
+   * @param {number} options.radius - The circle radius
+   * @param {number} options.radStart - The rotation start angle in rad
+   * @param {number} options.radEnd - The rotation end angle in rad
+   * @param {string} options.color - The circle color in Hex/RGB/HSL **/
   static drawDisc(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
-    ctx.fillStyle = options.color || '#FFF';
+    ctx.fillStyle = options.color;
     ctx.fill();
     ctx.closePath();
   }
 
 
-  static drawVerticalFrequencyBar(canvas, options) {
+  /** @method
+   * @name drawVerticalBar
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a disc vertical bar in given canvas with given gradient.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Vertical bar options
+   * @param {number} options.originX - The x origin in canvas dimension
+   * @param {number} options.frequencyHeight - The height of the frequency bin in canvas dimension
+   * @param {number} options.frequencyWidth - The width of the frequency bin in canvas dimension
+   * @param {object[]} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+  static drawVerticalBar(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.fillRect(options.originX, canvas.height - options.frequencyHeight, options.frequencyWidth, options.frequencyHeight);
@@ -65,6 +151,19 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawOscilloscope
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw an oscilloscope of frequencies in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Oscilloscope options
+   * @param {number} options.samples - The x origin in canvas dimension
+   * @param {number} options.timeDomain - The height of the frequency bin in canvas dimension
+   * @param {string} options.color - the oscilloscope color in Hex/RGB/HSL **/
   static drawOscilloscope(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -96,6 +195,19 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawPointsOscilloscope
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw an oscilloscope as points only in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Oscilloscope options
+   * @param {number} options.length - the oscilloscope length (half FFT)
+   * @param {number} options.times - The time domain bins
+   * @param {string} options.color - The point color in Hex/RGB/HSL **/
   static drawPointsOscilloscope(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -114,6 +226,23 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawRadialOscilloscope
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a radial oscilloscope as points only in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Oscilloscope options
+   * @param {number} options.centerX - the x center position
+   * @param {number} options.centerY - the y center position
+   * @param {number} options.rotation - the rotation offset
+   * @param {number} options.length - the oscilloscope length (half FFT)
+   * @param {number} options.times - The time domain bins
+   * @param {number} options.points - The oscilloscope radial points objects
+   * @param {string} options.color - The point color in Hex/RGB/HSL **/
   static drawRadialOscilloscope(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -122,6 +251,7 @@ class CanvasUtils {
     ctx.rotate(options.rotation)
     ctx.translate(-options.centerX, -options.centerY);
     ctx.moveTo(options.points[0].dx, options.points[0].dy);
+    ctx.strokeStyle = options.color;
 
     for (let i = 0; i < options.length - 1; ++i) {
       let point = options.points[i];
@@ -149,6 +279,20 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawPeakMeter
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a peakmeter in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Peak meter options
+   * @param {string} options.orientation - The peak meter orientation, either <code>horizontal</code> or <code>vertical</code>
+   * @param {number} options.amplitude - The sample amplitude value
+   * @param {number} options.peak - The peak value
+   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static drawPeakMeter(canvas, options) {
     const ctx = canvas.getContext('2d');
     ColorUtils.peakMeterGradient(canvas, options);
@@ -172,17 +316,42 @@ class CanvasUtils {
   }
 
 
-  static drawTriangle(canvas, x, y, radius, top) {
+  /** @method
+   * @name drawTriangle
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a triangle in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Peak meter options
+   * @param {number} options.x - The triangle x origin
+   * @param {number} options.y - The triangle y origin
+   * @param {number} options.radius - The triangle base
+   * @param {number} options.top - The triangle top position **/
+  static drawTriangle(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.moveTo(x - radius, y);
-    ctx.lineTo(x + radius, y);
-    ctx.lineTo(x, top);
+    ctx.moveTo(options.x - options.radius, options.y);
+    ctx.lineTo(options.x + options.radius, options.y);
+    ctx.lineTo(options.x, options.top);
     ctx.fill();
     ctx.closePath();
   }
 
 
+  /** @method
+   * @name precisionRound
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Round a floating number with a given precision after coma.</blockquote>
+   * @param {number} value - The floating value to round
+   * @param {number} precision - the amount of number we want to have after floating point
+   * @return {number} - The rounded value **/
   static precisionRound(value, precision) {
     const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;

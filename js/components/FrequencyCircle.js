@@ -157,13 +157,13 @@ class FrequencyCircle extends VisuComponentMono {
       const barHeight = (frequencies[i] / 255) * this._barMaxHeight;
       // Use CanvasUtils to draw bar
       CanvasUtils.drawRadialBar(this._canvas, {
+        frequencyValue: frequencies[i],
         x0: this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth),
         y0: this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth),
         x1: this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight),
         y1: this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight),
         width: barWidth,
-        color: this._averageHit ? /* Green */ '#56D45B' : /* Dark Green */ '#37C340',
-        frequency: frequencies[i]
+        color: this._averageHit ? /* Green */ '#56D45B' : /* Dark Green */ '#37C340'
       });
     }
   }
@@ -212,12 +212,13 @@ class FrequencyCircle extends VisuComponentMono {
 
   _animateOscilloscopes(times) {
     let tick = 0.05;
+    let color = '#FFF';
     if (this._averageHit) {
       this._oscilloscopeRotation += tick;
-      this._ctx.strokeStyle = 'rgba(255, 193, 140, .7)'; // Orange
+      color = 'rgba(255, 193, 140, .7)'; // Orange
     } else {
       this._oscilloscopeRotation += -tick;
-      this._ctx.strokeStyle = 'rgba(125, 228, 132, 0.25)'; // Green
+      color = 'rgba(125, 228, 132, 0.25)'; // Green
     }
     // Update radial oscilloscope with time values
     CanvasUtils.drawRadialOscilloscope(this._canvas, {
@@ -226,7 +227,8 @@ class FrequencyCircle extends VisuComponentMono {
       length: this._fftSize / 2,
       centerX: this._centerX,
       centerY: this._centerY,
-      rotation: this._oscilloscopeRotation
+      rotation: this._oscilloscopeRotation,
+      color: color
     });
     // If breakpoint is reached, we draw stillized horizontal oscilloscope
     if (this._averageHit) {

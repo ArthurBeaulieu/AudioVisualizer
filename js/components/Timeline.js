@@ -247,9 +247,19 @@ class Timeline extends VisuComponentMono {
       ctx.fillStyle = this._colors.subBeat;
     }
     // Upper triangle
-    CanvasUtils.drawTriangle(canvas, j, 4, 6, 12);
+    CanvasUtils.drawTriangle(canvas, {
+      x: j,
+      y: 4,
+      radius: 6,
+      top: 12
+    });
     // Down triangle
-    CanvasUtils.drawTriangle(canvas, j, this._canvas.height - 4, 6, this._canvas.height - 12);
+    CanvasUtils.drawTriangle(canvas, {
+      x: j,
+      y: this._canvas.height - 4,
+      radius: 6,
+      top: this._canvas.height - 12
+    });
   }
 
 
