@@ -27,7 +27,7 @@ module.exports = env => {
   let entry = { audiovisualizer: ['./js/AudioVisualizer.js', './scss/audiovisualizer.scss'] };
   return {
     mode: 'production',
-    watch: true,
+    watch: false,
     entry: entry,
     stats: {
       warnings: false,
