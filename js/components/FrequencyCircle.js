@@ -132,8 +132,8 @@ class FrequencyCircle extends VisuComponentMono {
       y1: this._centerY,
       r1: this._canvas.width / 2.66,
       colors: [
-        { color: '#3C405D', center: 0 },
-        { color: '#060609', center: 1 }
+        { color: '#3C405D', index: 0 },
+        { color: '#060609', index: 1 }
       ]
     });
     // Build logo circle border
@@ -202,9 +202,9 @@ class FrequencyCircle extends VisuComponentMono {
       radStart: 0,
       radEnd: Math.PI * 2,
       colors: [
-        { color: 'rgba(0, 0, 0, 0)', center: 0.48 },
-        { color: (this._averageHit ? /* Green */ '#56D45B' : /* Blue */ '#48ABAF'), center: 0.5 },
-        { color: 'rgba(0, 0, 0, 0)', center: 0.52 }
+        { color: 'rgba(0, 0, 0, 0)', index: 0.48 },
+        { color: (this._averageHit ? /* Green */ '#56D45B' : /* Blue */ '#48ABAF'), index: 0.5 },
+        { color: 'rgba(0, 0, 0, 0)', index: 0.52 }
       ]
     });
   }

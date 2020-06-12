@@ -40,8 +40,8 @@ class FrequencyBars extends VisuComponentMono {
         // Compute frequency height in px, relative to the canvas height
         let frequencyHeight = (frequencyData[i] / 255) * (this._canvas.height);
         CanvasUtils.drawVerticalBar(this._canvas, {
-          frequencyHeight: frequencyHeight,
-          frequencyWidth: frequencyWidth,
+          height: frequencyHeight,
+          width: frequencyWidth,
           colors: this._barGradient,
           originX: cursorX
         });

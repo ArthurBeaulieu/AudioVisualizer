@@ -1,10 +1,10 @@
 {
   "name": "audiovisualizer",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "",
   "main": "src/js/Start.js",
   "scripts": {
-    "build": "webpack  --env.version=0.9.1 --progress",
+    "build": "webpack  --env.version=0.9.2 --progress",
     "doc": "jsdoc -c jsDoc.json"
   },
   "homepage": "https://github.com/ArthurBeaulieu/AudioVisualizer/README.md",

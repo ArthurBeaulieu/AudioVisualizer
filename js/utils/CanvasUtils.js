@@ -4,7 +4,7 @@ import ColorUtils from './ColorUtils.js';
 class CanvasUtils {
 
 
-  /** @summary CanvasUtils provide several method to manipulate basic geometries in canvas
+  /** @summary CanvasUtils provides several method to manipulate basic geometries in canvas
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
@@ -139,14 +139,14 @@ class CanvasUtils {
    * @param {object} canvas - The canvas to draw disc in
    * @param {object} options - Vertical bar options
    * @param {number} options.originX - The x origin in canvas dimension
-   * @param {number} options.frequencyHeight - The height of the frequency bin in canvas dimension
-   * @param {number} options.frequencyWidth - The width of the frequency bin in canvas dimension
+   * @param {number} options.height - The height of the frequency bin in canvas dimension
+   * @param {number} options.width - The width of the frequency bin in canvas dimension
    * @param {object[]} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static drawVerticalBar(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.fillRect(options.originX, canvas.height - options.frequencyHeight, options.frequencyWidth, options.frequencyHeight);
-    ColorUtils.drawVerticalFrequencyGradient(canvas, options);
+    ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);
+    ColorUtils.drawVerticalGradient(canvas, options);
     ctx.closePath();
   }
 

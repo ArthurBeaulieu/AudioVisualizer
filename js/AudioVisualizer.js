@@ -8,8 +8,8 @@ import WaveformProgress from './components/WaveformProgress.js';
 'use strict';
 
 
-/* AudioVisualizer version 0.9.1 */
-const AudioVisualizerVersion = '0.9.1';
+/* AudioVisualizer version 0.9.2 */
+const AudioVisualizerVersion = '0.9.2';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 

@@ -1,9 +1,31 @@
 class ColorUtils {
 
 
+  /** @summary ColorUtils provides several method to abstract color manipulation for canvas
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
+   * make those utils methods available with constraints. Refer to each method for their associated documentation.</blockquote> */
   constructor() {}
 
 
+  /** @method
+   * @name drawRadialGradient
+   * @public
+   * @memberof ColorUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Fill context with radial gradient according to options object.</blockquote>
+   * @param {object} canvas - The canvas to draw radial gradient in
+   * @param {object} options - Radial gradient options
+   * @param {number} options.x0 - The x origin in canvas dimension
+   * @param {number} options.y0 - The y origin in canvas dimension
+   * @param {number} options.r0 - The radius of the start circle in Float[0,2PI]
+   * @param {number} options.x1 - The x endpoint in canvas dimension
+   * @param {number} options.y1 - The y endpoint in canvas dimension
+   * @param {number} options.r1 - The radius of the end circle in Float[0,2PI]
+   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static drawRadialGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -12,7 +34,7 @@ class ColorUtils {
     );
 
     for (let i = 0; i < options.colors.length; ++i) {
-      gradient.addColorStop(options.colors[i].center, options.colors[i].color);
+      gradient.addColorStop(options.colors[i].index, options.colors[i].color);
     }
 
     ctx.fillStyle = gradient;
@@ -20,7 +42,21 @@ class ColorUtils {
   }
 
 
-  static drawVerticalFrequencyGradient(canvas, options) {
+  /** @method
+   * @name drawVerticalGradient
+   * @public
+   * @memberof ColorUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Fill context with vertical gradient according to options object.</blockquote>
+   * @param {object} canvas - The canvas to draw vertical gradient in
+   * @param {object} options - Vertical gradient options
+   * @param {number} options.originX - The bar x origin in canvas dimension
+   * @param {number} options.height - The bar height in canvas dimension
+   * @param {number} options.width - The bar width in canvas dimension
+   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+  static drawVerticalGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(
       0, canvas.height,
@@ -32,10 +68,24 @@ class ColorUtils {
     }
 
     ctx.fillStyle = gradient;
-    ctx.fillRect(options.originX, canvas.height - options.frequencyHeight, options.frequencyWidth, options.frequencyHeight);
+    ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);
   }
 
 
+  /** @method
+   * @name drawRadialGlowGradient
+   * @public
+   * @memberof ColorUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Fill context radial glowing gradient according to options object.</blockquote>
+   * @param {object} canvas - The canvas to draw radial glowing gradient in
+   * @param {object} options - Radial glowing gradient options
+   * @param {number} options.centerX - The center x origin in canvas dimension
+   * @param {number} options.centerY - The center y origin in canvas dimension
+   * @param {number} options.radius - The circle radius in canvas dimension
+   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static drawRadialGlowGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -44,7 +94,7 @@ class ColorUtils {
     );
 
     for (let i = 0; i < options.colors.length; ++i) {
-      gradient.addColorStop(options.colors[i].center, options.colors[i].color);
+      gradient.addColorStop(options.colors[i].index, options.colors[i].color);
     }
 
     ctx.fillStyle = gradient;
@@ -52,6 +102,18 @@ class ColorUtils {
   }
 
 
+  /** @method
+   * @name peakMeterGradient
+   * @public
+   * @memberof ColorUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Fill context radial glowing gradient according to options object.</blockquote>
+   * @param {object} canvas - The canvas to draw radial glowing gradient in
+   * @param {object} options - Radial glowing gradient options
+   * @param {string} options.orientation - The peak meter orientation (<code>vertical</code> or <code>horizontal</code>)
+   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static peakMeterGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     let gradient = null;
@@ -73,8 +135,18 @@ class ColorUtils {
   }
 
 
+  /** @method
+   * @name lightenDarkenColor
+   * @public
+   * @memberof ColorUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Lighten or darken a given color from an amount. Inspired from https://jsfiddle.net/gabrieleromanato/hrJ4X/</blockquote>
+   * @param {string} color - The color to alter in Hex/RGB/HSL
+   * @param {number} amount - The percentage amount to lighten or darken in Float[-100,100]
+   * @return {string} The altered color in Hex/RGB/HSL **/
   static lightenDarkenColor(color, amount) {
-    // https://jsfiddle.net/gabrieleromanato/hrJ4X/
     let usePound = false;
     if (color[0] === '#') {
       color = color.slice(1);
@@ -109,6 +181,17 @@ class ColorUtils {
   }
 
 
+  /** @method
+   * @name rainbowGradient
+   * @public
+   * @memberof ColorUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Return a vertical or horizontal rainbow gradient.</blockquote>
+   * @param {object} canvas - The canvas to create gradient from
+   * @param {boolean} [vertical=false] - The gradient orientation, default to horizontal
+   * @return {object} The rainbow gradient to apply **/
   static rainbowGradient(canvas, vertical = false) {
     const ctx = canvas.getContext("2d");
     let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
@@ -127,31 +210,49 @@ class ColorUtils {
   }
 
 
+  /** @public
+   * @static
+   * @member {string} - The default background color */
   static get defaultBackgroundColor() {
     return '#1D1E25';
   }
 
 
+  /** @public
+   * @static
+   * @member {string} - The default text color */
   static get defaultTextColor() {
     return '#E7E9E7';
   }
 
 
+  /** @public
+   * @static
+   * @member {string} - The default primary color */
   static get defaultPrimaryColor() {
     return '#56D45B';
   }
 
 
+  /** @public
+   * @static
+   * @member {string} - The default anti primary color */
   static get defaultAntiPrimaryColor() {
     return '#FF6B67';
   }
 
 
+  /** @public
+   * @static
+   * @member {string} - The default dark primary color */
   static get defaultDarkPrimaryColor() {
     return '#12B31D';
   }
 
 
+  /** @public
+   * @static
+   * @member {string[]} - The default color array to be used in gradient */
   static get defaultAudioGradient() {
     // Green, Light Green, Orange, Red, Light Red
     return ['#56D45B', '#AFF2B3', '#FFAD67', '#FF6B67', '#FFBAB8'];

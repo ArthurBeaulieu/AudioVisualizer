@@ -1,41 +1,34 @@
-class VisuComponentMono {
+import BaseComponent from "./BaseComponent.js";
 
 
+class VisuComponentMono extends BaseComponent {
+
+
+  /** @summary VisuComponentMono is an abstraction for mono visualisation component. It must be inherited.
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Visualisation components inherit this class to benefit its node routing and canvas
+   * configuration. It is meant to use a single canvas for mono or merged L/R audio channels.</blockquote>
+   * @param {object} options - The visualizer root options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   constructor(options) {
-    // Attributes that can be sent as options
-    this._type = null;
-    this._player = null;
-    this._renderTo = null;
-    this._fftSize = null;
-    // The Web Audio API context
-    this._audioCtx = null;
-    this._inputNode = null; // Optionnal, the source node to chain from
+    super();
     // Audio nodes
     this._nodes = {
       source: null, // HTML audio element
-      analyser: null
+      analyser: null // Analysis node
     };
     this._isPlaying = false;
     // Canvas and context
     this._canvas = null;
     this._ctx = null;
-    // Display utils
-    this._parentDimension = { // Used to resize renderTo on toggle fullscreen
-      position: null,
-      height: null,
-      width: null,
-      zIndex: null
-    };
-    this._dom = {
-      container: null
-    };
-    // Event binding
-    this._resizeObserver = null;
-    this._onResize = this._onResize.bind(this);
-    this._play = this._play.bind(this);
-    this._pause = this._pause.bind(this);
+    // Bind process audio bin for add and remove event on demand
     this._processAudioBin = this._processAudioBin.bind(this);
-    this._dblClick = this._dblClick.bind(this);
     // Construction sequence
     this._fillAttributes(options);
     this._buildUI();
@@ -44,12 +37,21 @@ class VisuComponentMono {
   }
 
 
-  destroy() {
-    this._removeEvents();
-    Object.keys(this).forEach(key => { delete this[key]; });
-  }
-
-
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof VisuComponentMono
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+   * @param {object} options - The visualizer root options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   _fillAttributes(options) {
     this._type = options.type;
     this._player = options.player;
@@ -60,11 +62,19 @@ class VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _buildUI
+   * @private
+   * @override
+   * @memberof VisuComponentMono
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
   _buildUI() {
     this._dom.container = document.createElement('DIV');
     this._dom.container.classList.add(`audio-${this._type}`);
     this._canvas = document.createElement('CANVAS');
-    this._canvas.style.cssText = 'background-color:black;border: solid 1px #2c2c30;display:block;box-sizing:border-box;';
+    this._canvas.style.cssText = 'background-color:black;border:solid 1px #2c2c30;display:block;box-sizing:border-box;';
     this._ctx = this._canvas.getContext('2d');
     this._ctx.translate(0.5, 0.5);
     this._canvas.width = this._renderTo.offsetWidth - 2;
@@ -74,6 +84,14 @@ class VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _setAudioNodes
+   * @private
+   * @override
+   * @memberof VisuComponentMono
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Build audio chain with source -> analyzer -> destination.</blockquote> **/
   _setAudioNodes() {
     let audioCtxSent = false;
     if (!this._audioCtx) {
@@ -95,71 +113,28 @@ class VisuComponentMono {
   }
 
 
-  _addEvents() {
-    this._resizeObserver = new ResizeObserver(this._onResize);
-    this._resizeObserver.observe(this._renderTo);
-    this._player.addEventListener('play', this._play, false);
-    this._player.addEventListener('pause', this._pause, false);
-    this._dom.container.addEventListener('dblclick', this._dblClick, false);
-  }
-
-
-  _removeEvents() {
-    this._resizeObserver.disconnect();
-    this._player.removeEventListener('play', this._play, false);
-    this._player.removeEventListener('pause', this._pause, false);
-    this._dom.container.removeEventListener('dblclick', this._dblClick, false);
-  }
-
-
-  _play() {
-    this._isPlaying = true;
-    this._processAudioBin();
-  }
-
-
-  _pause() {
-    this._isPlaying = false;
-  }
-
-
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof VisuComponentMono
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
     this._canvas.width = this._renderTo.offsetWidth - 2;
     this._canvas.height = this._renderTo.offsetHeight - 2;
   }
 
 
-  _dblClick(event) {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      // Restore renderTo initial style
-      this._renderTo.style.position = this._parentDimension.position;
-      this._renderTo.style.height = this._parentDimension.height;
-      this._renderTo.style.width = this._parentDimension.width;
-      this._renderTo.style.zIndex = this._parentDimension.zIndex;
-      this._parentDimension = {
-        position: null,
-        height: null,
-        width: null,
-        zIndex: null
-      };
-    } else {
-      document.documentElement.requestFullscreen();
-      // Update renderTo dimension (canvas will be automatically rescaled)
-      this._parentDimension = {
-        position: this._renderTo.style.position,
-        height: this._renderTo.style.height,
-        width: this._renderTo.style.width,
-        zIndex: this._renderTo.style.zIndex || ''
-      };
-      this._renderTo.style.position = 'fixed';
-      this._renderTo.style.height = '100vh';
-      this._renderTo.style.width = '100vw';
-      this._renderTo.style.zIndex = '999';
-    }
-  }
-
-
+  /** @method
+   * @name _clearCanvas
+   * @private
+   * @override
+   * @memberof VisuComponentMono
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Clear component canvas context from its content.</blockquote> **/
   _clearCanvas() {
     this._canvas.getContext('2d').clearRect(0, 0, this._canvas.width, this._canvas.height);
   }
