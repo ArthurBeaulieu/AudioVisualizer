@@ -1,3 +1,6 @@
+'use strict';
+
+
 class ColorUtils {
 
 
@@ -25,7 +28,7 @@ class ColorUtils {
    * @param {number} options.x1 - The x endpoint in canvas dimension
    * @param {number} options.y1 - The y endpoint in canvas dimension
    * @param {number} options.r1 - The radius of the end circle in Float[0,2PI]
-   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawRadialGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -55,7 +58,7 @@ class ColorUtils {
    * @param {number} options.originX - The bar x origin in canvas dimension
    * @param {number} options.height - The bar height in canvas dimension
    * @param {number} options.width - The bar width in canvas dimension
-   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawVerticalGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(
@@ -85,7 +88,7 @@ class ColorUtils {
    * @param {number} options.centerX - The center x origin in canvas dimension
    * @param {number} options.centerY - The center y origin in canvas dimension
    * @param {number} options.radius - The circle radius in canvas dimension
-   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawRadialGlowGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -113,7 +116,7 @@ class ColorUtils {
    * @param {object} canvas - The canvas to draw radial glowing gradient in
    * @param {object} options - Radial glowing gradient options
    * @param {string} options.orientation - The peak meter orientation (<code>vertical</code> or <code>horizontal</code>)
-   * @param {object} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static peakMeterGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     let gradient = null;

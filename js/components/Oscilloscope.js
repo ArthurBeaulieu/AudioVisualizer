@@ -1,11 +1,28 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
+'use strict';
 
 
 class Oscilloscope extends VisuComponentStereo {
 
 
+  /** @summary Oscilloscope displays a merged or L/R oscilloscope in real time.
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentStereo
+   * @description <blockquote>This will display a single/dual canvas with frequency displayed with.</blockquote>
+   * @param {object} options - The oscilloscope options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {object} [options.merged=false] - Merge left and right channel into one output
+   * @param {string} [options.colors] - The oscilloscope background and signal color
+   * @param {string} [options.colors.signal=ColorUtils.defaultPrimaryColor] - The signal color
+   * @param {string} [options.colors.background=ColorUtils.defaultPrimaryColor] - The background color **/
   constructor(options) {
     super(options);
     // Save color
@@ -29,6 +46,21 @@ class Oscilloscope extends VisuComponentStereo {
 
 
 
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+   * @param {object} options - The oscilloscope options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   _fillAttributes(options) {
     super._fillAttributes(options)
 
@@ -41,6 +73,14 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _buildUI
+   * @private
+   * @override
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
   _buildUI() {
     super._buildUI();
 
@@ -50,15 +90,29 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
     super._onResize();
     this._updateDimensions();
   }
 
 
-  /*  ----------  Oscilloscope internal methods  ----------  */
-
-
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit time
+   * analysis.</blockquote> **/
   _processAudioBin() {
     if (this._isPlaying === true) {
       this._clearCanvas();
@@ -74,8 +128,18 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
+  /*  ----------  Oscilloscope internal methods  ----------  */
+
+
+  /** @method
+   * @name _mergedStereoAnalysis
+   * @private
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform a merged Left and Right analysis with 8 bit time domain data.</blockquote> **/
   _mergedStereoAnalysis() {
-    // Create TimeDomain array with freqency bin length
+    // Create TimeDomain array with frequency bin length
     let timeDomain = new Uint8Array(this._nodes.analyser.frequencyBinCount);
     // Left/Right channel
     this._nodes.analyser.getByteTimeDomainData(timeDomain);
@@ -87,6 +151,13 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _stereoAnalysis
+   * @private
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform a separated Left and Right analysis with 8 bit time domain data.</blockquote> **/
   _stereoAnalysis() {
     // Create TimeDomain array with freqency bin length
     let timeDomain = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
@@ -107,6 +178,13 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _updateDimensions
+   * @private
+   * @memberof Oscilloscope
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Usually called on resize event, update canvas dimension to fit render to DOM object.</blockquote> **/
   _updateDimensions() {
     this._dimension.height = this._renderTo.offsetHeight - 4; // 2px borders times two channels
     this._dimension.width = this._renderTo.offsetWidth - 2; // 2px borders

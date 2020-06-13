@@ -1,4 +1,5 @@
 import ColorUtils from './ColorUtils.js';
+'use strict';
 
 
 class CanvasUtils {
@@ -92,7 +93,7 @@ class CanvasUtils {
    * @param {number} options.radStart - The rotation start angle in rad
    * @param {number} options.radEnd - The rotation end angle in rad
    * @param {number} options.width - The circle line width in N
-   * @param {object[]} options.colors - the glow color, must be objects with color and center (0.5 being the circle line) properties **/
+   * @param {object[]} options.colors - the glow color, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1], 0.5 being the circle line) properties  **/
   static drawCircleGlow(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();

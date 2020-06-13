@@ -1,4 +1,5 @@
 import BaseComponent from "./BaseComponent.js";
+'use strict';
 
 
 class VisuComponentMono extends BaseComponent {
@@ -7,6 +8,7 @@ class VisuComponentMono extends BaseComponent {
   /** @summary VisuComponentMono is an abstraction for mono visualisation component. It must be inherited.
    * @author Arthur Beaulieu
    * @since 2020
+   * @augments BaseComponent
    * @description <blockquote>Visualisation components inherit this class to benefit its node routing and canvas
    * configuration. It is meant to use a single canvas for mono or merged L/R audio channels.</blockquote>
    * @param {object} options - The visualizer root options
@@ -27,8 +29,6 @@ class VisuComponentMono extends BaseComponent {
     // Canvas and context
     this._canvas = null;
     this._ctx = null;
-    // Bind process audio bin for add and remove event on demand
-    this._processAudioBin = this._processAudioBin.bind(this);
     // Construction sequence
     this._fillAttributes(options);
     this._buildUI();

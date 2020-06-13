@@ -1,9 +1,25 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
+'use strict';
 
 
 class Spectrum extends VisuComponentStereo {
 
 
+  /** @summary Spectrum displays real time audio frequencies as vertical bars that scroll over time
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentStereo
+   * @description <blockquote>.</blockquote>
+   * @param {object} options - The spectrum options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {boolean} [options.merged=false] - Merge left and right channel into one output
+   * @param {boolean} [options.scale=false] - The peak meter legend
+   * @param {boolean} [options.colorSmoothing=false] - Display color intensity with a gradient to next sample value **/
   constructor(options) {
     super(options);
     this._updateDimensions();
@@ -19,6 +35,26 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /*  ----------  VisuComponentStereo overrides  ----------  */
+
+
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+   * @param {object} options - The frequency circle options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {boolean} [options.scale=false] - The peak meter legend
+   * @param {boolean} [options.colorSmoothing=false] - Display color intensity with a gradient to next sample value **/
   _fillAttributes(options) {
     super._fillAttributes(options);
     // Spectrum specific attributes
@@ -43,6 +79,14 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _buildUI
+   * @private
+   * @override
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
   _buildUI() {
     super._buildUI();
     this._bufferCanvas = document.createElement('CANVAS');
@@ -103,12 +147,109 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _removeEvents
+   * @private
+   * @override
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
   _removeEvents() {
     super._removeEvents();
     document.body.removeEventListener('click', this._clickedElsewhere, false);
   }
 
 
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On resize event callback.</blockquote> **/
+  _onResize() {
+    super._onResize();
+    this._updateDimensions();
+    this._createLogarithmicScaleHeights();
+    // Update canvas dimensions
+    this._canvasL.width = this._dimension.width;
+    this._canvasL.height = this._dimension.canvasHeight;
+
+    if (this._merged === false) {
+      this._canvasR.width = this._dimension.width;
+      this._canvasR.height = this._dimension.canvasHeight;
+    }
+
+    this._bufferCanvas.width = this._dimension.width;
+    this._bufferCanvas.height = this._dimension.canvasHeight;
+  }
+
+
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
+   * and time analysis.</blockquote> **/
+  _processAudioBin() {
+    if (this._isPlaying === true) {
+      if (this._merged === true) {
+        this._mergedStereoAnalysis();
+      } else {
+        this._stereoAnalysis();
+      }
+
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  /*  ----------  Spectrum internal methods  ----------  */
+
+
+  /** @method
+   * @name _mergedStereoAnalysis
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform a merged Left and Right analysis with 32 bit time domain data.</blockquote> **/
+  _mergedStereoAnalysis() {
+    const frequencies = new Uint8Array(this._nodes.analyser.frequencyBinCount);
+    this._nodes.analyser.getByteFrequencyData(frequencies);
+    this._drawSpectrogramForFrequencyBin(this._canvasL, frequencies);
+  }
+
+
+  /** @method
+   * @name _stereoAnalysis
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform a separated Left and Right analysis with 32 bit time domain data.</blockquote> **/
+  _stereoAnalysis() {
+    const frequenciesL = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
+    const frequenciesR = new Uint8Array(this._nodes.analyserR.frequencyBinCount);
+    this._nodes.analyserL.getByteFrequencyData(frequenciesL);
+    this._nodes.analyserR.getByteFrequencyData(frequenciesR);
+    this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
+    this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
+  }
+
+
+  /** @method
+   * @name _updateDimensions
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Usually called on resize event, update canvas dimension to fit render to DOM object.</blockquote> **/
   _updateDimensions() {
     this._dimension.width = this._renderTo.offsetWidth - 2;  // 2px borders
 
@@ -122,6 +263,13 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _settingsClicked
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Spectrum settings button callback.</blockquote> **/
   _settingsClicked() {
     const opened = this._dom.settingsPanel.classList.contains('opened');
     if (opened === false) { // If opened, setings closure will be handled in clickedElsewhere
@@ -132,6 +280,14 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _clickedElsewhere
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Callback when a clicked is detected and settings context is open.</blockquote>
+   * @param {object} event - The click event **/
   _clickedElsewhere(event) {
     if (!event.target.closest('.audio-spectrum-settings') && !event.target.closest('.audio-spectrum-settings-panel')) {
       this._dom.settings.classList.remove('opened');
@@ -141,36 +297,15 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
-  _processAudioBin(event) {
-    if (this._isPlaying === true) {
-      if (this._merged === true) {
-        this._mergedStereoAnalysis();
-      } else {
-        this._stereoAnalysis();
-      }
-
-      requestAnimationFrame(this._processAudioBin);
-    }
-  }
-
-
-  _mergedStereoAnalysis() {
-    const frequencies = new Uint8Array(this._nodes.analyser.frequencyBinCount);
-    this._nodes.analyser.getByteFrequencyData(frequencies);
-    this._drawSpectrogramForFrequencyBin(this._canvasL, frequencies);
-  }
-
-
-  _stereoAnalysis() {
-    const frequenciesL = new Uint8Array(this._nodes.analyserL.frequencyBinCount);
-    const frequenciesR = new Uint8Array(this._nodes.analyserR.frequencyBinCount);
-    this._nodes.analyserL.getByteFrequencyData(frequenciesL);
-    this._nodes.analyserR.getByteFrequencyData(frequenciesR);
-    this._drawSpectrogramForFrequencyBin(this._canvasL, frequenciesL);
-    this._drawSpectrogramForFrequencyBin(this._canvasR, frequenciesR);
-  }
-
-
+  /** @method
+   * @name _drawSpectrogramForFrequencyBin
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a vertical ray representing the audio frequencies at process time.</blockquote>
+   * @param {object} canvas - The canvas to draw spectrum ray into
+   * @param {number[]} frequencies - The frequencies for a given audio bin **/
   _drawSpectrogramForFrequencyBin(canvas, frequencies) {
     const ctx = canvas.getContext('2d');
     // Copy previous image
@@ -190,6 +325,16 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _drawSpectrogramForFrequencyBin
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw the vertical ray with a linear scale.</blockquote>
+   * @param {object} ctx - The canvas context
+   * @param {number[]} frequencies - The frequencies for a given audio bin
+   * @param {number} i - The index to scale linearly **/
   _fillRectLinear(ctx, frequencies, i) {
     const scaledHeight = this._scaleLinearIndexToHeight(i);
     const frequencyHeight = this._dimension.canvasHeight / frequencies.length;
@@ -215,6 +360,16 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _drawSpectrogramForFrequencyBin
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw the vertical ray with a logarithm scale.</blockquote>
+   * @param {object} ctx - The canvas context
+   * @param {number[]} frequencies - The frequencies for a given audio bin
+   * @param {number} i - The index to scale logarithmically **/
   _fillRectLogarithm(ctx, frequencies, i) {
     if (i === 0 || i === frequencies.length - 1 || !this._colorSmoothing) {
       ctx.fillStyle = `rgb(${frequencies[i]}, ${frequencies[i]}, ${frequencies[i]})`;
@@ -238,11 +393,19 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
-  /* Convert a range to another, maintaining ratio
-   * oldRange = (oldMax - oldMin)
-   * newRange = (newMax - newMin)
-   * newValue = (((oldValue - oldMin) * newRange) / oldRange) + NewMin */
+  /** @method
+   * @name _scaleLinearIndexToHeight
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Convert linear value to logarithmic value.</blockquote>
+   * @param {number} index - The canvas context **/
   _scaleLinearIndexToHeight(index) {
+    // Convert a range to another, maintaining ratio
+    // oldRange = (oldMax - oldMin)
+    // newRange = (newMax - newMin)
+    // newValue = (((oldValue - oldMin) * newRange) / oldRange) + NewMin */
     // Convert from [0, (this._fftSize / 2)] to [0, this._dimension.canvasHeight] (frequency array length scale to canvas height scale)
     const oldRange = this._fftSize / 2;
     const newRange = this._dimension.canvasHeight;
@@ -250,7 +413,13 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
-  // Pre-compute samples height on a logarithmic scale to avoid computation on render process
+  /** @method
+   * @name _createLogarithmicScaleHeights
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Pre-compute samples height on a logarithmic scale to avoid computation on render process.</blockquote> **/
   _createLogarithmicScaleHeights() {
     return new Promise(resolve => {
       this._logScale = [this._dimension.canvasHeight]; // Reset previously made scale
@@ -262,26 +431,16 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _computeLogSampleHeight
+   * @private
+   * @memberof Spectrum
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Compute log sample height in canvas.</blockquote>
+   * @param {number} sample - The sample to compute its log height **/
   _computeLogSampleHeight(sample) {
     return this._dimension.canvasHeight - (((Math.log(sample) / Math.log(10)) / (Math.log(this._fftSize / 2) / Math.log(10))) * this._dimension.canvasHeight);
-  }
-
-
-  _onResize() {
-    super._onResize();
-    this._updateDimensions();
-    this._createLogarithmicScaleHeights();
-    // Update canvas dimensions
-    this._canvasL.width = this._dimension.width;
-    this._canvasL.height = this._dimension.canvasHeight;
-
-    if (this._merged === false) {
-      this._canvasR.width = this._dimension.width;
-      this._canvasR.height = this._dimension.canvasHeight;
-    }
-
-    this._bufferCanvas.width = this._dimension.width;
-    this._bufferCanvas.height = this._dimension.canvasHeight;
   }
 
 

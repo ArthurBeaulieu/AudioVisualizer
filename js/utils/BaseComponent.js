@@ -1,3 +1,6 @@
+'use strict';
+
+
 class BaseComponent {
 
 
@@ -31,6 +34,8 @@ class BaseComponent {
     this._play = this._play.bind(this);
     this._pause = this._pause.bind(this);
     this._dblClick = this._dblClick.bind(this);
+    // Bind process audio bin for add and remove event on demand
+    this._processAudioBin = this._processAudioBin.bind(this);
   }
 
 
@@ -79,6 +84,18 @@ class BaseComponent {
    * @since 2020
    * @description <blockquote>Build audio chain with source.</blockquote> **/
   _setAudioNodes() {
+    // Must be implemented in sub class
+  }
+
+
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @memberof BaseComponent
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Real time audio analysis using PCM data from WebAudioAPI.</blockquote> **/
+  _processAudioBin() {
     // Must be implemented in sub class
   }
 
@@ -145,7 +162,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>On resize event callback. Must be handled in child class.</blockquote> **/
+   * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
     // Resize must be handled in each sub class
   }

@@ -1,6 +1,7 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
+'use strict';
 
 
 const MAX_CANVAS_WIDTH = 32000;
@@ -45,11 +46,30 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /*  ----------  VisuComponentMono overrides  ----------  */
+
+
+
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+   * @param {object} options - The frequency circle options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._offlineCtx = null;
     this._offlineBuffer = null;
-    // Event binding
+    // Local event binding
     this._trackLoaded = this._trackLoaded.bind(this);
     this._onProgress = this._onProgress.bind(this);
     this._mouseDown = this._mouseDown.bind(this);
@@ -58,6 +78,14 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _addEvents
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
   _addEvents() {
     super._addEvents();
     this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
@@ -66,6 +94,14 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _removeEvents
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Remove component events (resize, play, pause, dbclick).</blockquote> **/
   _removeEvents() {
     super._removeEvents();
     this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
@@ -73,6 +109,14 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
     super._onResize();
     this._fillData();
@@ -81,9 +125,38 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _dblClick
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On double click event callback.</blockquote> **/
   _dblClick() {
-    // Required to revoke fullscreen toggle from parent class, as it interfers with drag feature
+    // Required to revoke fullscreen toggle from parent class, as it interferes with drag feature
   }
+
+
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
+   * and time analysis.</blockquote> **/
+  _processAudioBin() {
+    if (this._isPlaying === true) {
+      this._clearCanvas();
+      this._drawTimeline(this._player.currentTime);
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  /*  ----------  Timeline internal methods  ----------  */
 
 
   _trackLoaded() {
@@ -129,7 +202,7 @@ class Timeline extends VisuComponentMono {
   }
 
 
-  _mouseUp(event) {
+  _mouseUp() {
     this._isDragging = false;
     this._startDrag.x = 0;
     this._startDrag.y = 0;
@@ -306,15 +379,6 @@ class Timeline extends VisuComponentMono {
     request.responseType = 'arraybuffer';
     request.onload = () => { this._processAudioFile(request.response); };
     request.send();
-  }
-
-
-  _processAudioBin() {
-    if (this._isPlaying === true) {
-      this._clearCanvas();
-      this._drawTimeline(this._player.currentTime);
-      requestAnimationFrame(this._processAudioBin);
-    }
   }
 
 

@@ -1,5 +1,6 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import ColorUtils from '../utils/ColorUtils.js';
+'use strict';
 
 
 class WaveformProgress extends VisuComponentMono {
@@ -22,6 +23,25 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /*  ----------  VisuComponentMono overrides  ----------  */
+
+
+
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof FrequencyCircle
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+   * @param {object} options - The frequency circle options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._animation = options.animation;
@@ -43,12 +63,28 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _buildUI
+   * @private
+   * @override
+   * @memberof FrequencyCircle
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
   _buildUI() {
     super._buildUI();
     this._bars = this._canvas.width / this._wave.barWidth;
   }
 
 
+  /** @method
+   * @name _addEvents
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
   _addEvents() {
     super._addEvents();
     this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
@@ -56,6 +92,14 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _removeEvents
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Remove component events (resize, play, pause, dbclick).</blockquote> **/
   _removeEvents() {
     super._removeEvents();
     this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
@@ -63,6 +107,14 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof FrequencyCircle
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
     super._onResize();
     this._bars = this._canvas.width / this._wave.barWidth;
@@ -72,9 +124,38 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _dblClick
+   * @private
+   * @override
+   * @memberof FrequencyCircle
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On double click event callback.</blockquote> **/
   _dblClick() {
-    // Required to revoke fullscreen toggle from parent class, as it interfers with seek feature
+    // Required to revoke fullscreen toggle from parent class, as it interferes with seek feature
   }
+
+
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
+   * and time analysis.</blockquote> **/
+  _processAudioBin() {
+    if (this._isPlaying === true) {
+      this._clearCanvas();
+      this._drawFileWaveform(this._player.currentTime / this._player.duration);
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  /*  ----------  Waveform internal methods  ----------  */
 
 
   _trackLoaded() {
@@ -163,11 +244,11 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
-  /* Convert a range to another, maintaining ratio
-   * oldRange = (oldMax - oldMin)
-   * newRange = (newMax - newMin)
-   * newValue = (((oldValue - oldMin) * newRange) / oldRange) + NewMin */
   _scaleDataToHeight(sampledData) {
+    // Convert a range to another, maintaining ratio
+    // oldRange = (oldMax - oldMin)
+    // newRange = (newMax - newMin)
+    // newValue = (((oldValue - oldMin) * newRange) / oldRange) + NewMin */
     // We take max value of sampled data as 90% height in canvas as ref
     const oldMax = Math.max(...sampledData);
     const oldMin = Math.min(...sampledData);
@@ -244,22 +325,12 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
-
   _getPlayerSourceFile() {
     const request = new XMLHttpRequest();
     request.open('GET', this._player.src, true);
     request.responseType = 'arraybuffer';
     request.onload = () => { this._processAudioFile(request.response); };
     request.send();
-  }
-
-
-  _processAudioBin() {
-    if (this._isPlaying === true) {
-      this._clearCanvas();
-      this._drawFileWaveform(this._player.currentTime / this._player.duration);
-      requestAnimationFrame(this._processAudioBin);
-    }
   }
 
 

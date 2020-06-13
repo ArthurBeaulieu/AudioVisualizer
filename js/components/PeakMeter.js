@@ -1,14 +1,36 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
-
-
-// Modified https://github.com/esonderegger/web-audio-peak-meter to fit AudioVIsualizer needs
+'use strict';
 
 
 class PeakMeter extends VisuComponentStereo {
 
 
+  /** @summary PeakMeter displays a splited or merged peak meter for audio signal
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentStereo
+   * @description <blockquote>This component display a peak meter in several configuration. It can include a scale and its legend
+   * and be oriented vertically or horizontally. Modified https://github.com/esonderegger/web-audio-peak-meter</blockquote>
+   * @param {object} options - The peak meter options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {boolean} [options.merged=false] - Merge left and right channel into one output
+   * @param {object} [options.legend] - The peak meter legend options
+   * @param {number} [options.legend.dbScaleMin=60] - The min scale value
+   * @param {number} [options.legend.dbScaleTicks=6] - The tick distance, must be a multiple of scale min
+   * @param {object} [options.colors] - The oscilloscope background and signal color
+   * @param {string} [options.colors.background=ColorUtils.defaultPrimaryColor] - The background color
+   * @param {string} [options.colors.min=#56D45B] - The gradient min value
+   * @param {string} [options.colors.step0=#AFF2B3] - The gradient second value
+   * @param {string} [options.colors.step1=#FFAD67] - The gradient third value
+   * @param {string} [options.colors.step2=#FF6B67] - The gradient fourth value
+   * @param {string} [options.colors.max=#FFBAB8] - The gradient max value **/
   constructor(options) {
     super(options);
     // Peak gradient
@@ -33,6 +55,21 @@ class PeakMeter extends VisuComponentStereo {
   /*  ----------  VisuComponentStereo overrides  ----------  */
 
 
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+   * @param {object} options - The frequency circle options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._orientation = options.orientation || 'horizontal';
@@ -57,6 +94,14 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _buildUI
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
   _buildUI() {
     super._buildUI();
 
@@ -83,6 +128,14 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _setAudioNodes
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Build audio chain with source.</blockquote> **/
   _setAudioNodes() {
     super._setAudioNodes();
     this._peakSetTimeL = this._audioCtx.currentTime;
@@ -90,6 +143,13 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _pause
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On pause event callback.</blockquote> **/
   _pause() {
     super._pause();
     if (this._legend) {
@@ -99,6 +159,14 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
     super._onResize();
     this._updateDimensions();
@@ -110,9 +178,16 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
-  /*  ----------  Oscilloscope internal methods  ----------  */
-
-
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
+   * and time analysis. Then we use utils method to draw radial oscilloscope, linear point oscilloscope, background points
+   * and radial frequency bars.</blockquote> **/
   _processAudioBin() {
     if (this._isPlaying === true) {
       this._clearCanvas();
@@ -128,6 +203,16 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /*  ----------  PeakMeter internal methods  ----------  */
+
+
+  /** @method
+   * @name _mergedStereoAnalysis
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform a merged Left and Right analysis with 32 bit time domain data.</blockquote> **/
   _mergedStereoAnalysis() {
     const data = new Float32Array(this._fftSize);
     this._nodes.analyser.getFloatTimeDomainData(data);
@@ -172,6 +257,13 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _stereoAnalysis
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform a separated Left and Right analysis with 32 bit time domain data.</blockquote> **/
   _stereoAnalysis() {
     const dataL = new Float32Array(this._fftSize);
     const dataR = new Float32Array(this._fftSize);
@@ -245,6 +337,13 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _createScaleTicks
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Build the scale tick depending on component orientation.</blockquote> **/
   _createScaleTicks() {
     const numTicks = Math.floor(this._dbScaleMin / this._dbScaleTicks);
     let dbTickLabel = 0;
@@ -271,6 +370,13 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _createPeakLabel
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Build the scale legend depending on component orientation.</blockquote> **/
   _createPeakLabel() {
     if (this._dom.labels.length === 2) {
       this._dom.container.removeChild(this._dom.labels[0]);
@@ -306,6 +412,13 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
+  /** @method
+   * @name _updateDimensions
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Usually called on resize event, update canvas dimension to fit render to DOM object.</blockquote> **/
   _updateDimensions() {
     let widthOffset = 0;
     let heightOffset = 0;

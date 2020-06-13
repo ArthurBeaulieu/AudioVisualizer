@@ -5,6 +5,7 @@
   "main": "src/js/Start.js",
   "scripts": {
     "build": "webpack  --env.version=0.9.2 --progress",
+    "dev": "webpack  --env.version=0.9.2 --env.dev=true --progress",
     "doc": "jsdoc -c jsDoc.json"
   },
   "homepage": "https://github.com/ArthurBeaulieu/AudioVisualizer/README.md",
