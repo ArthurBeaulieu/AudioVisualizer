@@ -10,6 +10,28 @@ const MAX_CANVAS_WIDTH = 32000;
 class Timeline extends VisuComponentMono {
 
 
+  /** @summary Timeline displays a scrolling audio waveform.
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentMono
+   * @description <blockquote>Will display a waveform that scroll over playback. If provided, BPM is visualised as
+   * vertical bars with emphasis on main beats according to time signature.</blockquote>
+   * @param {object} options - The frequency bars options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {object} [options.beat=null] - The beat configuration
+   * @param {object} [options.beat.offset=null] - offset before first beat
+   * @param {object} [options.beat.bpm=null] - The track bpm
+   * @param {object} [options.beat.timeSignature=null] - The track time signature to emphasis main beats
+   * @param {object} [options.colors] - Waveform color potions
+   * @param {object} [options.colors.background] - Canvas background color in Hex/RGB/HSL
+   * @param {object} [options.colors.track] - The timeline color in Hex/RGB/HSL
+   * @param {object} [options.colors.mainBeat] - The main beat triangle color in Hex/RGB/HSL
+   * @param {object} [options.colors.subBeat] - The sub beat triangle color in Hex/RGB/HSL **/
   constructor(options) {
     super(options);
 
@@ -159,6 +181,13 @@ class Timeline extends VisuComponentMono {
   /*  ----------  Timeline internal methods  ----------  */
 
 
+  /** @method
+   * @name _trackLoaded
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Player callback on track loaded.</blockquote> **/
   _trackLoaded() {
     cancelAnimationFrame(this._processAudioBin);
     this._clearCanvas(); // Clear previous canvas
@@ -167,12 +196,27 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _onProgress
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>On progress callback.</blockquote> **/
   _onProgress() {
     this._clearCanvas()
     this._drawTimeline(this._player.currentTime || 0);
   }
 
 
+  /** @method
+   * @name _mouseDown
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Mouse down callback.</blockquote>
+   * @param {object} event - The mouse down event **/
   _mouseDown(event) {
     this._isDragging = true;
     this._startDrag.x = event.clientX;
@@ -190,6 +234,14 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _mouseDown
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Mouse move callback.</blockquote>
+   * @param {object} event - The mouse move event **/
   _mouseMove(event) {
     // Only perform drag code if mouse down was previously fired
     if (this._isDragging === true) {
@@ -202,6 +254,13 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _mouseUp
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Mouse up callback.</blockquote> **/
   _mouseUp() {
     this._isDragging = false;
     this._startDrag.x = 0;
@@ -220,6 +279,14 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _processAudioFile
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform an offline analysis on whole track.</blockquote>
+   * @param {object} response - HTTP response for audio track to extract buffer from **/
   _processAudioFile(response) {
     // Set offline context according to track duration to get its full samples
     this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
@@ -239,6 +306,13 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _fillData
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Generate merged data from audio buffer.</blockquote> **/
   _fillData() {
     if (this._offlineBuffer) {
       // Clear any previous canvas
@@ -304,6 +378,17 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _drawBeatBar
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>.</blockquote>
+   * @param {object} beatCount - The beat number from first
+   * @param {object} canvas - The canvas to draw in
+   * @param {object} ctx - The associated context
+   * @param {object} j - The y value **/
   _drawBeatBar(beatCount, canvas, ctx, j) {
     // Determine beat bar color
     if (beatCount % this._beat.timeSignature === 0) {
@@ -336,6 +421,15 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _genScaledMonoData
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Merged L/R Sub sample channel data to compute average value, depending on bar count.</blockquote>
+   * @param {object} buffer - Audio buffer
+   * @return {number[]} Array of height per sub samples **/
   _genScaledMonoData(buffer) {
     const dataL = buffer.getChannelData(0);
     const dataR = buffer.getChannelData(1);
@@ -349,6 +443,14 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _drawTimeline
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw waveform with a given progress.</blockquote>
+   * @param {number} time - Track current time **/
   _drawTimeline(time) {
     const center = Math.floor(time * this._canvas.width / this._canvasSpeed);
     let leftEdgeIndex = Math.floor((center - (this._canvas.width / 2)) / MAX_CANVAS_WIDTH);
@@ -373,6 +475,13 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _getPlayerSourceFile
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Fetch audio file using xmlHTTP request.</blockquote> **/
   _getPlayerSourceFile() {
     const request = new XMLHttpRequest();
     request.open('GET', this._player.src, true);
@@ -382,6 +491,20 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  /*  ----------  Timeline public methods  ----------  */
+
+
+  /** @method
+   * @name updateBeatInfo
+   * @public
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Update the beat position.</blockquote>
+   * @param {object} options - Track beat options
+   * @param {number} [options.beat.offset=null] - offset before first beat
+   * @param {number} [options.beat.bpm=null] - The track bpm
+   * @param {number} [options.beat.timeSignature=null] - The track time signature to emphasis main beats **/
   updateBeatInfo(options) {
     this._beat = {
       offset: options.offset,

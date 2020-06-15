@@ -6,6 +6,24 @@ import ColorUtils from '../utils/ColorUtils.js';
 class WaveformProgress extends VisuComponentMono {
 
 
+  /** @summary WaveformProgress displays the audio waveform using offline analysis.
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentMono
+   * @description <blockquote>This will display a single canvas with frequency from left to right be bass to high. The bar
+   * height depends on audio bin intensity. The audio graph is then draw with a gradient from bottom to top that is from
+   * green to red. Those color can be custom ones (see constructor options).</blockquote>
+   * @param {object} options - The frequency bars options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {object} [options.colors] - Waveform color potions
+   * @param {object} [options.colors.background] - Canvas background color in Hex/RGB/HSL
+   * @param {object} [options.colors.track] - The waveform background color in Hex/RGB/HSL
+   * @param {object} [options.colors.progress] - The waveform progress color in Hex/RGB/HSL **/
   constructor(options) {
     super(options);
 
@@ -31,7 +49,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _fillAttributes
    * @private
    * @override
-   * @memberof FrequencyCircle
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
@@ -67,7 +85,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _buildUI
    * @private
    * @override
-   * @memberof FrequencyCircle
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
@@ -81,7 +99,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _addEvents
    * @private
    * @override
-   * @memberof Timeline
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
@@ -96,7 +114,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _removeEvents
    * @private
    * @override
-   * @memberof Timeline
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Remove component events (resize, play, pause, dbclick).</blockquote> **/
@@ -111,7 +129,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _onResize
    * @private
    * @override
-   * @memberof FrequencyCircle
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>On resize event callback.</blockquote> **/
@@ -128,7 +146,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _dblClick
    * @private
    * @override
-   * @memberof FrequencyCircle
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>On double click event callback.</blockquote> **/
@@ -141,7 +159,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _processAudioBin
    * @private
    * @override
-   * @memberof Timeline
+   * @memberof WaveformProgress
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
@@ -158,6 +176,13 @@ class WaveformProgress extends VisuComponentMono {
   /*  ----------  Waveform internal methods  ----------  */
 
 
+  /** @method
+   * @name _trackLoaded
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Player callback on track loaded.</blockquote> **/
   _trackLoaded() {
     cancelAnimationFrame(this._processAudioBin);
     this._clearCanvas(); // Clear previous canvas
@@ -166,6 +191,14 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _seekPlayer
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Update waveform progress according to mouse seek event.</blockquote>
+   * @param {object} event - The mouse event **/
   _seekPlayer(event) {
     const boundingBox = event.target.getBoundingClientRect();
     const xOffset = event.clientX - boundingBox.left;
@@ -175,6 +208,14 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _processAudioFile
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Perform an offline analysis on whole track.</blockquote>
+   * @param {object} response - HTTP response for audio track to extract buffer from **/
   _processAudioFile(response) {
     // Set offline context according to track duration to get its full samples
     this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
@@ -194,6 +235,13 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _fillData
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Generate merged or stereo data from audio buffer.</blockquote> **/
   _fillData() {
     if (this._offlineBuffer) {
       if (this._wave.merged === true) {
@@ -207,6 +255,15 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _genScaledData
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>L/R Sub sample channel data to compute average value, depending on bar count.</blockquote>
+   * @param {number[]} data - Channel data (L/R here)
+   * @return {number[]} Array of height per sub samples **/
   _genScaledData(data) {
     const subSampleSize = Math.floor(data.length / this._bars);
     const output = [];
@@ -224,6 +281,15 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _genScaledMonoData
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Merged L/R Sub sample channel data to compute average value, depending on bar count.</blockquote>
+   * @param {object} buffer - Audio buffer
+   * @return {number[]} Array of height per sub samples **/
   _genScaledMonoData(buffer) {
     const dataL = buffer.getChannelData(0);
     const dataR = buffer.getChannelData(1);
@@ -244,6 +310,15 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _scaleDataToHeight
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Scale channel data into an array of height to be used in canvas on draw.</blockquote>
+   * @param {number[]} sampledData - Channel data
+   * @return {number[]} Array of height per sub samples **/
   _scaleDataToHeight(sampledData) {
     // Convert a range to another, maintaining ratio
     // oldRange = (oldMax - oldMin)
@@ -265,8 +340,16 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _scaleDataToHeight
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw waveform with a given progress.</blockquote>
+   * @param {number} progressPercentage - Track progress percentage **/
   _drawFileWaveform(progressPercentage) {
-    var x = this._canvas.width / this._bars;
+    const x = this._canvas.width / this._bars;
     const margin = x * this._wave.barMarginScale;
 
     this._ctx.beginPath();
@@ -325,6 +408,13 @@ class WaveformProgress extends VisuComponentMono {
   }
 
 
+  /** @method
+   * @name _getPlayerSourceFile
+   * @private
+   * @memberof WaveformProgress
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Fetch audio file using xmlHTTP request.</blockquote> **/
   _getPlayerSourceFile() {
     const request = new XMLHttpRequest();
     request.open('GET', this._player.src, true);
