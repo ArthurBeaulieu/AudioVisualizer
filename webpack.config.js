@@ -17,7 +17,7 @@ module.exports = env => {
   }, {
     loader: 'postcss-loader',
     options: {
-      plugins: (loader) => [
+      plugins: () => [
         require('autoprefixer')({
           browserlist: ['last 2 versions']
         })

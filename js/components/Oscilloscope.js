@@ -19,7 +19,7 @@ class Oscilloscope extends VisuComponentStereo {
    * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
    * @param {object} [options.audioContext=null] - The audio context to base analysis from
    * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
-   * @param {object} [options.merged=false] - Merge left and right channel into one output
+   * @param {boolean} [options.merged=false] - Merge left and right channel into one output
    * @param {string} [options.colors] - The oscilloscope background and signal color
    * @param {string} [options.colors.signal=ColorUtils.defaultPrimaryColor] - The signal color
    * @param {string} [options.colors.background=ColorUtils.defaultPrimaryColor] - The background color **/

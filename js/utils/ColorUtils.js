@@ -8,7 +8,7 @@ class ColorUtils {
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
-   * make those utils methods available with constraints. Refer to each method for their associated documentation.</blockquote> */
+   * make those utils methods available without constraints. Refer to each method for their associated documentation.</blockquote> */
   constructor() {}
 
 
@@ -28,7 +28,7 @@ class ColorUtils {
    * @param {number} options.x1 - The x endpoint in canvas dimension
    * @param {number} options.y1 - The y endpoint in canvas dimension
    * @param {number} options.r1 - The radius of the end circle in Float[0,2PI]
-   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawRadialGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -58,7 +58,7 @@ class ColorUtils {
    * @param {number} options.originX - The bar x origin in canvas dimension
    * @param {number} options.height - The bar height in canvas dimension
    * @param {number} options.width - The bar width in canvas dimension
-   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawVerticalGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(
@@ -82,13 +82,13 @@ class ColorUtils {
    * @static
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Fill context radial glowing gradient according to options object.</blockquote>
+   * @description <blockquote>Fill context with radial glowing gradient according to options object.</blockquote>
    * @param {object} canvas - The canvas to draw radial glowing gradient in
    * @param {object} options - Radial glowing gradient options
    * @param {number} options.centerX - The center x origin in canvas dimension
    * @param {number} options.centerY - The center y origin in canvas dimension
    * @param {number} options.radius - The circle radius in canvas dimension
-   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawRadialGlowGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -112,11 +112,11 @@ class ColorUtils {
    * @static
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Fill context radial glowing gradient according to options object.</blockquote>
+   * @description <blockquote>Fill peakmeter context with audio gradient according to options.</blockquote>
    * @param {object} canvas - The canvas to draw radial glowing gradient in
    * @param {object} options - Radial glowing gradient options
    * @param {string} options.orientation - The peak meter orientation (<code>vertical</code> or <code>horizontal</code>)
-   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
+   * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static peakMeterGradient(canvas, options) {
     const ctx = canvas.getContext('2d');
     let gradient = null;
@@ -215,7 +215,7 @@ class ColorUtils {
 
   /** @public
    * @static
-   * @member {string} - The default background color */
+   * @member {string} - The default background color, #1D1E25 */
   static get defaultBackgroundColor() {
     return '#1D1E25';
   }
@@ -223,7 +223,7 @@ class ColorUtils {
 
   /** @public
    * @static
-   * @member {string} - The default text color */
+   * @member {string} - The default text color, #E7E9E7 */
   static get defaultTextColor() {
     return '#E7E9E7';
   }
@@ -231,7 +231,7 @@ class ColorUtils {
 
   /** @public
    * @static
-   * @member {string} - The default primary color */
+   * @member {string} - The default primary color, #56D45B */
   static get defaultPrimaryColor() {
     return '#56D45B';
   }
@@ -239,7 +239,7 @@ class ColorUtils {
 
   /** @public
    * @static
-   * @member {string} - The default anti primary color */
+   * @member {string} - The default anti primary color, #FF6B67 */
   static get defaultAntiPrimaryColor() {
     return '#FF6B67';
   }
@@ -247,7 +247,7 @@ class ColorUtils {
 
   /** @public
    * @static
-   * @member {string} - The default dark primary color */
+   * @member {string} - The default dark primary color, #12B31D */
   static get defaultDarkPrimaryColor() {
     return '#12B31D';
   }
@@ -255,7 +255,7 @@ class ColorUtils {
 
   /** @public
    * @static
-   * @member {string[]} - The default color array to be used in gradient */
+   * @member {string[]} - The default color array to be used in gradient, <code>['#56D45B', '#AFF2B3', '#FFAD67', '#FF6B67', '#FFBAB8']</code> */
   static get defaultAudioGradient() {
     // Green, Light Green, Orange, Red, Light Red
     return ['#56D45B', '#AFF2B3', '#FFAD67', '#FF6B67', '#FFBAB8'];

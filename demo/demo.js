@@ -151,6 +151,6 @@ let currentIndex = 0; // Init demo with flac file (flac 4 the win guys)
 document.getElementById('demo-current-src').innerHTML = sources[currentIndex]; // Set initial src text
 document.getElementById('demo-change-src').addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % sources.length; // Update source index
-  document.getElementById('audio-player').src = `assets/audio/${sources[currentIndex]}`; // Update audio source
+  document.getElementById('audio-player').src = `demo/audio/${sources[currentIndex]}`; // Update audio source
   document.getElementById('demo-current-src').innerHTML = sources[currentIndex]; // Update text feedback
 });

@@ -14,9 +14,11 @@ class Timeline extends VisuComponentMono {
    * @author Arthur Beaulieu
    * @since 2020
    * @augments VisuComponentMono
-   * @description <blockquote>Will display a waveform that scroll over playback. If provided, BPM is visualised as
-   * vertical bars with emphasis on main beats according to time signature.</blockquote>
-   * @param {object} options - The frequency bars options
+   * @description <blockquote>Will display a waveform that scrolls over playback. If provided, BPM is visualised as
+   * vertical bars with emphasis on main beats according to time signature. It is interactive and will update the player's
+   * current time value to match the dragged one. This class extends VisuComponentMono only because it performs an offline
+   * analysis on audio and the stereo information are already held in audio buffer.</blockquote>
+   * @param {object} options - The timeline options
    * @param {string} options.type - The component type as string
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
    * @param {object} options.renderTo - The DOM element to render canvas in
@@ -26,12 +28,12 @@ class Timeline extends VisuComponentMono {
    * @param {object} [options.beat=null] - The beat configuration
    * @param {object} [options.beat.offset=null] - offset before first beat
    * @param {object} [options.beat.bpm=null] - The track bpm
-   * @param {object} [options.beat.timeSignature=null] - The track time signature to emphasis main beats
-   * @param {object} [options.colors] - Waveform color potions
-   * @param {object} [options.colors.background] - Canvas background color in Hex/RGB/HSL
-   * @param {object} [options.colors.track] - The timeline color in Hex/RGB/HSL
-   * @param {object} [options.colors.mainBeat] - The main beat triangle color in Hex/RGB/HSL
-   * @param {object} [options.colors.subBeat] - The sub beat triangle color in Hex/RGB/HSL **/
+   * @param {object} [options.beat.timeSignature=null] - The track time signature to put emphasis on main beats
+   * @param {object} [options.colors] - Timeline color potions
+   * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
+   * @param {object} [options.colors.track='#12B31D'] - The timeline color in Hex/RGB/HSL
+   * @param {object} [options.colors.mainBeat='#56D45B'] - The main beat triangles color in Hex/RGB/HSL
+   * @param {object} [options.colors.subBeat='#FF6B67'] - The sub beat triangles color in Hex/RGB/HSL **/
   constructor(options) {
     super(options);
 
@@ -384,11 +386,11 @@ class Timeline extends VisuComponentMono {
    * @memberof Timeline
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>.</blockquote>
+   * @description <blockquote>Draw a beat bard with its triangle with color that depends on main beat or sub beat.</blockquote>
    * @param {object} beatCount - The beat number from first
    * @param {object} canvas - The canvas to draw in
    * @param {object} ctx - The associated context
-   * @param {object} j - The y value **/
+   * @param {number} j - The y value **/
   _drawBeatBar(beatCount, canvas, ctx, j) {
     // Determine beat bar color
     if (beatCount % this._beat.timeSignature === 0) {
@@ -449,7 +451,7 @@ class Timeline extends VisuComponentMono {
    * @memberof Timeline
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Draw waveform with a given progress.</blockquote>
+   * @description <blockquote>Draw timeline with a given progress.</blockquote>
    * @param {number} time - Track current time **/
   _drawTimeline(time) {
     const center = Math.floor(time * this._canvas.width / this._canvasSpeed);

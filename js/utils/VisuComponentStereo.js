@@ -5,12 +5,13 @@ import BaseComponent from "./BaseComponent.js";
 class VisuComponentStereo extends BaseComponent {
 
 
-  /** @summary VisuComponentStereo is an abstraction for stereo visualisation component. It must be inherited.
+  /** @summary VisuComponentStereo is an abstraction for stereo visualisation components. It must be inherited.
    * @author Arthur Beaulieu
    * @since 2020
    * @augments BaseComponent
-   * @description <blockquote>Visualisation components inherit this class to benefit its node routing and canvas
-   * configuration. It is meant to use a L/R canvas for stereo or merged L/R audio channels.</blockquote>
+   * @description <blockquote>Stereo components inherit this class to benefit its node routing and canvas
+   * configuration. It is meant to use a L/R canvas for stereo or merged L/R one. This class extends BaseComponent to
+   * benefits all shared properties between visualisations.</blockquote>
    * @param {object} options - The visualizer root options
    * @param {string} options.type - The component type as string
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
@@ -115,7 +116,7 @@ class VisuComponentStereo extends BaseComponent {
       this._nodes.source = this._inputNode;
     }
 
-    let outputNode = null;
+    let outputNode;
     if (this._merged === true) {
       this._nodes.analyser = this._audioCtx.createAnalyser();
       this._nodes.analyser.fftSize = this._fftSize;

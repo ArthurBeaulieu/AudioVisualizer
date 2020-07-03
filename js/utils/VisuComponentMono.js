@@ -9,8 +9,9 @@ class VisuComponentMono extends BaseComponent {
    * @author Arthur Beaulieu
    * @since 2020
    * @augments BaseComponent
-   * @description <blockquote>Visualisation components inherit this class to benefit its node routing and canvas
-   * configuration. It is meant to use a single canvas for mono or merged L/R audio channels.</blockquote>
+   * @description <blockquote>Mono components inherit this class to benefit its node routing and canvas
+   * configuration. It is meant to use a single canvas for mono or merged L/R audio channels. This class extends
+   * BaseComponent to benefits all shared properties between visualisations.</blockquote>
    * @param {object} options - The visualizer root options
    * @param {string} options.type - The component type as string
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)

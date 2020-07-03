@@ -7,7 +7,7 @@ class BaseComponent {
   /** @summary BaseComponent is the bedrock of any visualisation here. It must be inherited from Mono or Stereo component abstraction.
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Store all base method, mostly to handle events.</blockquote> **/
+   * @description <blockquote>Store all base method, mostly to handle events, other processing methods needs to be overridden.</blockquote> **/
   constructor() {
     // Attributes that can be sent as options
     this._type = null;
@@ -58,7 +58,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Build component properties from options.</blockquote> **/
+   * @description <blockquote>Build component properties from options. Must be implemented in sub class.</blockquote> **/
   _fillAttributes() {
     // Must be implemented in sub class
   }
@@ -70,7 +70,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Create, configure and append in DOM.</blockquote> **/
+   * @description <blockquote>Create, configure and append UI in DOM. Must be implemented in sub class.</blockquote> **/
   _buildUI() {
     // Must be implemented in sub class
   }
@@ -82,7 +82,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Build audio chain with source.</blockquote> **/
+   * @description <blockquote>Build audio chain with source. Must be implemented in sub class.</blockquote> **/
   _setAudioNodes() {
     // Must be implemented in sub class
   }
@@ -94,7 +94,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Real time audio analysis using PCM data from WebAudioAPI.</blockquote> **/
+   * @description <blockquote>Real time audio analysis using PCM data from WebAudioAPI. Must be implemented in sub class.</blockquote> **/
   _processAudioBin() {
     // Must be implemented in sub class
   }
@@ -162,7 +162,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>On resize event callback.</blockquote> **/
+   * @description <blockquote>On resize event callback. Must be implemented in sub class.</blockquote> **/
   _onResize() {
     // Resize must be handled in each sub class
   }
@@ -214,7 +214,7 @@ class BaseComponent {
    * @memberof BaseComponent
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Clear component canvas contexts from their content.</blockquote> **/
+   * @description <blockquote>Clear component canvas contexts from their content. Must be implemented in sub class.</blockquote> **/
   _clearCanvas() {
     // Clear canvas must be handled in Mono/Stereo sub class depending on amount of canvas
   }

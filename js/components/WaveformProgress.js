@@ -6,24 +6,31 @@ import ColorUtils from '../utils/ColorUtils.js';
 class WaveformProgress extends VisuComponentMono {
 
 
-  /** @summary WaveformProgress displays the audio waveform using offline analysis.
+  /** @summary WaveformProgress displays the track audio waveform.
    * @author Arthur Beaulieu
    * @since 2020
    * @augments VisuComponentMono
-   * @description <blockquote>This will display a single canvas with frequency from left to right be bass to high. The bar
-   * height depends on audio bin intensity. The audio graph is then draw with a gradient from bottom to top that is from
-   * green to red. Those color can be custom ones (see constructor options).</blockquote>
-   * @param {object} options - The frequency bars options
+   * @description <blockquote>This component will perform an offline analysis to display the whole track audio shape,
+   * and provide different colors to track the audio progress. It is interactive and will update the player's
+   * current time value to match the clicked one. This class extends VisuComponentMono only because it performs an offline
+   * analysis on audio and the stereo information are already held in audio buffer.</blockquote>
+   * @param {object} options - The waveform options
    * @param {string} options.type - The component type as string
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
    * @param {object} options.renderTo - The DOM element to render canvas in
    * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
    * @param {object} [options.audioContext=null] - The audio context to base analysis from
    * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {object} [options.animation] - The track progress animation to be with <code>gradient</code> color
+   * @param {object} [options.wave] - Wave potions
+   * @param {string} [options.wave.align='center'] - Wave alignment in <code>top</code>/<code>center</code>/<code>bottom</code>
+   * @param {number} [options.wave.barWidth=1] - The bar width in px
+   * @param {number} [options.wave.barMarginScale=0.125] - The margin scale of bar width in Float[0,1]
+   * @param {boolean} [options.wave.merged=true] - Symmetry if wave is align center
    * @param {object} [options.colors] - Waveform color potions
-   * @param {object} [options.colors.background] - Canvas background color in Hex/RGB/HSL
-   * @param {object} [options.colors.track] - The waveform background color in Hex/RGB/HSL
-   * @param {object} [options.colors.progress] - The waveform progress color in Hex/RGB/HSL **/
+   * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
+   * @param {object} [options.colors.track='#E7E9E7'] - The waveform background color in Hex/RGB/HSL
+   * @param {object} [options.colors.progress='#56D45B'] - The waveform progress color in Hex/RGB/HSL **/
   constructor(options) {
     super(options);
 
@@ -59,10 +66,15 @@ class WaveformProgress extends VisuComponentMono {
    * @param {object} options.renderTo - The DOM element to render canvas in
    * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
    * @param {object} [options.audioContext=null] - The audio context to base analysis from
-   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {object} [options.wave] - Waveform potions
+   * @param {string} [options.wave.align='center'] - Waveform alignment in <code>top</code>/<code>center</code>/<code>bottom</code>
+   * @param {number} [options.wave.barWidth=1] - The bar width in px
+   * @param {number} [options.wave.barMarginScale=0] - The margin scale of bar width in Float[0,1]
+   * @param {boolean} [options.wave.merged=true] - Symmetry if wave is aligned to center **/
   _fillAttributes(options) {
     super._fillAttributes(options);
-    this._animation = options.animation;
+      this._animation = options.animation;
     this._wave = {
       align: options.wave ? options.wave.align || 'center' : 'center',
       barWidth: options.wave ? options.wave.barWidth || 1 : 1,
@@ -262,7 +274,7 @@ class WaveformProgress extends VisuComponentMono {
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>L/R Sub sample channel data to compute average value, depending on bar count.</blockquote>
-   * @param {number[]} data - Channel data (L/R here)
+   * @param {Float32Array} data - Channel data (L/R here)
    * @return {number[]} Array of height per sub samples **/
   _genScaledData(data) {
     const subSampleSize = Math.floor(data.length / this._bars);

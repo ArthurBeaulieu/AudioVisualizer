@@ -134,11 +134,7 @@ class Spectrum extends VisuComponentStereo {
       // Update canvas scale
       this._scaleType = output[0];
       // Set color smoothing from checkbox
-      if (output[1] === 'on') {
-        this._colorSmoothing = true;
-      } else {
-        this._colorSmoothing = false;
-      }
+      this._colorSmoothing = (output[1] === 'on');
     }, false);
     // Add display canvas to renderTo parent
     this._dom.container.appendChild(this._dom.settingsPanel); // Append panel before to emulate z-index under settings button w/ no scss rules of z-index
@@ -272,7 +268,7 @@ class Spectrum extends VisuComponentStereo {
    * @description <blockquote>Spectrum settings button callback.</blockquote> **/
   _settingsClicked() {
     const opened = this._dom.settingsPanel.classList.contains('opened');
-    if (opened === false) { // If opened, setings closure will be handled in clickedElsewhere
+    if (opened === false) { // If opened, settings closure will be handled in clickedElsewhere
       this._dom.settings.classList.add('opened');
       this._dom.settingsPanel.classList.add('opened');
       document.body.addEventListener('click', this._clickedElsewhere, false);
@@ -305,7 +301,7 @@ class Spectrum extends VisuComponentStereo {
    * @since 2020
    * @description <blockquote>Draw a vertical ray representing the audio frequencies at process time.</blockquote>
    * @param {object} canvas - The canvas to draw spectrum ray into
-   * @param {number[]} frequencies - The frequencies for a given audio bin **/
+   * @param {Uint8Array} frequencies - The frequencies for a given audio bin **/
   _drawSpectrogramForFrequencyBin(canvas, frequencies) {
     const ctx = canvas.getContext('2d');
     // Copy previous image
@@ -333,7 +329,7 @@ class Spectrum extends VisuComponentStereo {
    * @since 2020
    * @description <blockquote>Draw the vertical ray with a linear scale.</blockquote>
    * @param {object} ctx - The canvas context
-   * @param {number[]} frequencies - The frequencies for a given audio bin
+   * @param {Uint8Array} frequencies - The frequencies for a given audio bin
    * @param {number} i - The index to scale linearly **/
   _fillRectLinear(ctx, frequencies, i) {
     const scaledHeight = this._scaleLinearIndexToHeight(i);
@@ -368,7 +364,7 @@ class Spectrum extends VisuComponentStereo {
    * @since 2020
    * @description <blockquote>Draw the vertical ray with a logarithm scale.</blockquote>
    * @param {object} ctx - The canvas context
-   * @param {number[]} frequencies - The frequencies for a given audio bin
+   * @param {Uint8Array} frequencies - The frequencies for a given audio bin
    * @param {number} i - The index to scale logarithmically **/
   _fillRectLogarithm(ctx, frequencies, i) {
     if (i === 0 || i === frequencies.length - 1 || !this._colorSmoothing) {

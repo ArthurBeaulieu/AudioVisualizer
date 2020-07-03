@@ -16,7 +16,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 class AudioVisualizer {
 
 
-  /** @summary AudioVisualizer factory to build supported visualisation
+  /** @summary AudioVisualizer factory class to build all supported visualisation
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>This factory will return an <code>AudioVisualizer</code> component. It is
@@ -26,14 +26,14 @@ class AudioVisualizer {
    * specific options.<br><br>Multi visualisation can have an impact on CPU load that mostly depends on client configuration.
    * Keep that in mind if you develop your project with a battle station. When done using a component, please call its
    * <code>destroy</code> method to remove listeners and audio processing to avoid memory leaks in your app.</blockquote>
-   * @param {object} options - The audio visualisation component definition
-   * @param {string} options.type - The visualisation type, can be <code>bars</code>/<code>circle</code>/<code>oscilloscope</code>/<code>spectrum</code>/<code>timeline</code>/<code>waveform</code>
+   * @param {object} options - The audio visualisation definition
+   * @param {string} options.type - The visualisation type, can be <code>bars</code>/<code>circle</code>/<code>oscilloscope</code>/<code>peakmeter</code>/<code>spectrum</code>/<code>timeline</code>/<code>waveform</code>
    * @param {object} options.player - A DOM audio player to be the audio source for processing
-   * @param {object} options.renderTo - A DOM element to render the visualisation to. It will automatically scale content to this element's dimension
-   * @param {object} [options.audioContext=null] - A WebAudioAPI audio context to chain the processing nodes in your audio routing. You must provide an inputNode
+   * @param {object} options.renderTo - A DOM element to render the visualisation in. It will automatically scale content to this element's dimension
+   * @param {object} [options.audioContext=null] - A WebAudioAPI audio context to chain the processing nodes in your audio routing.
    * @param {object} [options.inputNode=null] - The WebAudioAPI audio node to be the audio source for processing, You must provide an audioContext
    * @param {number} [options.fftSize=1024] - The FFT size to use in processing, must be a power of 2. High values cost more CPU
-   * @returns {object|null} - The custom visualisation object according to options, null for unknown type */
+   * @returns {object|null} - The custom visualisation component according to given options, <code>null</code> for unknown type */
   constructor(options) {
     if (options.type === 'bars') {
       return new FrequencyBars(options);

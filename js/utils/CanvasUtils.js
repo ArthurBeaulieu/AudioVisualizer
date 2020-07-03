@@ -164,7 +164,7 @@ class CanvasUtils {
    * @param {object} options - Oscilloscope options
    * @param {number} options.samples - The x origin in canvas dimension
    * @param {number} options.timeDomain - The height of the frequency bin in canvas dimension
-   * @param {string} options.color - the oscilloscope color in Hex/RGB/HSL **/
+   * @param {string} options.color - the oscilloscope color in Hex/RGB/HSL or <code>rainbow</code> **/
   static drawOscilloscope(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -241,8 +241,8 @@ class CanvasUtils {
    * @param {number} options.centerY - the y center position
    * @param {number} options.rotation - the rotation offset
    * @param {number} options.length - the oscilloscope length (half FFT)
-   * @param {number} options.times - The time domain bins
-   * @param {number} options.points - The oscilloscope radial points objects
+   * @param {number[]} options.times - The time domain bins
+   * @param {number[]} options.points - The oscilloscope radial points objects
    * @param {string} options.color - The point color in Hex/RGB/HSL **/
   static drawRadialOscilloscope(canvas, options) {
     const ctx = canvas.getContext('2d');

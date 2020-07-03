@@ -2,7 +2,7 @@
   "name": "audiovisualizer",
   "version": "0.9.2",
   "description": "",
-  "main": "src/js/Start.js",
+  "main": "js/AudioVisualizer.js",
   "scripts": {
     "build": "webpack  --env.version=0.9.2 --progress",
     "dev": "webpack  --env.version=0.9.2 --env.dev=true --progress",

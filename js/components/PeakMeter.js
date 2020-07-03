@@ -448,7 +448,7 @@ class PeakMeter extends VisuComponentStereo {
         widthOffset = 18;
         heightOffset = 16;
       } else {
-        this._canvasL.style.left = 0; // Remove left offset for legend
+        this._canvasL.style.left = '0'; // Remove left offset for legend
       }
 
       this._canvasL.height = this._renderTo.offsetHeight - heightOffset - 2; // 2px borders + 16px height for label
