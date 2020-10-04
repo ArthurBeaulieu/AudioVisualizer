@@ -169,7 +169,7 @@ const component = new AudioVisualizer({
 
 ```javascript
 const component = new AudioVisualizer({
-  type: 'waveformprogress',
+  type: 'waveform',
   player: document.querySelector('audio'),
   renderTo: document.body,
   /* Optional arguments presented with default values */  
