@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: components/Timeline.js | AudioVisualizer</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 20px; height: 20px">
+        
+            <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" rel="noopener noreferrer" target="_blank">
+                <img src="../demo/logo.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AudioVisualizer</a></h1>
+        
+            <span class="version">v0.9.4</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="AudioVisualizer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AudioVisualizer.html#.version">version</a></li></ul></div></li><li><a href="BackgroundStar.html">BackgroundStar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BackgroundStar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BackgroundStar.html#.updatePosition">updatePosition</a></li></ul></div></li><li><a href="BaseComponent.html">BaseComponent</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BaseComponent_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BaseComponent.html#._addEvents">_addEvents</a></li><li><a href="BaseComponent.html#._buildUI">_buildUI</a></li><li><a href="BaseComponent.html#._clearCanvas">_clearCanvas</a></li><li><a href="BaseComponent.html#._dblClick">_dblClick</a></li><li><a href="BaseComponent.html#._fillAttributes">_fillAttributes</a></li><li><a href="BaseComponent.html#._onResize">_onResize</a></li><li><a href="BaseComponent.html#._pause">_pause</a></li><li><a href="BaseComponent.html#._play">_play</a></li><li><a href="BaseComponent.html#._processAudioBin">_processAudioBin</a></li><li><a href="BaseComponent.html#._removeEvents">_removeEvents</a></li><li><a href="BaseComponent.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="BaseComponent.html#.destroy">destroy</a></li></ul></div></li><li><a href="CanvasUtils.html">CanvasUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="CanvasUtils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="CanvasUtils.html#.drawCircle">drawCircle</a></li><li><a href="CanvasUtils.html#.drawCircleGlow">drawCircleGlow</a></li><li><a href="CanvasUtils.html#.drawDisc">drawDisc</a></li><li><a href="CanvasUtils.html#.drawOscilloscope">drawOscilloscope</a></li><li><a href="CanvasUtils.html#.drawPeakMeter">drawPeakMeter</a></li><li><a href="CanvasUtils.html#.drawPointsOscilloscope">drawPointsOscilloscope</a></li><li><a href="CanvasUtils.html#.drawRadialBar">drawRadialBar</a></li><li><a href="CanvasUtils.html#.drawRadialOscilloscope">drawRadialOscilloscope</a></li><li><a href="CanvasUtils.html#.drawSquare">drawSquare</a></li><li><a href="CanvasUtils.html#.drawTriangle">drawTriangle</a></li><li><a href="CanvasUtils.html#.drawVerticalBar">drawVerticalBar</a></li><li><a href="CanvasUtils.html#.precisionRound">precisionRound</a></li></ul></div></li><li><a href="ColorUtils.html">ColorUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="ColorUtils_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="ColorUtils.html#.defaultAntiPrimaryColor">defaultAntiPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultAudioGradient">defaultAudioGradient</a></li><li><a href="ColorUtils.html#.defaultBackgroundColor">defaultBackgroundColor</a></li><li><a href="ColorUtils.html#.defaultDarkPrimaryColor">defaultDarkPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultPrimaryColor">defaultPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultTextColor">defaultTextColor</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="ColorUtils.html#.drawRadialGlowGradient">drawRadialGlowGradient</a></li><li><a href="ColorUtils.html#.drawRadialGradient">drawRadialGradient</a></li><li><a href="ColorUtils.html#.drawVerticalGradient">drawVerticalGradient</a></li><li><a href="ColorUtils.html#.lightenDarkenColor">lightenDarkenColor</a></li><li><a href="ColorUtils.html#.peakMeterGradient">peakMeterGradient</a></li><li><a href="ColorUtils.html#.rainbowGradient">rainbowGradient</a></li></ul></div></li><li><a href="FrequencyBars.html">FrequencyBars</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyBars_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyBars.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="FrequencyCircle.html">FrequencyCircle</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyCircle_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyCircle.html#._animateCircleBars">_animateCircleBars</a></li><li><a href="FrequencyCircle.html#._animateCircleGlow">_animateCircleGlow</a></li><li><a href="FrequencyCircle.html#._animateOscilloscopes">_animateOscilloscopes</a></li><li><a href="FrequencyCircle.html#._animateStars">_animateStars</a></li><li><a href="FrequencyCircle.html#._buildUI">_buildUI</a></li><li><a href="FrequencyCircle.html#._fillAttributes">_fillAttributes</a></li><li><a href="FrequencyCircle.html#._getAverageFrequency">_getAverageFrequency</a></li><li><a href="FrequencyCircle.html#._onResize">_onResize</a></li><li><a href="FrequencyCircle.html#._pause">_pause</a></li><li><a href="FrequencyCircle.html#._play">_play</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="Oscilloscope.html">Oscilloscope</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Oscilloscope_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Oscilloscope.html#._buildUI">_buildUI</a></li><li><a href="Oscilloscope.html#._fillAttributes">_fillAttributes</a></li><li><a href="Oscilloscope.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Oscilloscope.html#._onResize">_onResize</a></li><li><a href="Oscilloscope.html#._processAudioBin">_processAudioBin</a></li><li><a href="Oscilloscope.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Oscilloscope.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="OscilloscopeRadialPoint_sub"></div></li><li><a href="PeakMeter.html">PeakMeter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="PeakMeter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="PeakMeter.html#._buildUI">_buildUI</a></li><li><a href="PeakMeter.html#._createPeakLabel">_createPeakLabel</a></li><li><a href="PeakMeter.html#._createScaleTicks">_createScaleTicks</a></li><li><a href="PeakMeter.html#._fillAttributes">_fillAttributes</a></li><li><a href="PeakMeter.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="PeakMeter.html#._onResize">_onResize</a></li><li><a href="PeakMeter.html#._pause">_pause</a></li><li><a href="PeakMeter.html#._processAudioBin">_processAudioBin</a></li><li><a href="PeakMeter.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="PeakMeter.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="PeakMeter.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Spectrum.html">Spectrum</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Spectrum_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Spectrum.html#._buildUI">_buildUI</a></li><li><a href="Spectrum.html#._clickedElsewhere">_clickedElsewhere</a></li><li><a href="Spectrum.html#._computeLogSampleHeight">_computeLogSampleHeight</a></li><li><a href="Spectrum.html#._createLogarithmicScaleHeights">_createLogarithmicScaleHeights</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._fillAttributes">_fillAttributes</a></li><li><a href="Spectrum.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Spectrum.html#._onResize">_onResize</a></li><li><a href="Spectrum.html#._processAudioBin">_processAudioBin</a></li><li><a href="Spectrum.html#._removeEvents">_removeEvents</a></li><li><a href="Spectrum.html#._scaleLinearIndexToHeight">_scaleLinearIndexToHeight</a></li><li><a href="Spectrum.html#._settingsClicked">_settingsClicked</a></li><li><a href="Spectrum.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Spectrum.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Timeline.html">Timeline</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Timeline_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Timeline.html#._addEvents">_addEvents</a></li><li><a href="Timeline.html#._dblClick">_dblClick</a></li><li><a href="Timeline.html#._drawBeatBar">_drawBeatBar</a></li><li><a href="Timeline.html#._drawTimeline">_drawTimeline</a></li><li><a href="Timeline.html#._fillAttributes">_fillAttributes</a></li><li><a href="Timeline.html#._fillData">_fillData</a></li><li><a href="Timeline.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Timeline.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseUp">_mouseUp</a></li><li><a href="Timeline.html#._onProgress">_onProgress</a></li><li><a href="Timeline.html#._onResize">_onResize</a></li><li><a href="Timeline.html#._processAudioBin">_processAudioBin</a></li><li><a href="Timeline.html#._processAudioFile">_processAudioFile</a></li><li><a href="Timeline.html#._removeEvents">_removeEvents</a></li><li><a href="Timeline.html#._trackLoaded">_trackLoaded</a></li><li><a href="Timeline.html#.setHotCuePoint">setHotCuePoint</a></li><li><a href="Timeline.html#.updateBeatInfo">updateBeatInfo</a></li></ul></div></li><li><a href="VisuComponentMono.html">VisuComponentMono</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentMono_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentMono.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentMono.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentMono.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentMono.html#._onResize">_onResize</a></li><li><a href="VisuComponentMono.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentStereo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentStereo.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentStereo.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentStereo.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentStereo.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="Waveform.html">Waveform</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Waveform_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Waveform.html#._addEvents">_addEvents</a></li><li><a href="Waveform.html#._buildUI">_buildUI</a></li><li><a href="Waveform.html#._dblClick">_dblClick</a></li><li><a href="Waveform.html#._drawFileWaveform">_drawFileWaveform</a></li><li><a href="Waveform.html#._fillAttributes">_fillAttributes</a></li><li><a href="Waveform.html#._fillData">_fillData</a></li><li><a href="Waveform.html#._genScaledData">_genScaledData</a></li><li><a href="Waveform.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Waveform.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Waveform.html#._onResize">_onResize</a></li><li><a href="Waveform.html#._processAudioBin">_processAudioBin</a></li><li><a href="Waveform.html#._processAudioFile">_processAudioFile</a></li><li><a href="Waveform.html#._removeEvents">_removeEvents</a></li><li><a href="Waveform.html#._scaleDataToHeight">_scaleDataToHeight</a></li><li><a href="Waveform.html#._seekPlayer">_seekPlayer</a></li><li><a href="Waveform.html#._trackLoaded">_trackLoaded</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import VisuComponentMono from '../utils/VisuComponentMono.js';
+import CanvasUtils from '../utils/CanvasUtils.js';
+import ColorUtils from '../utils/ColorUtils.js';
+'use strict';
+
+
+const MAX_CANVAS_WIDTH = 32000;
+
+
+class Timeline extends VisuComponentMono {
+
+
+  /** @summary Timeline displays a scrolling audio waveform.
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentMono
+   * @description &lt;blockquote>Will display a waveform that scrolls over playback. If provided, BPM is visualised as
+   * vertical bars with emphasis on main beats according to time signature. It is interactive and will update the player's
+   * current time value to match the dragged one. This class extends VisuComponentMono only because it performs an offline
+   * analysis on audio and the stereo information are already held in audio buffer.&lt;/blockquote>
+   * @param {object} options - The timeline options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {object} [options.beat=null] - The beat configuration
+   * @param {object} [options.beat.offset=null] - offset before first beat
+   * @param {object} [options.beat.bpm=null] - The track bpm
+   * @param {object} [options.beat.timeSignature=null] - The track time signature to put emphasis on main beats
+   * @param {object} [options.colors] - Timeline color potions
+   * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
+   * @param {object} [options.colors.track='#12B31D'] - The timeline color in Hex/RGB/HSL
+   * @param {object} [options.colors.mainBeat='#56D45B'] - The main beat triangles color in Hex/RGB/HSL
+   * @param {object} [options.colors.subBeat='#FF6B67'] - The sub beat triangles color in Hex/RGB/HSL **/
+  constructor(options) {
+    super(options);
+
+    this._colors = {
+      background: options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor,
+      track: options.colors ? options.colors.track || ColorUtils.defaultDarkPrimaryColor : ColorUtils.defaultDarkPrimaryColor,
+      mainBeat: options.colors ? options.colors.mainBeat || ColorUtils.defaultPrimaryColor : ColorUtils.defaultPrimaryColor,
+      subBeat: options.colors ? options.colors.subBeat || ColorUtils.defaultAntiPrimaryColor : ColorUtils.defaultAntiPrimaryColor
+    };
+
+    this._canvas.style.backgroundColor = this._colors.background;
+
+    this._canvasSpeed = options.speed ? options.speed : 5.0; // Time in seconds
+
+    this._beat = {
+      offset: options.beat ? options.beat.offset : null,
+      bpm: options.beat ? options.beat.bpm : null,
+      timeSignature: options.beat ? options.beat.timeSignature : null,
+    };
+
+    this._beatsArray = [];
+    this._hotCues = [];
+    // Offline canvas -> main canvas is divided with 32k px wide canvases
+    this._canvases = [];
+    this._cueCanvases = [];
+    this._beatCanvases = [];
+    // Drag canvas utils
+    this._isDragging = false;
+    this._wasPlaying = false;
+    this._draggedTime = 0;
+    this._startDrag = {
+      x: 0,
+      y: 0
+    };
+
+    if (this._player.src !== '') {
+      this._getPlayerSourceFile();
+    }
+  }
+
+
+  /*  ----------  VisuComponentMono overrides  ----------  */
+
+
+
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Internal method to fill internal properties from options object sent to constructor.&lt;/blockquote>
+   * @param {object} options - The frequency circle options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
+  _fillAttributes(options) {
+    super._fillAttributes(options);
+    this._offlineCtx = null;
+    this._offlineBuffer = null;
+    // Local event binding
+    this._trackLoaded = this._trackLoaded.bind(this);
+    this._onProgress = this._onProgress.bind(this);
+    this._mouseDown = this._mouseDown.bind(this);
+    this._mouseMove = this._mouseMove.bind(this);
+    this._mouseUp = this._mouseUp.bind(this);
+  }
+
+
+  /** @method
+   * @name _addEvents
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Add component events (resize, play, pause, dbclick).&lt;/blockquote> **/
+  _addEvents() {
+    super._addEvents();
+    this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
+    this._player.addEventListener('seeking', this._onProgress, false);
+    this._canvas.addEventListener('mousedown', this._mouseDown, false);
+  }
+
+
+  /** @method
+   * @name _removeEvents
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Remove component events (resize, play, pause, dbclick).&lt;/blockquote> **/
+  _removeEvents() {
+    super._removeEvents();
+    this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
+    this._player.removeEventListener('seeking', this._onProgress, false);
+  }
+
+
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>On resize event callback.&lt;/blockquote> **/
+  _onResize() {
+    super._onResize();
+    this._fillData();
+    this._clearCanvas();
+    this._clearCueCanvas();
+    this._drawTimeline(this._player.currentTime);
+  }
+
+
+  /** @method
+   * @name _dblClick
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>On double click event callback.&lt;/blockquote> **/
+  _dblClick() {
+    // Required to revoke fullscreen toggle from parent class, as it interferes with drag feature
+  }
+
+
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
+   * and time analysis.&lt;/blockquote> **/
+  _processAudioBin() {
+    if (this._isPlaying === true) {
+      this._clearCanvas();
+      this._clearCueCanvas();
+      this._drawTimeline(this._player.currentTime);
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  /*  ----------  Timeline internal methods  ----------  */
+
+
+  /** @method
+   * @name _trackLoaded
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Player callback on track loaded.&lt;/blockquote> **/
+  _trackLoaded() {
+    cancelAnimationFrame(this._processAudioBin);
+    this._clearCanvas(); // Clear previous canvas
+    this._clearCueCanvas();
+    // Do XHR to request file and parse it
+    this._getPlayerSourceFile();
+  }
+
+
+  /** @method
+   * @name _onProgress
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>On progress callback.&lt;/blockquote> **/
+  _onProgress() {
+    this._clearCanvas();
+    this._clearCueCanvas();
+    this._drawTimeline(this._player.currentTime || 0);
+  }
+
+
+  /** @method
+   * @name _mouseDown
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Mouse down callback.&lt;/blockquote>
+   * @param {object} event - The mouse down event **/
+  _mouseDown(event) {
+    this._isDragging = true;
+    this._startDrag.x = event.clientX;
+    this._startDrag.y = event.clientY;
+    // Save previous playback status and pause only if required
+    if (this._player.paused === false) {
+      this._wasPlaying = true;
+      this._player.pause();
+    }
+
+    // Subscribe to drag events
+    this._canvas.addEventListener('mousemove', this._mouseMove, false);
+    this._canvas.addEventListener('mouseup', this._mouseUp, false);
+    this._canvas.addEventListener('mouseout', this._mouseUp, false);
+  }
+
+
+  /** @method
+   * @name _mouseDown
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Mouse move callback.&lt;/blockquote>
+   * @param {object} event - The mouse move event **/
+  _mouseMove(event) {
+    // Only perform drag code if mouse down was previously fired
+    if (this._isDragging === true) {
+      const variation = (this._startDrag.x - event.clientX);
+      const timeOffset = ((variation * this._canvasSpeed) / this._canvas.width) * 2;
+      this._draggedTime = this._player.currentTime + timeOffset;
+      this._clearCanvas();
+      this._drawTimeline(this._draggedTime);
+    }
+  }
+
+
+  /** @method
+   * @name _mouseUp
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Mouse up callback.&lt;/blockquote> **/
+  _mouseUp() {
+    this._isDragging = false;
+    this._startDrag.x = 0;
+    this._startDrag.y = 0;
+    this._player.currentTime = this._draggedTime || this._player.currentTime;
+    this._draggedTime = null;
+    // Restore playback status
+    if (this._wasPlaying === true) {
+      this._wasPlaying = false;
+      this._player.play();
+    }
+    // Remove drag events
+    this._canvas.removeEventListener('mousemove', this._mouseMove, false);
+    this._canvas.removeEventListener('mouseup', this._mouseUp, false);
+    this._canvas.removeEventListener('mouseout', this._mouseUp, false);
+  }
+
+
+  /** @method
+   * @name _processAudioFile
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Perform an offline analysis on whole track.&lt;/blockquote>
+   * @param {object} response - HTTP response for audio track to extract buffer from **/
+  _processAudioFile(response) {
+    // Set offline context according to track duration to get its full samples
+    this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
+    this._offlineSource = this._offlineCtx.createBufferSource();
+    this._audioCtx.decodeAudioData(response, buffer => {
+      this._offlineSource.buffer = buffer;
+      this._offlineSource.connect(this._offlineCtx.destination);
+      this._offlineSource.start();
+      this._offlineCtx.startRendering().then(renderedBuffer => {
+        this._offlineBuffer = renderedBuffer;
+        this._fillData();
+        this._drawTimeline(this._player.currentTime || 0);
+      }).catch(function(err) {
+        console.log('Rendering failed: ' + err);
+      });
+    });
+  }
+
+
+  /** @method
+   * @name _fillData
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Generate merged data from audio buffer.&lt;/blockquote> **/
+  _fillData() {
+    if (this._offlineBuffer) {
+      // Clear any previous canvas
+      this._canvases = [];
+      this._cueCanvases = [];
+      this._beatCanvases = [];
+      // Compute useful values
+      const data = this._genScaledMonoData(this._offlineBuffer);
+      const step = (this._canvasSpeed * this._offlineBuffer.sampleRate) / this._canvas.width;
+      const totalLength = Math.round((this._offlineBuffer.duration / this._canvasSpeed) * this._canvas.width);
+      // Draw full track on offline canvas
+      for (let i = 0; i &lt; totalLength; i += MAX_CANVAS_WIDTH) {
+        // Create canvas with width of the reduced-in-size buffer's length.
+        const canvas = document.createElement('CANVAS');
+        const ctx = canvas.getContext('2d');
+        const cueCanvas = document.createElement('CANVAS');
+        const beatCanvas = document.createElement('CANVAS');
+
+        let width = totalLength - i;
+        width = (width > MAX_CANVAS_WIDTH) ? MAX_CANVAS_WIDTH : width;
+        // Update offline canvas dimension
+        canvas.width = width;
+        canvas.height = this._canvas.height;
+        cueCanvas.width = width;
+        cueCanvas.height = this._canvas.height;
+        beatCanvas.width = width;
+        beatCanvas.height = this._canvas.height;
+        // Clear offline context
+        ctx.clearRect(0, 0, totalLength, this._canvas.height);
+        // Draw the canvas
+        for (let j = 0; j &lt; width; ++j) {
+          const offset = Math.floor((i + j) * step);
+          let max = 0.0; // The max value to draw
+          // Update maximum value in step range
+          for (let k = 0; k &lt; step; ++k) {
+            if (data[offset + k] > max) {
+              max = data[offset + k];
+            }
+          }
+          // Set waveform color according to sample intensity
+          ctx.fillStyle = ColorUtils.lightenDarkenColor(this._colors.track, (max * 150)); // 150, not 255 to avoid full white on sample at max value
+          // Update max to scale in half canvas height
+          max = Math.floor(max * ((this._canvas.height * .9) / 2)); // Scale on 90% height max
+          // Fill up and down side of timeline
+          ctx.fillRect(j, this._canvas.height / 2, 1, -max);
+          ctx.fillRect(j, this._canvas.height / 2, 1, +max);
+          // Add tiny centered line
+          ctx.fillRect(j, (this._canvas.height / 2) - 0.5, 1, 1);
+        }
+        // Store canvas to properly animate Timeline on progress
+        this._canvases.push(canvas);
+        this._cueCanvases.push(cueCanvas);
+        this._beatCanvases.push(beatCanvas);
+      }
+
+      if (this._beat.bpm !== null &amp;&amp; this._beat.offset !== null) {
+        this._fillBeatBars({
+          totalWidth: (this._offlineBuffer.duration / this._canvasSpeed) * this._canvas.width,
+          beatWidth: ((1 / (this._beat.bpm / 60)) / this._canvasSpeed) * this._canvas.width,
+          beatOffset: (this._beat.offset / this._canvasSpeed) * this._canvas.width
+        });
+      }
+    }
+  }
+
+
+  _fillBeatBars(options) {
+    let beatOffset = options.beatOffset;
+    let canvasIndex = 0; // The offline canvas to consider
+    // We floor because last beat is pretsty irrelevant
+    for (let i = 0; i &lt; Math.floor(options.totalWidth / options.beatWidth); ++i) {
+      // We reached MAX_CANVAS_WIDTH, using next offline canvas
+      if ((i * options.beatWidth + beatOffset) >= MAX_CANVAS_WIDTH + (canvasIndex * MAX_CANVAS_WIDTH)) {
+        // Increment offline canvas to use
+        ++canvasIndex;
+        // When changing canvas, the beatOffset is dependant to last beat saved position.
+        beatOffset = options.beatWidth - (MAX_CANVAS_WIDTH - this._beatsArray[this._beatsArray.length - 1].xPos);
+      }
+      // Draw beat bar, x position is loop index times a space between beats, plus the beat offset,
+      // modulo max canvas width to fit in offline canvases
+      this._drawBeatBar(i, (i * options.beatWidth) + beatOffset, canvasIndex);
+    }
+  }
+
+
+  /** @method
+   * @name _drawBeatBar
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a beat bard with its triangle with color that depends on main beat or sub beat.&lt;/blockquote>
+   * @param {object} beatCount - The beat number from first
+   * @param {object} canvas - The canvas to draw in
+   * @param {object} ctx - The associated context
+   * @param {number} j - The y value **/
+  _drawBeatBar(beatCount, x, canvasIndex) {
+    const canvas = this._beatCanvases[canvasIndex];
+    const ctx = canvas.getContext('2d');
+    // Determine beat bar color
+    if (beatCount % this._beat.timeSignature === 0) {
+      ctx.fillStyle = 'white';
+    } else {
+      ctx.fillStyle = 'grey';
+    }
+    // Beat bar drawing
+    ctx.fillRect(x % MAX_CANVAS_WIDTH, 9, 1, this._canvas.height - 18);
+    // Determine beat triangle color
+    if (beatCount % this._beat.timeSignature === 0) {
+      ctx.fillStyle = this._colors.mainBeat;
+    } else {
+      ctx.fillStyle = this._colors.subBeat;
+    }
+    // Upper triangle
+    CanvasUtils.drawTriangle(canvas, {
+      x: x % MAX_CANVAS_WIDTH,
+      y: 4,
+      radius: 6,
+      top: 12
+    });
+    // Down triangle
+    CanvasUtils.drawTriangle(canvas, {
+      x: x % MAX_CANVAS_WIDTH,
+      y: this._canvas.height - 4,
+      radius: 6,
+      top: this._canvas.height - 12
+    });
+    // Update beats array with new beat bar
+    this._beatsArray.push({
+      primaryBeat: (beatCount % this._beat.timeSignature === 0),
+      beatCount: beatCount,
+      xPos: x
+    });
+  }
+
+
+  /** @method
+   * @name _genScaledMonoData
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Merged L/R Sub sample channel data to compute average value, depending on bar count.&lt;/blockquote>
+   * @param {object} buffer - Audio buffer
+   * @return {number[]} Array of height per sub samples **/
+  _genScaledMonoData(buffer) {
+    const dataL = buffer.getChannelData(0);
+    const dataR = buffer.getChannelData(1);
+    const output = [];
+
+    for (let i = 0; i &lt; dataL.length; ++i) {
+      output.push((Math.abs(dataL[i]) + Math.abs(dataR[i])) / 2);
+    }
+
+    return output;
+  }
+
+
+  /** @method
+   * @name _drawTimeline
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw timeline with a given progress.&lt;/blockquote>
+   * @param {number} time - Track current time **/
+  _drawTimeline(time) {
+    const center = Math.floor(time * this._canvas.width / this._canvasSpeed);
+    let leftEdgeIndex = Math.floor((center - (this._canvas.width / 2)) / MAX_CANVAS_WIDTH);
+    if (leftEdgeIndex &lt; 0) {
+      leftEdgeIndex = 0;
+    }
+
+    let rightEdgeIndex = Math.floor((center + (this._canvas.width / 2)) / MAX_CANVAS_WIDTH);
+    if (rightEdgeIndex >= this._canvases.length) {
+      rightEdgeIndex = this._canvases.length - 1;
+    }
+
+    for (let i = leftEdgeIndex; i &lt;= rightEdgeIndex; ++i) {
+      this._ctx.drawImage(this._canvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
+      this._ctx.drawImage(this._cueCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
+      this._ctx.drawImage(this._beatCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
+    }
+    // Draw centered vertical bar
+    this._ctx.fillStyle = ColorUtils.defaultAntiPrimaryColor;
+    this._ctx.fillRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
+    this._ctx.strokeStyle = 'black';
+    this._ctx.lineWidth = 1;
+    this._ctx.strokeRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
+  }
+
+
+  /** @method
+   * @name _getPlayerSourceFile
+   * @private
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Fetch audio file using xmlHTTP request.&lt;/blockquote> **/
+  _getPlayerSourceFile() {
+    const request = new XMLHttpRequest();
+    request.open('GET', this._player.src, true);
+    request.responseType = 'arraybuffer';
+    request.onload = () => { this._processAudioFile(request.response); };
+    request.send();
+  }
+
+
+  _drawHotCue(hotcue) {
+    CanvasUtils.drawHotCue(this._cueCanvases[hotcue.canvasIndex], {
+      x: hotcue.xPos - (hotcue.canvasIndex * MAX_CANVAS_WIDTH),
+      y: 4,
+      size: 18,
+      label: hotcue.number
+    });
+  }
+
+
+  _clearCueCanvas() {
+    for (let i = 0; i &lt; this._cueCanvases.length; ++i) {
+      this._cueCanvases[i].getContext('2d').clearRect(0, 0, this._cueCanvases[i].width, this._cueCanvases[i].height);
+    }
+  }
+
+
+  _fillCueCanvas() {
+    for (let i = 0; i &lt; this._hotCues.length; ++i) {
+      this._drawHotCue(this._hotCues[i]);
+    }
+  }
+
+
+  /*  --------------------------------------------------------------------------------------------------------------- */
+  /*  ----------------------------------------  TIMELINE PUBLIC METHODS  -------------------------------------------  */
+  /*                                                                                                                  */
+  /*  These methods allow the caller to update the beat info (on change track for example), or to add/remove a hot    */
+  /*  cue in the timeline.                                                                                            */
+  /*  --------------------------------------------------------------------------------------------------------------- */
+
+
+  /** @method
+   * @name updateBeatInfo
+   * @public
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Update the beat position.&lt;/blockquote>
+   * @param {object} options - Track beat options
+   * @param {number} [options.beat.offset=null] - offset before first beat
+   * @param {number} [options.beat.bpm=null] - The track bpm
+   * @param {number} [options.beat.timeSignature=null] - The track time signature to emphasis main beats **/
+  updateBeatInfo(options) {
+    this._beat = {
+      offset: options.offset,
+      bpm: options.bpm,
+      timeSignature: options.timeSignature
+    };
+  }
+
+
+  /** @method
+   * @name setHotCuePoint
+   * @public
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Define a HotCue point. It will be attached to the nearest bar. It will only be
+   * attached if no hotcue is registered on the targeted bar.&lt;/blockquote>
+   * @return {object} The hotcue object with its information **/
+  setHotCuePoint() {
+    // The center coordinate when this method is called
+    const center = Math.floor(this._player.currentTime * this._canvas.width / this._canvasSpeed);
+    let matchingBeat = {};
+    // Find nearest beat to process
+    for (let i = 0; i &lt; this._beatsArray.length; ++i) {
+      // We now have the upper beat, compare with previous one to find nearest
+      if (this._beatsArray[i].xPos > center) {
+        // Take previous bar if click was closer to it
+        if (i - 1 > 0 &amp;&amp; (this._beatsArray[i].xPos - center) > (center - this._beatsArray[i - 1].xPos)) {
+          matchingBeat = this._beatsArray[i - 1];
+          break;
+        } else { // Take curent bar otherwise
+          matchingBeat = this._beatsArray[i];
+          break;
+        }
+      }
+    }
+    // Save sub-canvas index in which the hot cue applies
+    if (matchingBeat.xPos > MAX_CANVAS_WIDTH) {
+      matchingBeat.canvasIndex = Math.floor(matchingBeat.xPos / MAX_CANVAS_WIDTH);
+    } else {
+      matchingBeat.canvasIndex = 0;
+    }
+    // Search for existing hotcue at the target bar
+    let existing = false;
+    for (let i = 0; i &lt; this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === matchingBeat.beatCount) {
+        existing = true;
+        break;
+      }
+    }
+    // Only append hotcue if it's not already registered, return null otherwise
+    if (!existing) {
+      // Save hot cue and return to the sender
+      matchingBeat.number = this._hotCues.length + 1; // Attach hotcue number
+      matchingBeat.time = matchingBeat.xPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
+      this._hotCues.push(matchingBeat);
+      // Draw hotcues if any
+      this._drawHotCue(matchingBeat);
+      this._drawTimeline(this._player.currentTime);
+      return matchingBeat;
+    } else {
+      return null;
+    }
+  }
+
+
+  removeHotCuePoint(hotcue) {
+    for (let i = 0; i &lt; this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === hotcue.beatCount) {
+        this._hotCues.splice(i, 1);
+        this._clearCueCanvas();
+        this._fillCueCanvas();
+        this._drawTimeline(this._player.currentTime);
+        break;
+      }
+    }
+  }
+
+
+}
+
+
+export default Timeline;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="../demo/logo.png" style="width: 20px; height: 20px">
+    <div class="footer-text">AudioVisualizer</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: components/PeakMeter.js | AudioVisualizer</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 20px; height: 20px">
+        
+            <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" rel="noopener noreferrer" target="_blank">
+                <img src="../demo/logo.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AudioVisualizer</a></h1>
+        
+            <span class="version">v0.9.4</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="AudioVisualizer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AudioVisualizer.html#.version">version</a></li></ul></div></li><li><a href="BackgroundStar.html">BackgroundStar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BackgroundStar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BackgroundStar.html#.updatePosition">updatePosition</a></li></ul></div></li><li><a href="BaseComponent.html">BaseComponent</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BaseComponent_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BaseComponent.html#._addEvents">_addEvents</a></li><li><a href="BaseComponent.html#._buildUI">_buildUI</a></li><li><a href="BaseComponent.html#._clearCanvas">_clearCanvas</a></li><li><a href="BaseComponent.html#._dblClick">_dblClick</a></li><li><a href="BaseComponent.html#._fillAttributes">_fillAttributes</a></li><li><a href="BaseComponent.html#._onResize">_onResize</a></li><li><a href="BaseComponent.html#._pause">_pause</a></li><li><a href="BaseComponent.html#._play">_play</a></li><li><a href="BaseComponent.html#._processAudioBin">_processAudioBin</a></li><li><a href="BaseComponent.html#._removeEvents">_removeEvents</a></li><li><a href="BaseComponent.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="BaseComponent.html#.destroy">destroy</a></li></ul></div></li><li><a href="CanvasUtils.html">CanvasUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="CanvasUtils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="CanvasUtils.html#.drawCircle">drawCircle</a></li><li><a href="CanvasUtils.html#.drawCircleGlow">drawCircleGlow</a></li><li><a href="CanvasUtils.html#.drawDisc">drawDisc</a></li><li><a href="CanvasUtils.html#.drawOscilloscope">drawOscilloscope</a></li><li><a href="CanvasUtils.html#.drawPeakMeter">drawPeakMeter</a></li><li><a href="CanvasUtils.html#.drawPointsOscilloscope">drawPointsOscilloscope</a></li><li><a href="CanvasUtils.html#.drawRadialBar">drawRadialBar</a></li><li><a href="CanvasUtils.html#.drawRadialOscilloscope">drawRadialOscilloscope</a></li><li><a href="CanvasUtils.html#.drawSquare">drawSquare</a></li><li><a href="CanvasUtils.html#.drawTriangle">drawTriangle</a></li><li><a href="CanvasUtils.html#.drawVerticalBar">drawVerticalBar</a></li><li><a href="CanvasUtils.html#.precisionRound">precisionRound</a></li></ul></div></li><li><a href="ColorUtils.html">ColorUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="ColorUtils_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="ColorUtils.html#.defaultAntiPrimaryColor">defaultAntiPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultAudioGradient">defaultAudioGradient</a></li><li><a href="ColorUtils.html#.defaultBackgroundColor">defaultBackgroundColor</a></li><li><a href="ColorUtils.html#.defaultDarkPrimaryColor">defaultDarkPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultPrimaryColor">defaultPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultTextColor">defaultTextColor</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="ColorUtils.html#.drawRadialGlowGradient">drawRadialGlowGradient</a></li><li><a href="ColorUtils.html#.drawRadialGradient">drawRadialGradient</a></li><li><a href="ColorUtils.html#.drawVerticalGradient">drawVerticalGradient</a></li><li><a href="ColorUtils.html#.lightenDarkenColor">lightenDarkenColor</a></li><li><a href="ColorUtils.html#.peakMeterGradient">peakMeterGradient</a></li><li><a href="ColorUtils.html#.rainbowGradient">rainbowGradient</a></li></ul></div></li><li><a href="FrequencyBars.html">FrequencyBars</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyBars_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyBars.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="FrequencyCircle.html">FrequencyCircle</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyCircle_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyCircle.html#._animateCircleBars">_animateCircleBars</a></li><li><a href="FrequencyCircle.html#._animateCircleGlow">_animateCircleGlow</a></li><li><a href="FrequencyCircle.html#._animateOscilloscopes">_animateOscilloscopes</a></li><li><a href="FrequencyCircle.html#._animateStars">_animateStars</a></li><li><a href="FrequencyCircle.html#._buildUI">_buildUI</a></li><li><a href="FrequencyCircle.html#._fillAttributes">_fillAttributes</a></li><li><a href="FrequencyCircle.html#._getAverageFrequency">_getAverageFrequency</a></li><li><a href="FrequencyCircle.html#._onResize">_onResize</a></li><li><a href="FrequencyCircle.html#._pause">_pause</a></li><li><a href="FrequencyCircle.html#._play">_play</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="Oscilloscope.html">Oscilloscope</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Oscilloscope_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Oscilloscope.html#._buildUI">_buildUI</a></li><li><a href="Oscilloscope.html#._fillAttributes">_fillAttributes</a></li><li><a href="Oscilloscope.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Oscilloscope.html#._onResize">_onResize</a></li><li><a href="Oscilloscope.html#._processAudioBin">_processAudioBin</a></li><li><a href="Oscilloscope.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Oscilloscope.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="OscilloscopeRadialPoint_sub"></div></li><li><a href="PeakMeter.html">PeakMeter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="PeakMeter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="PeakMeter.html#._buildUI">_buildUI</a></li><li><a href="PeakMeter.html#._createPeakLabel">_createPeakLabel</a></li><li><a href="PeakMeter.html#._createScaleTicks">_createScaleTicks</a></li><li><a href="PeakMeter.html#._fillAttributes">_fillAttributes</a></li><li><a href="PeakMeter.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="PeakMeter.html#._onResize">_onResize</a></li><li><a href="PeakMeter.html#._pause">_pause</a></li><li><a href="PeakMeter.html#._processAudioBin">_processAudioBin</a></li><li><a href="PeakMeter.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="PeakMeter.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="PeakMeter.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Spectrum.html">Spectrum</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Spectrum_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Spectrum.html#._buildUI">_buildUI</a></li><li><a href="Spectrum.html#._clickedElsewhere">_clickedElsewhere</a></li><li><a href="Spectrum.html#._computeLogSampleHeight">_computeLogSampleHeight</a></li><li><a href="Spectrum.html#._createLogarithmicScaleHeights">_createLogarithmicScaleHeights</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._fillAttributes">_fillAttributes</a></li><li><a href="Spectrum.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Spectrum.html#._onResize">_onResize</a></li><li><a href="Spectrum.html#._processAudioBin">_processAudioBin</a></li><li><a href="Spectrum.html#._removeEvents">_removeEvents</a></li><li><a href="Spectrum.html#._scaleLinearIndexToHeight">_scaleLinearIndexToHeight</a></li><li><a href="Spectrum.html#._settingsClicked">_settingsClicked</a></li><li><a href="Spectrum.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Spectrum.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Timeline.html">Timeline</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Timeline_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Timeline.html#._addEvents">_addEvents</a></li><li><a href="Timeline.html#._dblClick">_dblClick</a></li><li><a href="Timeline.html#._drawBeatBar">_drawBeatBar</a></li><li><a href="Timeline.html#._drawTimeline">_drawTimeline</a></li><li><a href="Timeline.html#._fillAttributes">_fillAttributes</a></li><li><a href="Timeline.html#._fillData">_fillData</a></li><li><a href="Timeline.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Timeline.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseUp">_mouseUp</a></li><li><a href="Timeline.html#._onProgress">_onProgress</a></li><li><a href="Timeline.html#._onResize">_onResize</a></li><li><a href="Timeline.html#._processAudioBin">_processAudioBin</a></li><li><a href="Timeline.html#._processAudioFile">_processAudioFile</a></li><li><a href="Timeline.html#._removeEvents">_removeEvents</a></li><li><a href="Timeline.html#._trackLoaded">_trackLoaded</a></li><li><a href="Timeline.html#.setHotCuePoint">setHotCuePoint</a></li><li><a href="Timeline.html#.updateBeatInfo">updateBeatInfo</a></li></ul></div></li><li><a href="VisuComponentMono.html">VisuComponentMono</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentMono_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentMono.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentMono.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentMono.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentMono.html#._onResize">_onResize</a></li><li><a href="VisuComponentMono.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentStereo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentStereo.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentStereo.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentStereo.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentStereo.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="Waveform.html">Waveform</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Waveform_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Waveform.html#._addEvents">_addEvents</a></li><li><a href="Waveform.html#._buildUI">_buildUI</a></li><li><a href="Waveform.html#._dblClick">_dblClick</a></li><li><a href="Waveform.html#._drawFileWaveform">_drawFileWaveform</a></li><li><a href="Waveform.html#._fillAttributes">_fillAttributes</a></li><li><a href="Waveform.html#._fillData">_fillData</a></li><li><a href="Waveform.html#._genScaledData">_genScaledData</a></li><li><a href="Waveform.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Waveform.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Waveform.html#._onResize">_onResize</a></li><li><a href="Waveform.html#._processAudioBin">_processAudioBin</a></li><li><a href="Waveform.html#._processAudioFile">_processAudioFile</a></li><li><a href="Waveform.html#._removeEvents">_removeEvents</a></li><li><a href="Waveform.html#._scaleDataToHeight">_scaleDataToHeight</a></li><li><a href="Waveform.html#._seekPlayer">_seekPlayer</a></li><li><a href="Waveform.html#._trackLoaded">_trackLoaded</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import VisuComponentStereo from '../utils/VisuComponentStereo.js';
+import CanvasUtils from '../utils/CanvasUtils.js';
+import ColorUtils from '../utils/ColorUtils.js';
+'use strict';
+
+
+class PeakMeter extends VisuComponentStereo {
+
+
+  /** @summary PeakMeter displays a splited or merged peak meter for audio signal
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @augments VisuComponentStereo
+   * @description &lt;blockquote>This component display a peak meter in several configuration. It can include a scale and its legend
+   * and be oriented vertically or horizontally. Modified https://github.com/esonderegger/web-audio-peak-meter&lt;/blockquote>
+   * @param {object} options - The peak meter options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
+   * @param {boolean} [options.merged=false] - Merge left and right channel into one output
+   * @param {object} [options.legend] - The peak meter legend options
+   * @param {number} [options.legend.dbScaleMin=60] - The min scale value
+   * @param {number} [options.legend.dbScaleTicks=6] - The tick distance, must be a multiple of scale min
+   * @param {object} [options.colors] - The oscilloscope background and signal color
+   * @param {string} [options.colors.background=ColorUtils.defaultPrimaryColor] - The background color
+   * @param {string} [options.colors.min=#56D45B] - The gradient min value
+   * @param {string} [options.colors.step0=#AFF2B3] - The gradient second value
+   * @param {string} [options.colors.step1=#FFAD67] - The gradient third value
+   * @param {string} [options.colors.step2=#FF6B67] - The gradient fourth value
+   * @param {string} [options.colors.max=#FFBAB8] - The gradient max value **/
+  constructor(options) {
+    super(options);
+    // Peak gradient
+    this._peakGradient = [
+      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], center: 0 }, // Green
+      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], center: 0.7 }, // Light Green
+      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], center: 0.833 }, // Orange
+      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], center: 0.9 }, // Red
+      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], center: 1 } // Light Red
+    ];
+    // Update canvas CSS background color
+    const bgColor = (options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor);
+    if (this._merged === true) {
+      this._canvasL.style.backgroundColor = bgColor;
+    } else {
+      this._canvasL.style.backgroundColor = bgColor;
+      this._canvasR.style.backgroundColor = bgColor;
+    }
+  }
+
+
+  /*  ----------  VisuComponentStereo overrides  ----------  */
+
+
+  /** @method
+   * @name _fillAttributes
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Internal method to fill internal properties from options object sent to constructor.&lt;/blockquote>
+   * @param {object} options - The frequency circle options
+   * @param {string} options.type - The component type as string
+   * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
+   * @param {object} options.renderTo - The DOM element to render canvas in
+   * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {object} [options.audioContext=null] - The audio context to base analysis from
+   * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
+  _fillAttributes(options) {
+    super._fillAttributes(options);
+    this._orientation = options.orientation || 'horizontal';
+    this._legend = options.legend || null;
+
+    if (this._legend) {
+      this._dbScaleMin = options.legend.dbScaleMin || 60;
+      this._dbScaleTicks = options.legend.dbScaleTicks || 15;
+    } else {
+      this._dbScaleMin = 60;
+      this._dbScaleTicks = 15;
+    }
+
+    this._amplitudeL = 0;
+    this._amplitudeR = 0;
+    this._peakL = 0;
+    this._peakR = 0;
+    this._peakSetTimeL = null;
+    this._peakSetTimeR = null;
+    this._dom.scaleContainer = null;
+    this._dom.labels = [];
+  }
+
+
+  /** @method
+   * @name _buildUI
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Create and configure canvas then append it to given DOM element.&lt;/blockquote> **/
+  _buildUI() {
+    super._buildUI();
+
+    if (this._orientation === 'horizontal') {
+      this._dom.container.classList.add('horizontal-peakmeter');
+    }
+
+    if (this._legend) {
+      this._dom.scaleContainer = document.createElement('DIV');
+      this._dom.scaleContainer.classList.add('scale-container');
+      this._dom.container.insertBefore(this._dom.scaleContainer, this._dom.container.firstChild);
+    }
+
+    if (this._merged === true) {
+      this._dom.container.removeChild(this._canvasR);
+    }
+
+    this._updateDimensions();
+
+    if (this._legend) {
+      this._createPeakLabel();
+      this._createScaleTicks();
+    }
+  }
+
+
+  /** @method
+   * @name _setAudioNodes
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Build audio chain with source.&lt;/blockquote> **/
+  _setAudioNodes() {
+    super._setAudioNodes();
+    this._peakSetTimeL = this._audioCtx.currentTime;
+    this._peakSetTimeR = this._audioCtx.currentTime;
+  }
+
+
+  /** @method
+   * @name _pause
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>On pause event callback.&lt;/blockquote> **/
+  _pause() {
+    super._pause();
+    if (this._legend) {
+      this._dom.labels[0].textContent = '-∞';
+      this._dom.labels[1].textContent = '-∞';
+    }
+  }
+
+
+  /** @method
+   * @name _onResize
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>On resize event callback.&lt;/blockquote> **/
+  _onResize() {
+    super._onResize();
+    this._updateDimensions();
+
+    if (this._legend) {
+      this._createPeakLabel();
+      this._createScaleTicks();
+    }
+  }
+
+
+  /** @method
+   * @name _processAudioBin
+   * @private
+   * @override
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
+   * and time analysis. Then we use utils method to draw radial oscilloscope, linear point oscilloscope, background points
+   * and radial frequency bars.&lt;/blockquote> **/
+  _processAudioBin() {
+    if (this._isPlaying === true) {
+      this._clearCanvas();
+
+      if (this._merged === true) {
+        this._mergedStereoAnalysis();
+      } else {
+        this._stereoAnalysis();
+      }
+      // Draw next frame
+      requestAnimationFrame(this._processAudioBin);
+    }
+  }
+
+
+  /*  ----------  PeakMeter internal methods  ----------  */
+
+
+  /** @method
+   * @name _mergedStereoAnalysis
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Perform a merged Left and Right analysis with 32 bit time domain data.&lt;/blockquote> **/
+  _mergedStereoAnalysis() {
+    const data = new Float32Array(this._fftSize);
+    this._nodes.analyser.getFloatTimeDomainData(data);
+    // Compute average power over the interval and average power attenuation in DB
+    let sumOfSquares = 0;
+    for (let i = 0; i &lt; data.length; i++) {
+      sumOfSquares += data[i] ** 2;
+    }
+
+    const avgPowerDecibels = 10 * Math.log10(sumOfSquares / data.length);
+    // Compure amplitude from width or height depending on orientation
+    const dbScaleBound = this._dbScaleMin * -1;
+    if (this._orientation === 'horizontal') {
+      this._amplitudeL = Math.floor((avgPowerDecibels * this._canvasL.width) / dbScaleBound);
+    } else if (this._orientation === 'vertical') {
+      this._amplitudeL = Math.floor((avgPowerDecibels * this._canvasL.height) / dbScaleBound);
+    }
+    // Left channel
+    // Found a new max value (peak) [-this._dbScaleMin, 0] interval
+    if (this._peakL > this._amplitudeL) {
+      this._peakL = this._amplitudeL;
+      this._peakSetTimeL = this._audioCtx.currentTime;
+      // Update peak label
+      if (this._legend) {
+        avgPowerDecibels !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibels, 1) : null;
+      }
+    } else if (this._audioCtx.currentTime - this._peakSetTimeL > 1) {
+      this._peakL = this._amplitudeL;
+      this._peakSetTimeL = this._audioCtx.currentTime;
+      // Update peak label
+      if (this._legend) {
+        avgPowerDecibels !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibels, 1) : null;
+      }
+    }
+    // Draw left and right peak meters
+    CanvasUtils.drawPeakMeter(this._canvasL, {
+      amplitude: this._amplitudeL,
+      peak: this._peakL,
+      orientation: this._orientation,
+      colors: this._peakGradient
+    });
+  }
+
+
+  /** @method
+   * @name _stereoAnalysis
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Perform a separated Left and Right analysis with 32 bit time domain data.&lt;/blockquote> **/
+  _stereoAnalysis() {
+    const dataL = new Float32Array(this._fftSize);
+    const dataR = new Float32Array(this._fftSize);
+    this._nodes.analyserL.getFloatTimeDomainData(dataL);
+    this._nodes.analyserR.getFloatTimeDomainData(dataR);
+    // Compute average power over the interval and average power attenuation in DB
+    let sumOfSquaresL = 0;
+    let sumOfSquaresR = 0;
+    for (let i = 0; i &lt; dataL.length; i++) {
+      sumOfSquaresL += dataL[i] ** 2;
+      sumOfSquaresR += dataR[i] ** 2;
+    }
+    const avgPowerDecibelsL = 10 * Math.log10(sumOfSquaresL / dataL.length);
+    const avgPowerDecibelsR = 10 * Math.log10(sumOfSquaresR / dataR.length);
+    // Compure amplitude from width or height depending on orientation
+    const dbScaleBound = this._dbScaleMin * -1;
+    if (this._orientation === 'horizontal') {
+      this._amplitudeL = Math.floor((avgPowerDecibelsL * this._canvasL.width) / dbScaleBound);
+      this._amplitudeR = Math.floor((avgPowerDecibelsR * this._canvasR.width) / dbScaleBound);
+    } else if (this._orientation === 'vertical') {
+      this._amplitudeL = Math.floor((avgPowerDecibelsL * this._canvasL.height) / dbScaleBound);
+      this._amplitudeR = Math.floor((avgPowerDecibelsR * this._canvasR.height) / dbScaleBound);
+    }
+    // Left channel
+    // Found a new max value (peak) [-this._dbScaleMin, 0] interval
+    if (this._peakL > this._amplitudeL) {
+      this._peakL = this._amplitudeL;
+      this._peakSetTimeL = this._audioCtx.currentTime;
+      // Update peak label
+      if (this._legend) {
+        avgPowerDecibelsL !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibelsL, 1) : null;
+      }
+    } else if (this._audioCtx.currentTime - this._peakSetTimeL > 1) {
+      this._peakL = this._amplitudeL;
+      this._peakSetTimeL = this._audioCtx.currentTime;
+      // Update peak label
+      if (this._legend) {
+        avgPowerDecibelsL !== -Infinity ? this._dom.labels[0].textContent = CanvasUtils.precisionRound(avgPowerDecibelsL, 1) : null;
+      }
+    }
+    // Right channel
+    // Found a new max value (peak) [-this._dbScaleMin, 0] interval
+    if (this._peakR > this._amplitudeR) {
+      this._peakR = this._amplitudeR;
+      this._peakSetTimeR = this._audioCtx.currentTime;
+      // Update peak label
+      if (this._legend) {
+        avgPowerDecibelsR !== -Infinity ? this._dom.labels[1].textContent = CanvasUtils.precisionRound(avgPowerDecibelsR, 1) : null;
+      }
+    } else if (this._audioCtx.currentTime - this._peakSetTimeR > 1) {
+      this._peakR = this._amplitudeL;
+      this._peakSetTimeR = this._audioCtx.currentTime;
+      // Update peak label
+      if (this._legend) {
+        avgPowerDecibelsR !== -Infinity ? this._dom.labels[1].textContent = CanvasUtils.precisionRound(avgPowerDecibelsR, 1) : null;
+      }
+    }
+    // Draw left and right peak meters
+    CanvasUtils.drawPeakMeter(this._canvasL, {
+      amplitude: this._amplitudeL,
+      peak: this._peakL,
+      orientation: this._orientation,
+      colors: this._peakGradient
+    });
+    CanvasUtils.drawPeakMeter(this._canvasR, {
+      amplitude: this._amplitudeR,
+      peak: this._peakR,
+      orientation: this._orientation,
+      colors: this._peakGradient
+    });
+  }
+
+
+  /** @method
+   * @name _createScaleTicks
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Build the scale tick depending on component orientation.&lt;/blockquote> **/
+  _createScaleTicks() {
+    const numTicks = Math.floor(this._dbScaleMin / this._dbScaleTicks);
+    let dbTickLabel = 0;
+    this._dom.scaleContainer.innerHTML = '';
+    if (this._orientation === 'horizontal') {
+      const tickWidth = this._canvasL.width / numTicks;
+      for (let i = 0; i &lt; numTicks; ++i) {
+        const dbTick = document.createElement('DIV');
+        this._dom.scaleContainer.appendChild(dbTick);
+        dbTick.style.width = `${tickWidth}px`;
+        dbTick.textContent = `${dbTickLabel}`;
+        dbTickLabel -= this._dbScaleTicks;
+      }
+    } else {
+      const tickHeight = this._canvasL.height / numTicks;
+      for (let i = 0; i &lt; numTicks; ++i) {
+        const dbTick = document.createElement('DIV');
+        this._dom.scaleContainer.appendChild(dbTick);
+        dbTick.style.height = `${tickHeight}px`;
+        dbTick.textContent = `${dbTickLabel}`;
+        dbTickLabel -= this._dbScaleTicks;
+      }
+    }
+  }
+
+
+  /** @method
+   * @name _createPeakLabel
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Build the scale legend depending on component orientation.&lt;/blockquote> **/
+  _createPeakLabel() {
+    if (this._dom.labels.length === 2) {
+      this._dom.container.removeChild(this._dom.labels[0]);
+      this._dom.container.removeChild(this._dom.labels[1]);
+      this._dom.labels = [];
+    }
+
+    const peakLabelL = document.createElement('DIV');
+    const peakLabelR = document.createElement('DIV');
+    peakLabelL.classList.add('peak-value-container');
+    peakLabelR.classList.add('peak-value-container');
+    peakLabelL.textContent = '-∞';
+    peakLabelR.textContent = '-∞';
+
+    if (this._orientation === 'horizontal') {
+      peakLabelL.style.width = '28px';
+      peakLabelL.style.height = `${this._canvasL.height + 2}px`; // 2 px borders
+      peakLabelL.style.top = '14px';
+      peakLabelR.style.width = '28px';
+      peakLabelR.style.height = `${this._canvasL.height + 2}px`; // 2 px borders
+      peakLabelR.style.top = `${this._canvasL.height + 16}px`; // 2px borders + 14px height
+    } else {
+      peakLabelL.style.width = `${this._canvasL.width + 2}px`; // 2 px borders
+      peakLabelL.style.left = '18px';
+      peakLabelR.style.width = `${this._canvasL.width + 2}px`; // 2 px borders
+      peakLabelR.style.left = `${this._canvasL.width + 20}px`; // 2px borders + 18px width
+    }
+
+    this._dom.labels.push(peakLabelL);
+    this._dom.labels.push(peakLabelR);
+    this._dom.container.appendChild(this._dom.labels[0]);
+    this._dom.container.appendChild(this._dom.labels[1]);
+  }
+
+
+  /** @method
+   * @name _updateDimensions
+   * @private
+   * @memberof PeakMeter
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Usually called on resize event, update canvas dimension to fit render to DOM object.&lt;/blockquote> **/
+  _updateDimensions() {
+    let widthOffset = 0;
+    let heightOffset = 0;
+
+    if (this._orientation === 'horizontal') {
+      if (this._legend) {
+        widthOffset = 30;
+        heightOffset = 14;
+      }
+
+      this._canvasL.width = this._renderTo.offsetWidth - widthOffset; // 2px borders + 28 px with for label
+
+      if (this._merged === true) {
+        this._canvasL.height = (this._renderTo.offsetHeight - heightOffset) - 2; // 2px border + scale height 14px
+        this._canvasR.height = (this._renderTo.offsetHeight - heightOffset) - 2; // 2px border + scale height 14px
+      } else {
+        this._canvasR.width = this._renderTo.offsetWidth - widthOffset; // 2px borders + 28 px with for label
+        this._canvasL.height = (this._renderTo.offsetHeight - heightOffset) / 2 - 2; // 2px border + scale height 14px
+        this._canvasR.height = (this._renderTo.offsetHeight - heightOffset) / 2 - 2; // 2px border + scale height 14px
+      }
+
+      if (this._legend) {
+        this._dom.scaleContainer.style.width = `${this._canvasL.width}px`;
+      }
+    } else if (this._orientation === 'vertical') {
+      if (this._legend) {
+        widthOffset = 18;
+        heightOffset = 16;
+      } else {
+        this._canvasL.style.left = '0'; // Remove left offset for legend
+      }
+
+      this._canvasL.height = this._renderTo.offsetHeight - heightOffset - 2; // 2px borders + 16px height for label
+
+      if (this._merged === true) {
+        this._canvasL.width = (this._renderTo.offsetWidth - widthOffset) - 2; // 2px border + scale width 18px
+        this._canvasR.width = (this._renderTo.offsetWidth - widthOffset) - 2; // 2px border + scale width 18px
+      } else {
+        this._canvasR.height = this._renderTo.offsetHeight - heightOffset - 2; // 2px borders + 16px height for label
+        this._canvasL.width = (this._renderTo.offsetWidth - widthOffset) / 2 - 2; // 2px border + scale width 18px
+        this._canvasR.width = (this._renderTo.offsetWidth - widthOffset) / 2 - 2; // 2px border + scale width 18px
+      }
+
+      if (this._legend) {
+        this._dom.scaleContainer.style.height = `${this._canvasL.height}px`;
+        this._dom.scaleContainer.style.width = '18px';
+      }
+    }
+  }
+
+
+}
+
+
+export default PeakMeter;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="../demo/logo.png" style="width: 20px; height: 20px">
+    <div class="footer-text">AudioVisualizer</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

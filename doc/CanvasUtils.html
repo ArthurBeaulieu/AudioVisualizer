@@ -1,0 +1,3846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Class: CanvasUtils | AudioVisualizer</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 20px; height: 20px">
+        
+            <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" rel="noopener noreferrer" target="_blank">
+                <img src="../demo/logo.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AudioVisualizer</a></h1>
+        
+            <span class="version">v0.9.4</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="AudioVisualizer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AudioVisualizer.html#.version">version</a></li></ul></div></li><li><a href="BackgroundStar.html">BackgroundStar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BackgroundStar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BackgroundStar.html#.updatePosition">updatePosition</a></li></ul></div></li><li><a href="BaseComponent.html">BaseComponent</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BaseComponent_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BaseComponent.html#._addEvents">_addEvents</a></li><li><a href="BaseComponent.html#._buildUI">_buildUI</a></li><li><a href="BaseComponent.html#._clearCanvas">_clearCanvas</a></li><li><a href="BaseComponent.html#._dblClick">_dblClick</a></li><li><a href="BaseComponent.html#._fillAttributes">_fillAttributes</a></li><li><a href="BaseComponent.html#._onResize">_onResize</a></li><li><a href="BaseComponent.html#._pause">_pause</a></li><li><a href="BaseComponent.html#._play">_play</a></li><li><a href="BaseComponent.html#._processAudioBin">_processAudioBin</a></li><li><a href="BaseComponent.html#._removeEvents">_removeEvents</a></li><li><a href="BaseComponent.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="BaseComponent.html#.destroy">destroy</a></li></ul></div></li><li><a href="CanvasUtils.html">CanvasUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="CanvasUtils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="CanvasUtils.html#.drawCircle">drawCircle</a></li><li><a href="CanvasUtils.html#.drawCircleGlow">drawCircleGlow</a></li><li><a href="CanvasUtils.html#.drawDisc">drawDisc</a></li><li><a href="CanvasUtils.html#.drawOscilloscope">drawOscilloscope</a></li><li><a href="CanvasUtils.html#.drawPeakMeter">drawPeakMeter</a></li><li><a href="CanvasUtils.html#.drawPointsOscilloscope">drawPointsOscilloscope</a></li><li><a href="CanvasUtils.html#.drawRadialBar">drawRadialBar</a></li><li><a href="CanvasUtils.html#.drawRadialOscilloscope">drawRadialOscilloscope</a></li><li><a href="CanvasUtils.html#.drawSquare">drawSquare</a></li><li><a href="CanvasUtils.html#.drawTriangle">drawTriangle</a></li><li><a href="CanvasUtils.html#.drawVerticalBar">drawVerticalBar</a></li><li><a href="CanvasUtils.html#.precisionRound">precisionRound</a></li></ul></div></li><li><a href="ColorUtils.html">ColorUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="ColorUtils_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="ColorUtils.html#.defaultAntiPrimaryColor">defaultAntiPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultAudioGradient">defaultAudioGradient</a></li><li><a href="ColorUtils.html#.defaultBackgroundColor">defaultBackgroundColor</a></li><li><a href="ColorUtils.html#.defaultDarkPrimaryColor">defaultDarkPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultPrimaryColor">defaultPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultTextColor">defaultTextColor</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="ColorUtils.html#.drawRadialGlowGradient">drawRadialGlowGradient</a></li><li><a href="ColorUtils.html#.drawRadialGradient">drawRadialGradient</a></li><li><a href="ColorUtils.html#.drawVerticalGradient">drawVerticalGradient</a></li><li><a href="ColorUtils.html#.lightenDarkenColor">lightenDarkenColor</a></li><li><a href="ColorUtils.html#.peakMeterGradient">peakMeterGradient</a></li><li><a href="ColorUtils.html#.rainbowGradient">rainbowGradient</a></li></ul></div></li><li><a href="FrequencyBars.html">FrequencyBars</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyBars_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyBars.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="FrequencyCircle.html">FrequencyCircle</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyCircle_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyCircle.html#._animateCircleBars">_animateCircleBars</a></li><li><a href="FrequencyCircle.html#._animateCircleGlow">_animateCircleGlow</a></li><li><a href="FrequencyCircle.html#._animateOscilloscopes">_animateOscilloscopes</a></li><li><a href="FrequencyCircle.html#._animateStars">_animateStars</a></li><li><a href="FrequencyCircle.html#._buildUI">_buildUI</a></li><li><a href="FrequencyCircle.html#._fillAttributes">_fillAttributes</a></li><li><a href="FrequencyCircle.html#._getAverageFrequency">_getAverageFrequency</a></li><li><a href="FrequencyCircle.html#._onResize">_onResize</a></li><li><a href="FrequencyCircle.html#._pause">_pause</a></li><li><a href="FrequencyCircle.html#._play">_play</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="Oscilloscope.html">Oscilloscope</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Oscilloscope_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Oscilloscope.html#._buildUI">_buildUI</a></li><li><a href="Oscilloscope.html#._fillAttributes">_fillAttributes</a></li><li><a href="Oscilloscope.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Oscilloscope.html#._onResize">_onResize</a></li><li><a href="Oscilloscope.html#._processAudioBin">_processAudioBin</a></li><li><a href="Oscilloscope.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Oscilloscope.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="OscilloscopeRadialPoint_sub"></div></li><li><a href="PeakMeter.html">PeakMeter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="PeakMeter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="PeakMeter.html#._buildUI">_buildUI</a></li><li><a href="PeakMeter.html#._createPeakLabel">_createPeakLabel</a></li><li><a href="PeakMeter.html#._createScaleTicks">_createScaleTicks</a></li><li><a href="PeakMeter.html#._fillAttributes">_fillAttributes</a></li><li><a href="PeakMeter.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="PeakMeter.html#._onResize">_onResize</a></li><li><a href="PeakMeter.html#._pause">_pause</a></li><li><a href="PeakMeter.html#._processAudioBin">_processAudioBin</a></li><li><a href="PeakMeter.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="PeakMeter.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="PeakMeter.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Spectrum.html">Spectrum</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Spectrum_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Spectrum.html#._buildUI">_buildUI</a></li><li><a href="Spectrum.html#._clickedElsewhere">_clickedElsewhere</a></li><li><a href="Spectrum.html#._computeLogSampleHeight">_computeLogSampleHeight</a></li><li><a href="Spectrum.html#._createLogarithmicScaleHeights">_createLogarithmicScaleHeights</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._fillAttributes">_fillAttributes</a></li><li><a href="Spectrum.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Spectrum.html#._onResize">_onResize</a></li><li><a href="Spectrum.html#._processAudioBin">_processAudioBin</a></li><li><a href="Spectrum.html#._removeEvents">_removeEvents</a></li><li><a href="Spectrum.html#._scaleLinearIndexToHeight">_scaleLinearIndexToHeight</a></li><li><a href="Spectrum.html#._settingsClicked">_settingsClicked</a></li><li><a href="Spectrum.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Spectrum.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Timeline.html">Timeline</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Timeline_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Timeline.html#._addEvents">_addEvents</a></li><li><a href="Timeline.html#._dblClick">_dblClick</a></li><li><a href="Timeline.html#._drawBeatBar">_drawBeatBar</a></li><li><a href="Timeline.html#._drawTimeline">_drawTimeline</a></li><li><a href="Timeline.html#._fillAttributes">_fillAttributes</a></li><li><a href="Timeline.html#._fillData">_fillData</a></li><li><a href="Timeline.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Timeline.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseUp">_mouseUp</a></li><li><a href="Timeline.html#._onProgress">_onProgress</a></li><li><a href="Timeline.html#._onResize">_onResize</a></li><li><a href="Timeline.html#._processAudioBin">_processAudioBin</a></li><li><a href="Timeline.html#._processAudioFile">_processAudioFile</a></li><li><a href="Timeline.html#._removeEvents">_removeEvents</a></li><li><a href="Timeline.html#._trackLoaded">_trackLoaded</a></li><li><a href="Timeline.html#.setHotCuePoint">setHotCuePoint</a></li><li><a href="Timeline.html#.updateBeatInfo">updateBeatInfo</a></li></ul></div></li><li><a href="VisuComponentMono.html">VisuComponentMono</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentMono_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentMono.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentMono.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentMono.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentMono.html#._onResize">_onResize</a></li><li><a href="VisuComponentMono.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentStereo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentStereo.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentStereo.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentStereo.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentStereo.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="Waveform.html">Waveform</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Waveform_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Waveform.html#._addEvents">_addEvents</a></li><li><a href="Waveform.html#._buildUI">_buildUI</a></li><li><a href="Waveform.html#._dblClick">_dblClick</a></li><li><a href="Waveform.html#._drawFileWaveform">_drawFileWaveform</a></li><li><a href="Waveform.html#._fillAttributes">_fillAttributes</a></li><li><a href="Waveform.html#._fillData">_fillData</a></li><li><a href="Waveform.html#._genScaledData">_genScaledData</a></li><li><a href="Waveform.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Waveform.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Waveform.html#._onResize">_onResize</a></li><li><a href="Waveform.html#._processAudioBin">_processAudioBin</a></li><li><a href="Waveform.html#._processAudioFile">_processAudioFile</a></li><li><a href="Waveform.html#._removeEvents">_removeEvents</a></li><li><a href="Waveform.html#._scaleDataToHeight">_scaleDataToHeight</a></li><li><a href="Waveform.html#._seekPlayer">_seekPlayer</a></li><li><a href="Waveform.html#._trackLoaded">_trackLoaded</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>CanvasUtils<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dt>
+    
+        <h4 class="name" id="CanvasUtils">
+            
+                new <span class="type-signature"></span>CanvasUtils<span class="signature">()</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line13">line 13</a></code>
+            </div>
+            
+        </h4>
+
+        
+        <p class="summary"><p>CanvasUtils provides several method to manipulate basic geometries in canvas</p></p>
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
+make those utils methods available with constraints. Refer to each method for their associated documentation.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawCircle">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawCircle<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line52">line 52</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a circle in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw circle in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Circle options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>centerX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>centerY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle y origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle radius</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The rotation start angle in rad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radEnd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The rotation end angle in rad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle line width in N</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle color in Hex/RGB/HSL</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawCircleGlow">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawCircleGlow<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line80">line 80</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a circle with glow effect made with radial gradients in inner and outer circle.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw circle glow in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Circle glow options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>centerX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>centerY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle y origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle radius</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The rotation start angle in rad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radEnd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The rotation end angle in rad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle line width in N</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the glow color, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1], 0.5 being the circle line) properties</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawDisc">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawDisc<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line106">line 106</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a disc in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Disc options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>centerX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>centerY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle y origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle radius</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radStart</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The rotation start angle in rad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radEnd</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The rotation end angle in rad</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle color in Hex/RGB/HSL</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawOscilloscope">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line155">line 155</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw an oscilloscope of frequencies in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Oscilloscope options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>samples</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>timeDomain</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The height of the frequency bin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the oscilloscope color in Hex/RGB/HSL or <code>rainbow</code></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawPeakMeter">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawPeakMeter<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line283">line 283</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a peakmeter in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Peak meter options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>orientation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The peak meter orientation, either <code>horizontal</code> or <code>vertical</code></p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>amplitude</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The sample amplitude value</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>peak</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The peak value</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The peak meter gradient colors, must be objects with color and index (in Float[0,1]) properties</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawPointsOscilloscope">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawPointsOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line199">line 199</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw an oscilloscope as points only in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Oscilloscope options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the oscilloscope length (half FFT)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>times</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The time domain bins</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The point color in Hex/RGB/HSL</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawRadialBar">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawRadialBar<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line16">line 16</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a radial bar with its height and color being computed from the frequency intensity.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw radial bar in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Radial bar options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>frequencyValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The frequency value in Int[0,255]</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x0</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y0</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The y origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>x1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The x endpoint in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The y endpoint in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The bar line width in N</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The bar base color (will be lighten/darken according to frequency value) in Hex/RGB/HSL</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawRadialOscilloscope">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawRadialOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line230">line 230</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a radial oscilloscope as points only in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Oscilloscope options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>centerX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the x center position</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>centerY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the y center position</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rotation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the rotation offset</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the oscilloscope length (half FFT)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>times</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The time domain bins</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>points</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The oscilloscope radial points objects</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The point color in Hex/RGB/HSL</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawSquare">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawSquare<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line345">line 345</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a square in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw square in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Peak meter options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The square x origin</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The square y origin</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>size</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The square dimension</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawTriangle">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawTriangle<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line320">line 320</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a triangle in given canvas.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Peak meter options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The triangle x origin</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The triangle y origin</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The triangle base</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>top</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The triangle top position</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".drawVerticalBar">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>drawVerticalBar<span class="signature">(canvas, options)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line132">line 132</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Draw a disc vertical bar in given canvas with given gradient.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw disc in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Vertical bar options</p>
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>originX</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The height of the frequency bin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The width of the frequency bin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the gradient colors, must be objects with color and index (in Float[0,1]) properties</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".precisionRound">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>precisionRound<span class="signature">(value, precision)</span><span class="type-signature"> &rarr; {number}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
+                <code><a href="utils_CanvasUtils.js.html#line371">line 371</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <blockquote>Round a floating number with a given precision after coma.</blockquote>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The floating value to round</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>precision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the amount of number we want to have after floating point</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">number</span>
+
+
+
+
+
+- <ul>
+<li>The rounded value</li>
+</ul>
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="../demo/logo.png" style="width: 20px; height: 20px">
+    <div class="footer-text">AudioVisualizer</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'CanvasUtils_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

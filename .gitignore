@@ -1,6 +1,4 @@
-.idea
-doc
 node_modules
-scss/*.css.map
-scss/*.css
+.idea
+test/coverage
 package-lock.json

@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: utils/CanvasUtils.js | AudioVisualizer</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="width: 20px; height: 20px">
+        
+            <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" rel="noopener noreferrer" target="_blank">
+                <img src="../demo/logo.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">AudioVisualizer</a></h1>
+        
+            <span class="version">v0.9.4</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="AudioVisualizer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AudioVisualizer.html#.version">version</a></li></ul></div></li><li><a href="BackgroundStar.html">BackgroundStar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BackgroundStar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BackgroundStar.html#.updatePosition">updatePosition</a></li></ul></div></li><li><a href="BaseComponent.html">BaseComponent</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BaseComponent_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BaseComponent.html#._addEvents">_addEvents</a></li><li><a href="BaseComponent.html#._buildUI">_buildUI</a></li><li><a href="BaseComponent.html#._clearCanvas">_clearCanvas</a></li><li><a href="BaseComponent.html#._dblClick">_dblClick</a></li><li><a href="BaseComponent.html#._fillAttributes">_fillAttributes</a></li><li><a href="BaseComponent.html#._onResize">_onResize</a></li><li><a href="BaseComponent.html#._pause">_pause</a></li><li><a href="BaseComponent.html#._play">_play</a></li><li><a href="BaseComponent.html#._processAudioBin">_processAudioBin</a></li><li><a href="BaseComponent.html#._removeEvents">_removeEvents</a></li><li><a href="BaseComponent.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="BaseComponent.html#.destroy">destroy</a></li></ul></div></li><li><a href="CanvasUtils.html">CanvasUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="CanvasUtils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="CanvasUtils.html#.drawCircle">drawCircle</a></li><li><a href="CanvasUtils.html#.drawCircleGlow">drawCircleGlow</a></li><li><a href="CanvasUtils.html#.drawDisc">drawDisc</a></li><li><a href="CanvasUtils.html#.drawOscilloscope">drawOscilloscope</a></li><li><a href="CanvasUtils.html#.drawPeakMeter">drawPeakMeter</a></li><li><a href="CanvasUtils.html#.drawPointsOscilloscope">drawPointsOscilloscope</a></li><li><a href="CanvasUtils.html#.drawRadialBar">drawRadialBar</a></li><li><a href="CanvasUtils.html#.drawRadialOscilloscope">drawRadialOscilloscope</a></li><li><a href="CanvasUtils.html#.drawSquare">drawSquare</a></li><li><a href="CanvasUtils.html#.drawTriangle">drawTriangle</a></li><li><a href="CanvasUtils.html#.drawVerticalBar">drawVerticalBar</a></li><li><a href="CanvasUtils.html#.precisionRound">precisionRound</a></li></ul></div></li><li><a href="ColorUtils.html">ColorUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="ColorUtils_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="ColorUtils.html#.defaultAntiPrimaryColor">defaultAntiPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultAudioGradient">defaultAudioGradient</a></li><li><a href="ColorUtils.html#.defaultBackgroundColor">defaultBackgroundColor</a></li><li><a href="ColorUtils.html#.defaultDarkPrimaryColor">defaultDarkPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultPrimaryColor">defaultPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultTextColor">defaultTextColor</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="ColorUtils.html#.drawRadialGlowGradient">drawRadialGlowGradient</a></li><li><a href="ColorUtils.html#.drawRadialGradient">drawRadialGradient</a></li><li><a href="ColorUtils.html#.drawVerticalGradient">drawVerticalGradient</a></li><li><a href="ColorUtils.html#.lightenDarkenColor">lightenDarkenColor</a></li><li><a href="ColorUtils.html#.peakMeterGradient">peakMeterGradient</a></li><li><a href="ColorUtils.html#.rainbowGradient">rainbowGradient</a></li></ul></div></li><li><a href="FrequencyBars.html">FrequencyBars</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyBars_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyBars.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="FrequencyCircle.html">FrequencyCircle</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyCircle_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyCircle.html#._animateCircleBars">_animateCircleBars</a></li><li><a href="FrequencyCircle.html#._animateCircleGlow">_animateCircleGlow</a></li><li><a href="FrequencyCircle.html#._animateOscilloscopes">_animateOscilloscopes</a></li><li><a href="FrequencyCircle.html#._animateStars">_animateStars</a></li><li><a href="FrequencyCircle.html#._buildUI">_buildUI</a></li><li><a href="FrequencyCircle.html#._fillAttributes">_fillAttributes</a></li><li><a href="FrequencyCircle.html#._getAverageFrequency">_getAverageFrequency</a></li><li><a href="FrequencyCircle.html#._onResize">_onResize</a></li><li><a href="FrequencyCircle.html#._pause">_pause</a></li><li><a href="FrequencyCircle.html#._play">_play</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="Oscilloscope.html">Oscilloscope</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Oscilloscope_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Oscilloscope.html#._buildUI">_buildUI</a></li><li><a href="Oscilloscope.html#._fillAttributes">_fillAttributes</a></li><li><a href="Oscilloscope.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Oscilloscope.html#._onResize">_onResize</a></li><li><a href="Oscilloscope.html#._processAudioBin">_processAudioBin</a></li><li><a href="Oscilloscope.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Oscilloscope.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="OscilloscopeRadialPoint_sub"></div></li><li><a href="PeakMeter.html">PeakMeter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="PeakMeter_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="PeakMeter.html#._buildUI">_buildUI</a></li><li><a href="PeakMeter.html#._createPeakLabel">_createPeakLabel</a></li><li><a href="PeakMeter.html#._createScaleTicks">_createScaleTicks</a></li><li><a href="PeakMeter.html#._fillAttributes">_fillAttributes</a></li><li><a href="PeakMeter.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="PeakMeter.html#._onResize">_onResize</a></li><li><a href="PeakMeter.html#._pause">_pause</a></li><li><a href="PeakMeter.html#._processAudioBin">_processAudioBin</a></li><li><a href="PeakMeter.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="PeakMeter.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="PeakMeter.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Spectrum.html">Spectrum</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Spectrum_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Spectrum.html#._buildUI">_buildUI</a></li><li><a href="Spectrum.html#._clickedElsewhere">_clickedElsewhere</a></li><li><a href="Spectrum.html#._computeLogSampleHeight">_computeLogSampleHeight</a></li><li><a href="Spectrum.html#._createLogarithmicScaleHeights">_createLogarithmicScaleHeights</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._fillAttributes">_fillAttributes</a></li><li><a href="Spectrum.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Spectrum.html#._onResize">_onResize</a></li><li><a href="Spectrum.html#._processAudioBin">_processAudioBin</a></li><li><a href="Spectrum.html#._removeEvents">_removeEvents</a></li><li><a href="Spectrum.html#._scaleLinearIndexToHeight">_scaleLinearIndexToHeight</a></li><li><a href="Spectrum.html#._settingsClicked">_settingsClicked</a></li><li><a href="Spectrum.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Spectrum.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Timeline.html">Timeline</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Timeline_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Timeline.html#._addEvents">_addEvents</a></li><li><a href="Timeline.html#._dblClick">_dblClick</a></li><li><a href="Timeline.html#._drawBeatBar">_drawBeatBar</a></li><li><a href="Timeline.html#._drawTimeline">_drawTimeline</a></li><li><a href="Timeline.html#._fillAttributes">_fillAttributes</a></li><li><a href="Timeline.html#._fillData">_fillData</a></li><li><a href="Timeline.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Timeline.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseUp">_mouseUp</a></li><li><a href="Timeline.html#._onProgress">_onProgress</a></li><li><a href="Timeline.html#._onResize">_onResize</a></li><li><a href="Timeline.html#._processAudioBin">_processAudioBin</a></li><li><a href="Timeline.html#._processAudioFile">_processAudioFile</a></li><li><a href="Timeline.html#._removeEvents">_removeEvents</a></li><li><a href="Timeline.html#._trackLoaded">_trackLoaded</a></li><li><a href="Timeline.html#.setHotCuePoint">setHotCuePoint</a></li><li><a href="Timeline.html#.updateBeatInfo">updateBeatInfo</a></li></ul></div></li><li><a href="VisuComponentMono.html">VisuComponentMono</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentMono_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentMono.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentMono.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentMono.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentMono.html#._onResize">_onResize</a></li><li><a href="VisuComponentMono.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentStereo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentStereo.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentStereo.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentStereo.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentStereo.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="Waveform.html">Waveform</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Waveform_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="Waveform.html#._addEvents">_addEvents</a></li><li><a href="Waveform.html#._buildUI">_buildUI</a></li><li><a href="Waveform.html#._dblClick">_dblClick</a></li><li><a href="Waveform.html#._drawFileWaveform">_drawFileWaveform</a></li><li><a href="Waveform.html#._fillAttributes">_fillAttributes</a></li><li><a href="Waveform.html#._fillData">_fillData</a></li><li><a href="Waveform.html#._genScaledData">_genScaledData</a></li><li><a href="Waveform.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Waveform.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Waveform.html#._onResize">_onResize</a></li><li><a href="Waveform.html#._processAudioBin">_processAudioBin</a></li><li><a href="Waveform.html#._processAudioFile">_processAudioFile</a></li><li><a href="Waveform.html#._removeEvents">_removeEvents</a></li><li><a href="Waveform.html#._scaleDataToHeight">_scaleDataToHeight</a></li><li><a href="Waveform.html#._seekPlayer">_seekPlayer</a></li><li><a href="Waveform.html#._trackLoaded">_trackLoaded</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import ColorUtils from './ColorUtils.js';
+'use strict';
+
+
+class CanvasUtils {
+
+
+  /** @summary CanvasUtils provides several method to manipulate basic geometries in canvas
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
+   * make those utils methods available with constraints. Refer to each method for their associated documentation.&lt;/blockquote> */
+  constructor() {}
+
+
+  /** @method
+   * @name drawRadialBar
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a radial bar with its height and color being computed from the frequency intensity.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw radial bar in
+   * @param {object} options - Radial bar options
+   * @param {object} options.frequencyValue - The frequency value in Int[0,255]
+   * @param {number} options.x0 - The x origin in canvas dimension
+   * @param {number} options.y0 - The y origin in canvas dimension
+   * @param {number} options.x1 - The x endpoint in canvas dimension
+   * @param {number} options.y1 - The y endpoint in canvas dimension
+   * @param {number} options.width - The bar line width in N
+   * @param {string} options.color - The bar base color (will be lighten/darken according to frequency value) in Hex/RGB/HSL **/
+  static drawRadialBar(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    let amount = options.frequencyValue / 255;
+    if (amount &lt; 0.05) {
+      amount = -amount;
+    } else {
+      amount = amount * 1.33;
+    }
+    // Draw on canvas context
+    ctx.beginPath();
+    ctx.moveTo(options.x0, options.y0);
+    ctx.lineTo(options.x1, options.y1);
+    ctx.strokeStyle = ColorUtils.lightenDarkenColor(options.color, amount * 100);
+    ctx.lineWidth = options.width;
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawCircle
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a circle in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw circle in
+   * @param {object} options - Circle options
+   * @param {number} options.centerX - The circle x origin in canvas dimension
+   * @param {number} options.centerY - The circle y origin in canvas dimension
+   * @param {number} options.radius - The circle radius
+   * @param {number} options.radStart - The rotation start angle in rad
+   * @param {number} options.radEnd - The rotation end angle in rad
+   * @param {number} options.width - The circle line width in N
+   * @param {string} options.color - The circle color in Hex/RGB/HSL **/
+  static drawCircle(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
+    ctx.lineWidth = options.width;
+    ctx.strokeStyle = options.color;
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawCircleGlow
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a circle with glow effect made with radial gradients in inner and outer circle.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw circle glow in
+   * @param {object} options - Circle glow options
+   * @param {number} options.centerX - The circle x origin in canvas dimension
+   * @param {number} options.centerY - The circle y origin in canvas dimension
+   * @param {number} options.radius - The circle radius
+   * @param {number} options.radStart - The rotation start angle in rad
+   * @param {number} options.radEnd - The rotation end angle in rad
+   * @param {number} options.width - The circle line width in N
+   * @param {object[]} options.colors - the glow color, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1], 0.5 being the circle line) properties  **/
+  static drawCircleGlow(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
+    ColorUtils.drawRadialGlowGradient(canvas, options);
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawDisc
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a disc in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Disc options
+   * @param {number} options.centerX - The circle x origin in canvas dimension
+   * @param {number} options.centerY - The circle y origin in canvas dimension
+   * @param {number} options.radius - The circle radius
+   * @param {number} options.radStart - The rotation start angle in rad
+   * @param {number} options.radEnd - The rotation end angle in rad
+   * @param {string} options.color - The circle color in Hex/RGB/HSL **/
+  static drawDisc(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
+    ctx.fillStyle = options.color;
+    ctx.fill();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawVerticalBar
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a disc vertical bar in given canvas with given gradient.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Vertical bar options
+   * @param {number} options.originX - The x origin in canvas dimension
+   * @param {number} options.height - The height of the frequency bin in canvas dimension
+   * @param {number} options.width - The width of the frequency bin in canvas dimension
+   * @param {object[]} options.colors - the gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+  static drawVerticalBar(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);
+    ColorUtils.drawVerticalGradient(canvas, options);
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawOscilloscope
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw an oscilloscope of frequencies in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Oscilloscope options
+   * @param {number} options.samples - The x origin in canvas dimension
+   * @param {number} options.timeDomain - The height of the frequency bin in canvas dimension
+   * @param {string} options.color - the oscilloscope color in Hex/RGB/HSL or &lt;code>rainbow&lt;/code> **/
+  static drawOscilloscope(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    // Iterate over data to build each bar
+    let cursorX = 0;
+    const frequencyWidth = canvas.width / options.samples;
+    for (let i = 0; i &lt; options.samples; ++i) {
+      // Compute frequency height percentage relative to canvas height to determine Y origin
+      const frequencyHeight = options.timeDomain[i] / 255; // Get value between 0 and 1
+      const cursorY = canvas.height * frequencyHeight;
+
+      if (i > 0) { // General case
+        ctx.lineTo(cursorX, cursorY);
+      } else { // 0 index case
+        ctx.moveTo(cursorX, cursorY);
+      }
+      // Update cursor position
+      cursorX += frequencyWidth;
+    }
+
+    if (options.color === 'rainbow') {
+      ctx.strokeStyle = ColorUtils.rainbowGradient(canvas);
+    } else {
+      ctx.strokeStyle = options.color;
+    }
+
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawPointsOscilloscope
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw an oscilloscope as points only in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Oscilloscope options
+   * @param {number} options.length - the oscilloscope length (half FFT)
+   * @param {number} options.times - The time domain bins
+   * @param {string} options.color - The point color in Hex/RGB/HSL **/
+  static drawPointsOscilloscope(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+
+    for (let i = 0; i &lt; options.length; ++i) {
+      let height = canvas.height * (options.times[i] / 255);
+      let offset = canvas.height - height - 1;
+      let barWidth = canvas.width / options.length;
+      ctx.fillStyle = options.color;
+      ctx.fillRect(i * barWidth, offset, 2, 2);
+    }
+
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawRadialOscilloscope
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a radial oscilloscope as points only in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Oscilloscope options
+   * @param {number} options.centerX - the x center position
+   * @param {number} options.centerY - the y center position
+   * @param {number} options.rotation - the rotation offset
+   * @param {number} options.length - the oscilloscope length (half FFT)
+   * @param {number[]} options.times - The time domain bins
+   * @param {number[]} options.points - The oscilloscope radial points objects
+   * @param {string} options.color - The point color in Hex/RGB/HSL **/
+  static drawRadialOscilloscope(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.save();
+    ctx.translate(options.centerX, options.centerY);
+    ctx.rotate(options.rotation)
+    ctx.translate(-options.centerX, -options.centerY);
+    ctx.moveTo(options.points[0].dx, options.points[0].dy);
+    ctx.strokeStyle = options.color;
+
+    for (let i = 0; i &lt; options.length - 1; ++i) {
+      let point = options.points[i];
+      point.dx = point.x + options.times[i] * Math.sin((Math.PI / 180) * point.angle);
+      point.dy = point.y + options.times[i] * Math.cos((Math.PI / 180) * point.angle);
+      let xc = (point.dx + options.points[i + 1].dx) / 2;
+      let yc = (point.dy + options.points[i + 1].dy) / 2;
+      ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
+    }
+    // Handle last point manually
+    let value = options.times[options.length - 1];
+    let point = options.points[options.length - 1];
+    point.dx = point.x + value * Math.sin((Math.PI / 180) * point.angle);
+    point.dy = point.y + value * Math.cos((Math.PI / 180) * point.angle);
+    let xc = (point.dx + options.points[0].dx) / 2;
+    let yc = (point.dy + options.points[0].dy) / 2;
+    ctx.quadraticCurveTo(point.dx, point.dy, xc, yc);
+    ctx.quadraticCurveTo(xc, yc, options.points[0].dx, options.points[0].dy);
+    // Fill context for current path
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    ctx.restore();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawPeakMeter
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a peakmeter in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Peak meter options
+   * @param {string} options.orientation - The peak meter orientation, either &lt;code>horizontal&lt;/code> or &lt;code>vertical&lt;/code>
+   * @param {number} options.amplitude - The sample amplitude value
+   * @param {number} options.peak - The peak value
+   * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color and index (in Float[0,1]) properties **/
+  static drawPeakMeter(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ColorUtils.peakMeterGradient(canvas, options);
+
+    if (options.orientation === 'horizontal') {
+      const ledWidth = canvas.width - options.amplitude;
+      ctx.fillRect(0, 0, ledWidth, canvas.height);
+    } else if (options.orientation === 'vertical') {
+      const ledHeight = canvas.height - options.amplitude;
+      ctx.fillRect(0, canvas.height - ledHeight, canvas.width, ledHeight);
+    }
+
+    ctx.fillStyle = '#FF6B67';
+    if (options.orientation === 'horizontal') {
+      const ledWidth = canvas.width - options.peak;
+      ctx.fillRect(ledWidth, 0, 1, canvas.height);
+    } else if (options.orientation === 'vertical') {
+      const ledHeight = canvas.height - options.peak;
+      ctx.fillRect(0, canvas.height - ledHeight, canvas.width, 1);
+    }
+  }
+
+
+  /** @method
+   * @name drawTriangle
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a triangle in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw disc in
+   * @param {object} options - Peak meter options
+   * @param {number} options.x - The triangle x origin
+   * @param {number} options.y - The triangle y origin
+   * @param {number} options.radius - The triangle base
+   * @param {number} options.top - The triangle top position **/
+  static drawTriangle(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(options.x - options.radius, options.y);
+    ctx.lineTo(options.x + options.radius, options.y);
+    ctx.lineTo(options.x, options.top);
+    ctx.fill();
+    ctx.closePath();
+  }
+
+
+  /** @method
+   * @name drawSquare
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Draw a square in given canvas.&lt;/blockquote>
+   * @param {object} canvas - The canvas to draw square in
+   * @param {object} options - Peak meter options
+   * @param {number} options.x - The square x origin
+   * @param {number} options.y - The square y origin
+   * @param {number} options.size - The square dimension **/
+  static drawHotCue(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.fillStyle = ColorUtils.defaultPrimaryColor;    
+    ctx.fillRect(options.x - (options.size / 2), options.y, options.size, options.size);
+    ctx.fillStyle = ColorUtils.defaultBackgroundColor;
+    ctx.font = 'bold 10pt Helvetica sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(options.label || '', options.x, options.y + (3 * options.size / 4));
+    ctx.closePath();
+  }  
+
+
+  /** @method
+   * @name precisionRound
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description &lt;blockquote>Round a floating number with a given precision after coma.&lt;/blockquote>
+   * @param {number} value - The floating value to round
+   * @param {number} precision - the amount of number we want to have after floating point
+   * @return {number} - The rounded value **/
+  static precisionRound(value, precision) {
+    const multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  }
+
+
+}
+
+
+export default CanvasUtils;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="../demo/logo.png" style="width: 20px; height: 20px">
+    <div class="footer-text">AudioVisualizer</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
