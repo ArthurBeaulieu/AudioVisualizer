@@ -123,7 +123,8 @@ const buttonClicked = function() {
         align: 'center',
         barWidth: 1,
         barMarginScale: 0,
-        merged: true
+        merged: true,
+        noSignalLine: true
       },
       colors: {
         background: '#1D1E25',

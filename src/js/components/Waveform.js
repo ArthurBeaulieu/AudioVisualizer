@@ -3,10 +3,10 @@ import ColorUtils from '../utils/ColorUtils.js';
 'use strict';
 
 
-class WaveformProgress extends VisuComponentMono {
+class Waveform extends VisuComponentMono {
 
 
-  /** @summary WaveformProgress displays the track audio waveform.
+  /** @summary Waveform displays the track audio waveform.
    * @author Arthur Beaulieu
    * @since 2020
    * @augments VisuComponentMono
@@ -27,6 +27,7 @@ class WaveformProgress extends VisuComponentMono {
    * @param {number} [options.wave.barWidth=1] - The bar width in px
    * @param {number} [options.wave.barMarginScale=0.125] - The margin scale of bar width in Float[0,1]
    * @param {boolean} [options.wave.merged=true] - Symmetry if wave is align center
+   * @param {boolean} [options.wave.noSignalLine=true] - Display a line when no signal
    * @param {object} [options.colors] - Waveform color potions
    * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
    * @param {object} [options.colors.track='#E7E9E7'] - The waveform background color in Hex/RGB/HSL
@@ -56,7 +57,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _fillAttributes
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
@@ -71,15 +72,17 @@ class WaveformProgress extends VisuComponentMono {
    * @param {string} [options.wave.align='center'] - Waveform alignment in <code>top</code>/<code>center</code>/<code>bottom</code>
    * @param {number} [options.wave.barWidth=1] - The bar width in px
    * @param {number} [options.wave.barMarginScale=0] - The margin scale of bar width in Float[0,1]
-   * @param {boolean} [options.wave.merged=true] - Symmetry if wave is aligned to center **/
+   * @param {boolean} [options.wave.merged=true] - Symmetry if wave is aligned to center
+   * @param {boolean} [options.wave.noSignalLine=true] - Display a line when no signal **/
   _fillAttributes(options) {
     super._fillAttributes(options);
-      this._animation = options.animation;
+    this._animation = options.animation;
     this._wave = {
       align: options.wave ? options.wave.align || 'center' : 'center',
       barWidth: options.wave ? options.wave.barWidth || 1 : 1,
       barMarginScale: options.wave ? (options.wave.barMarginScale / 2) : 0.125, // Divide by 2 because true range is [0, 0.5]
-      merged: options.wave ? options.wave.merged || true : true
+      merged: options.wave ? options.wave.merged || true : true,
+      noSignalLine: options.wave.noSignalLine ? options.wave.noSignalLine || true : false
     };
     this._bars = null; // Computed on build or resize
     this._offlineCtx = null;
@@ -97,7 +100,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _buildUI
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Create and configure canvas then append it to given DOM element.</blockquote> **/
@@ -111,7 +114,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _addEvents
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
@@ -126,7 +129,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _removeEvents
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Remove component events (resize, play, pause, dbclick).</blockquote> **/
@@ -141,7 +144,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _onResize
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>On resize event callback.</blockquote> **/
@@ -158,7 +161,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _dblClick
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>On double click event callback.</blockquote> **/
@@ -171,7 +174,7 @@ class WaveformProgress extends VisuComponentMono {
    * @name _processAudioBin
    * @private
    * @override
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
@@ -191,7 +194,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _trackLoaded
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Player callback on track loaded.</blockquote> **/
@@ -206,7 +209,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _seekPlayer
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Update waveform progress according to mouse seek event.</blockquote>
@@ -223,7 +226,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _processAudioFile
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Perform an offline analysis on whole track.</blockquote>
@@ -250,7 +253,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _fillData
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Generate merged or stereo data from audio buffer.</blockquote> **/
@@ -270,7 +273,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _genScaledData
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>L/R Sub sample channel data to compute average value, depending on bar count.</blockquote>
@@ -296,7 +299,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _genScaledMonoData
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Merged L/R Sub sample channel data to compute average value, depending on bar count.</blockquote>
@@ -325,7 +328,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _scaleDataToHeight
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Scale channel data into an array of height to be used in canvas on draw.</blockquote>
@@ -353,9 +356,9 @@ class WaveformProgress extends VisuComponentMono {
 
 
   /** @method
-   * @name _scaleDataToHeight
+   * @name _drawFileWaveform
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Draw waveform with a given progress.</blockquote>
@@ -406,7 +409,9 @@ class WaveformProgress extends VisuComponentMono {
         this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);
         this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yD);
         // Add tiny centered line
-        this._ctx.fillRect(x * i + margin, this._canvas.height / 2 - 0.15, x - margin * 2, 0.15);
+        if (this._wave.noSignalLine) {        
+          this._ctx.fillRect(x * i + margin, this._canvas.height / 2 - 0.5, x - margin * 2, 1);
+        }
       } else if (this._wave.align === 'bottom') {
         this._ctx.fillRect(x * i + margin, this._canvas.height - yU, x - margin * 2, yU);
         this._ctx.fillRect(x * i + margin, this._canvas.height - yU - yD + 1, x - margin * 2, yD); // Offset one pixel origin to blend channel properly
@@ -423,7 +428,7 @@ class WaveformProgress extends VisuComponentMono {
   /** @method
    * @name _getPlayerSourceFile
    * @private
-   * @memberof WaveformProgress
+   * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Fetch audio file using xmlHTTP request.</blockquote> **/
@@ -439,4 +444,4 @@ class WaveformProgress extends VisuComponentMono {
 }
 
 
-export default WaveformProgress;
+export default Waveform;

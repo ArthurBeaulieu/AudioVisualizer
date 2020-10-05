@@ -1,6 +1,6 @@
 {
   "name": "audiovisualizer",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "Web module to display audio visualization using WebAudioAPI.",
   "keywords": [
     "javascript",
@@ -14,8 +14,8 @@
   ],
   "main": "src/js/AudioVisualizer.js",
   "scripts": {
-    "build": "webpack --env.version=0.9.3 --progress",
-    "dev": "webpack --env.version=0.9.3 --env.dev=true --progress",
+    "build": "webpack --env.version=0.9.4 --progress",
+    "dev": "webpack --env.version=0.9.4 --env.dev=true --progress",
     "web-server": "http-server -p 1337 -c-1 -o example.html",
     "doc": "jsdoc -c doc/jsDoc.json",
     "beforecommit": "npm run build && npm run doc"

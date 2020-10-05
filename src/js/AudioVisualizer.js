@@ -4,12 +4,12 @@ import Oscilloscope from './components/Oscilloscope.js';
 import PeakMeter from './components/PeakMeter.js';
 import Spectrum from './components/Spectrum.js';
 import Timeline from './components/Timeline.js';
-import WaveformProgress from './components/WaveformProgress.js';
+import Waveform from './components/Waveform.js';
 'use strict';
 
 
-/* AudioVisualizer version 0.9.3 */
-const AudioVisualizerVersion = '0.9.3';
+/* AudioVisualizer version 0.9.4 */
+const AudioVisualizerVersion = '0.9.4';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
@@ -48,7 +48,7 @@ class AudioVisualizer {
     } else if (options.type === 'timeline') {
       return new Timeline(options);
     } else if (options.type === 'waveform') {
-      return new WaveformProgress(options);
+      return new Waveform(options);
     }
     // Visualizer factory return null by default (unknown component name)
     return null;

@@ -54,7 +54,7 @@ class Timeline extends VisuComponentMono {
       timeSignature: options.beat ? options.beat.timeSignature : null,
     };
 
-    this._beats = [];
+    this._beatsArray = [];
     this._hotCues = [];
     // Offline canvas -> main canvas is divided with 32k px wide canvases
     this._canvases = [];
@@ -400,7 +400,7 @@ class Timeline extends VisuComponentMono {
         // Increment offline canvas to use
         ++canvasIndex;
         // When changing canvas, the beatOffset is dependant to last beat saved position.
-        beatOffset = options.beatWidth - (MAX_CANVAS_WIDTH - this._beats[this._beats.length - 1].yPos);
+        beatOffset = options.beatWidth - (MAX_CANVAS_WIDTH - this._beatsArray[this._beatsArray.length - 1].xPos);
       }
       // Draw beat bar, x position is loop index times a space between beats, plus the beat offset,
       // modulo max canvas width to fit in offline canvases
@@ -452,10 +452,10 @@ class Timeline extends VisuComponentMono {
       top: this._canvas.height - 12
     });
     // Update beats array with new beat bar
-    this._beats.push({
+    this._beatsArray.push({
       primaryBeat: (beatCount % this._beat.timeSignature === 0),
       beatCount: beatCount,
-      yPos: x
+      xPos: x
     });
   }
 
@@ -534,7 +534,7 @@ class Timeline extends VisuComponentMono {
 
   _drawHotCue(hotcue) {
     CanvasUtils.drawHotCue(this._cueCanvases[hotcue.canvasIndex], {
-      x: hotcue.yPos - (hotcue.canvasIndex * MAX_CANVAS_WIDTH),
+      x: hotcue.xPos - (hotcue.canvasIndex * MAX_CANVAS_WIDTH),
       y: 4,
       size: 18,
       label: hotcue.number
@@ -598,22 +598,22 @@ class Timeline extends VisuComponentMono {
     const center = Math.floor(this._player.currentTime * this._canvas.width / this._canvasSpeed);
     let matchingBeat = {};
     // Find nearest beat to process
-    for (let i = 0; i < this._beats.length; ++i) {
+    for (let i = 0; i < this._beatsArray.length; ++i) {
       // We now have the upper beat, compare with previous one to find nearest
-      if (this._beats[i].yPos > center) {
+      if (this._beatsArray[i].xPos > center) {
         // Take previous bar if click was closer to it
-        if (i - 1 > 0 && (this._beats[i].yPos - center) > (center - this._beats[i - 1].yPos)) {
-          matchingBeat = this._beats[i - 1];
+        if (i - 1 > 0 && (this._beatsArray[i].xPos - center) > (center - this._beatsArray[i - 1].xPos)) {
+          matchingBeat = this._beatsArray[i - 1];
           break;
         } else { // Take curent bar otherwise
-          matchingBeat = this._beats[i];
+          matchingBeat = this._beatsArray[i];
           break;
         }
       }
     }
     // Save sub-canvas index in which the hot cue applies
-    if (matchingBeat.yPos > MAX_CANVAS_WIDTH) {
-      matchingBeat.canvasIndex = Math.floor(matchingBeat.yPos / MAX_CANVAS_WIDTH);
+    if (matchingBeat.xPos > MAX_CANVAS_WIDTH) {
+      matchingBeat.canvasIndex = Math.floor(matchingBeat.xPos / MAX_CANVAS_WIDTH);
     } else {
       matchingBeat.canvasIndex = 0;
     }
@@ -629,7 +629,7 @@ class Timeline extends VisuComponentMono {
     if (!existing) {
       // Save hot cue and return to the sender
       matchingBeat.number = this._hotCues.length + 1; // Attach hotcue number
-      matchingBeat.time = matchingBeat.yPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
+      matchingBeat.time = matchingBeat.xPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
       this._hotCues.push(matchingBeat);
       // Draw hotcues if any
       this._drawHotCue(matchingBeat);
