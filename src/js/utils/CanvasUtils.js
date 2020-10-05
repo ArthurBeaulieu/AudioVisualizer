@@ -343,6 +343,32 @@ class CanvasUtils {
 
 
   /** @method
+   * @name drawSquare
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw a square in given canvas.</blockquote>
+   * @param {object} canvas - The canvas to draw square in
+   * @param {object} options - Peak meter options
+   * @param {number} options.x - The square x origin
+   * @param {number} options.y - The square y origin
+   * @param {number} options.size - The square dimension **/
+  static drawHotCue(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.fillStyle = ColorUtils.defaultPrimaryColor;    
+    ctx.fillRect(options.x - (options.size / 2), options.y, options.size, options.size);
+    ctx.fillStyle = ColorUtils.defaultBackgroundColor;
+    ctx.font = 'bold 10pt Helvetica sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(options.label || '', options.x, options.y + (3 * options.size / 4));
+    ctx.closePath();
+  }  
+
+
+  /** @method
    * @name precisionRound
    * @public
    * @memberof CanvasUtils

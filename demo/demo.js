@@ -1,6 +1,6 @@
 // On this demo, we import AudioVisualizer as an es6 module. You can also reference a script tag in your HTML file that
 // loads dist/audiovisualizer.js ; this will attach AudioVisualizer to the window object so you can use it anywhere.
-import AudioVisualizer from '../js/AudioVisualizer.js';
+import AudioVisualizer from '../src/js/AudioVisualizer.js';
 // Navigation buttons
 const buttons = {
   barsButton: document.getElementById('bars'),
@@ -99,10 +99,10 @@ const buttonClicked = function() {
       player: document.querySelector('#audio-player'),
       renderTo: document.getElementById('view'),
       fftSize: 1024,
-      speed: 5,
+      speed: 9,
       beat: {
-        offset: 0.5,
-        bpm: 120,
+        offset: 0.58,
+        bpm: 103,
         timeSignature: 4
       },
       colors: {

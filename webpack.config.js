@@ -1,78 +1,64 @@
 module.exports = env => {
-  // Js and CSS components
-  const TerserPlugin = require('terser-webpack-plugin');
-  const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-  const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+  // Webpack clean and uglify plugins
   const path = require('path');
+  const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
   // Utils path
-  const SRC = path.resolve(__dirname, '');
+  const SRC = path.resolve(__dirname, 'src');
   const DIST = path.resolve(__dirname, 'dist');
-
-  const cssLoaders = [{
+  // CSS loaders to be used on compilation
+  const cssLoader = {
     loader: 'css-loader',
     options: {
       importLoaders: 1
     }
-  }, {
-    loader: 'postcss-loader',
-    options: {
-      plugins: () => [
-        require('autoprefixer')({
-          browserlist: ['last 2 versions']
-        })
-      ]
-    }
-  }];
-  let entry = { audiovisualizer: ['./js/AudioVisualizer.js', './scss/audiovisualizer.scss'] };
+  };
+  // Webpack configuration object
   return {
-    mode: 'production',
+    mode: env.dev === 'true' ? 'development' : 'production',
     watch: env.dev === 'true',
-    entry: entry,
+    entry: ['./src/js/AudioVisualizer.js', './src/scss/audiovisualizer.scss'],
     stats: {
-      warnings: false,
+      warnings: env.dev === 'true',
     },
     devtool: false,
     output: {
       path: DIST,
-      filename: `[name].${env.version}.js`
+      filename: `AudioVisualizer.min.js`
     },
     module: {
       rules: [{
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
-          ...cssLoaders,
+          cssLoader,
           'sass-loader'
         ]
+      }, (env.dev === 'true') ? {} : {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       }]
     },
     plugins: [
-      new CleanWebpackPlugin(),
+      new CleanWebpackPlugin({
+        root: DIST,
+        verbose: true,
+        dry: false
+      }),
       new MiniCssExtractPlugin({
-        filename: `[name].${env.version}.css`
+        filename: 'audiovisualizer.min.css'
       })
     ],
     resolve: {
       extensions: ['.js', '.scss'],
       modules: ['node_modules', SRC]
-    },
-    optimization: {
-      minimizer: [
-        new TerserPlugin({
-          parallel: 4,
-          terserOptions: {
-            ecma: 5
-          }
-        }),
-        new OptimizeCSSAssetsPlugin({
-          assetNameRegExp: /\.css$/g,
-          cssProcessor: require('cssnano'),
-          cssProcessorPluginOptions: {
-            preset: ['default', { discardComments: { removeAll: true } }]
-          }
-        })
-      ]
     }
   };
 };
