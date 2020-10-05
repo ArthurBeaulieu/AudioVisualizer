@@ -396,7 +396,7 @@ class Timeline extends VisuComponentMono {
     // We floor because last beat is pretsty irrelevant
     for (let i = 0; i < Math.floor(options.totalWidth / options.beatWidth); ++i) {
       // We reached MAX_CANVAS_WIDTH, using next offline canvas
-      if (i * options.beatWidth > MAX_CANVAS_WIDTH + (canvasIndex * MAX_CANVAS_WIDTH)) {
+      if ((i * options.beatWidth + beatOffset) >= MAX_CANVAS_WIDTH + (canvasIndex * MAX_CANVAS_WIDTH)) {
         // Increment offline canvas to use
         ++canvasIndex;
         // When changing canvas, the beatOffset is dependant to last beat saved position.
@@ -404,7 +404,7 @@ class Timeline extends VisuComponentMono {
       }
       // Draw beat bar, x position is loop index times a space between beats, plus the beat offset,
       // modulo max canvas width to fit in offline canvases
-      this._drawBeatBar(i, ((i * options.beatWidth) + beatOffset) % MAX_CANVAS_WIDTH, canvasIndex);
+      this._drawBeatBar(i, (i * options.beatWidth) + beatOffset, canvasIndex);
     }
   }
 
@@ -430,7 +430,7 @@ class Timeline extends VisuComponentMono {
       ctx.fillStyle = 'grey';
     }
     // Beat bar drawing
-    ctx.fillRect(x, 9, 1, this._canvas.height - 18);
+    ctx.fillRect(x % MAX_CANVAS_WIDTH, 9, 1, this._canvas.height - 18);
     // Determine beat triangle color
     if (beatCount % this._beat.timeSignature === 0) {
       ctx.fillStyle = this._colors.mainBeat;
@@ -439,14 +439,14 @@ class Timeline extends VisuComponentMono {
     }
     // Upper triangle
     CanvasUtils.drawTriangle(canvas, {
-      x: x,
+      x: x % MAX_CANVAS_WIDTH,
       y: 4,
       radius: 6,
       top: 12
     });
     // Down triangle
     CanvasUtils.drawTriangle(canvas, {
-      x: x,
+      x: x % MAX_CANVAS_WIDTH,
       y: this._canvas.height - 4,
       radius: 6,
       top: this._canvas.height - 12

@@ -190,3 +190,18 @@ const component = new AudioVisualizer({
   }
 });
 ```
+
+# Development
+
+If you clone this repository, you can `npm install` to install development dependencies. This will allow you to build dist file, run the component tests or generate the documentation ;
+
+- `npm run build` to generate the minified file ;
+- `npm run dev` to watch for any change in source code ;
+- `npm run web-server` to launch a local development server ;
+- `npm run doc` to generate documentation ;
+- `npm run beforecommit` to perform tests, generate doc and bundle the JavaScript.
+
+To avoid CORS when locally loading the example HTML file, run the web server. Please do not use it on a production environment. Unit tests are performed on both Firefox and Chrome ; ensure you have both installed before running tests, otherwise they might fail.
+
+Free sample mp3 is from [Teminite](https://www.facebook.com/Teminite/app/208195102528120), other frequency insanity is mine.
+If you have any question or idea, feel free to DM or open an issue (or even a PR, who knows) ! I'll be glad to answer your request.

@@ -101,8 +101,8 @@ const buttonClicked = function() {
       fftSize: 1024,
       speed: 9,
       beat: {
-        offset: 0.58,
-        bpm: 103,
+        offset: 0.16,
+        bpm: 105,
         timeSignature: 4
       },
       colors: {
@@ -146,8 +146,8 @@ component = new AudioVisualizer({
   image: 'demo/logo.png'
 });
 // Switch source type events
-const sources = ['FrequencyTest.flac', 'FrequencyTest.mp3', 'FrequencyTest.ogg', 'FrequencyTest.wav'];
-let currentIndex = 0; // Init demo with flac file (flac 4 the win guys)
+const sources = ['Teminite - Hot Fizz.mp3', 'FrequencyTest.flac', 'FrequencyTest.ogg', 'FrequencyTest.wav'];
+let currentIndex = 0;
 document.getElementById('demo-current-src').innerHTML = sources[currentIndex]; // Set initial src text
 document.getElementById('demo-change-src').addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % sources.length; // Update source index
