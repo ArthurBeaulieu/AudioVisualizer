@@ -1,6 +1,6 @@
 # AudioVisualizer
 
-![](https://badgen.net/badge/version/0.9.4/blue)
+![](https://badgen.net/badge/version/0.9.5/blue)
 ![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
@@ -156,7 +156,8 @@ const component = new AudioVisualizer({
     track: '#12B31D',
     mainBeat: '#FF6B67',
     subBeat: '#56D45B'
-  }
+  },
+  hotCue: [] // Array of hot cues to display. Must match the format returned by method setHotCuePoint
 });
 ```
 
@@ -188,7 +189,8 @@ const component = new AudioVisualizer({
     background: '#1D1E25',
     track: '#E7E9E7',
     progress: '#56D45B'
-  }
+  },
+  hotCue: [] // Array of hot cues to display. Must contain a time key with its value in seconds
 });
 ```
 

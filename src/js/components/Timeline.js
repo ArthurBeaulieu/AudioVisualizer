@@ -33,7 +33,8 @@ class Timeline extends VisuComponentMono {
    * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
    * @param {object} [options.colors.track='#12B31D'] - The timeline color in Hex/RGB/HSL
    * @param {object} [options.colors.mainBeat='#56D45B'] - The main beat triangles color in Hex/RGB/HSL
-   * @param {object} [options.colors.subBeat='#FF6B67'] - The sub beat triangles color in Hex/RGB/HSL **/
+   * @param {object} [options.colors.subBeat='#FF6B67'] - The sub beat triangles color in Hex/RGB/HSL
+   * @param {object[]} [options.hotCues=[]] - Hotcues sorted array to load waveform with. Each array item must contain a time key with its value **/
   constructor(options) {
     super(options);
 
@@ -53,9 +54,9 @@ class Timeline extends VisuComponentMono {
       bpm: options.beat ? options.beat.bpm : null,
       timeSignature: options.beat ? options.beat.timeSignature : null,
     };
-
+    // HotCues and beats arrays
+    this._hotCues = [...options.hotCues] || [];
     this._beatsArray = [];
-    this._hotCues = [];
     // Offline canvas -> main canvas is divided with 32k px wide canvases
     this._canvases = [];
     this._cueCanvases = [];
@@ -75,7 +76,9 @@ class Timeline extends VisuComponentMono {
   }
 
 
-  /*  ----------  VisuComponentMono overrides  ----------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
+  /*  --------------------------------------  VISUCOMPONENTMONO OVERRIDES  -----------------------------------------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
 
 
 
@@ -150,8 +153,24 @@ class Timeline extends VisuComponentMono {
     super._onResize();
     this._fillData();
     this._clearCanvas();
-    this._clearCueCanvas();
     this._drawTimeline(this._player.currentTime);
+  }
+
+
+  _clearCanvas(clearBeat, clearHotCue) {
+    super._clearCanvas();
+    // Clear beat bars canvas
+    if (clearBeat) {
+      for (let i = 0; i < this._beatCanvases.length; ++i) {
+        this._beatCanvases[i].getContext('2d').clearRect(0, 0, this._beatCanvases[i].width, this._beatCanvases[i].height);
+      }
+    }
+    // Clear hot cue canvas
+    if (clearHotCue) {
+      for (let i = 0; i < this._cueCanvases.length; ++i) {
+        this._cueCanvases[i].getContext('2d').clearRect(0, 0, this._cueCanvases[i].width, this._cueCanvases[i].height);
+      }
+    }
   }
 
 
@@ -180,7 +199,6 @@ class Timeline extends VisuComponentMono {
   _processAudioBin() {
     if (this._isPlaying === true) {
       this._clearCanvas();
-      this._clearCueCanvas();
       this._drawTimeline(this._player.currentTime);
       requestAnimationFrame(this._processAudioBin);
     }
@@ -200,7 +218,6 @@ class Timeline extends VisuComponentMono {
   _trackLoaded() {
     cancelAnimationFrame(this._processAudioBin);
     this._clearCanvas(); // Clear previous canvas
-    this._clearCueCanvas();
     // Do XHR to request file and parse it
     this._getPlayerSourceFile();
   }
@@ -215,7 +232,6 @@ class Timeline extends VisuComponentMono {
    * @description <blockquote>On progress callback.</blockquote> **/
   _onProgress() {
     this._clearCanvas();
-    this._clearCueCanvas();
     this._drawTimeline(this._player.currentTime || 0);
   }
 
@@ -229,19 +245,29 @@ class Timeline extends VisuComponentMono {
    * @description <blockquote>Mouse down callback.</blockquote>
    * @param {object} event - The mouse down event **/
   _mouseDown(event) {
-    this._isDragging = true;
-    this._startDrag.x = event.clientX;
-    this._startDrag.y = event.clientY;
-    // Save previous playback status and pause only if required
-    if (this._player.paused === false) {
-      this._wasPlaying = true;
-      this._player.pause();
+    const rect = event.target.getBoundingClientRect();
+    // X coord must be relative to cuent canvas. Check half width to center coord, then add center position, module MAX_CANVAS_WIDTH
+    const x = ((event.clientX - rect.left) - (this._canvas.width / 2) + ((this._player.currentTime / this._canvasSpeed) * this._canvas.width)) % MAX_CANVAS_WIDTH;
+    const y = event.clientY - rect.top;
+    const hotCue = this._hotCueClicked(x, y);
+    if (hotCue) {
+      this._player.currentTime = hotCue.time;
+      this._clearCanvas();
+      this._drawTimeline(this._player.currentTime);
+    } else {
+      this._isDragging = true;
+      this._startDrag.x = event.clientX;
+      this._startDrag.y = event.clientY;
+      // Save previous playback status and pause only if required
+      if (this._player.paused === false) {
+        this._wasPlaying = true;
+        this._player.pause();
+      }
+      // Subscribe to drag events
+      this._canvas.addEventListener('mousemove', this._mouseMove, false);
+      this._canvas.addEventListener('mouseup', this._mouseUp, false);
+      this._canvas.addEventListener('mouseout', this._mouseUp, false);
     }
-
-    // Subscribe to drag events
-    this._canvas.addEventListener('mousemove', this._mouseMove, false);
-    this._canvas.addEventListener('mouseup', this._mouseUp, false);
-    this._canvas.addEventListener('mouseout', this._mouseUp, false);
   }
 
 
@@ -386,6 +412,8 @@ class Timeline extends VisuComponentMono {
           beatOffset: (this._beat.offset / this._canvasSpeed) * this._canvas.width
         });
       }
+
+      this._drawHotCues(); // Load hot cues if any
     }
   }
 
@@ -504,8 +532,8 @@ class Timeline extends VisuComponentMono {
 
     for (let i = leftEdgeIndex; i <= rightEdgeIndex; ++i) {
       this._ctx.drawImage(this._canvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
-      this._ctx.drawImage(this._cueCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
       this._ctx.drawImage(this._beatCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
+      this._ctx.drawImage(this._cueCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
     }
     // Draw centered vertical bar
     this._ctx.fillStyle = ColorUtils.defaultAntiPrimaryColor;
@@ -513,6 +541,37 @@ class Timeline extends VisuComponentMono {
     this._ctx.strokeStyle = 'black';
     this._ctx.lineWidth = 1;
     this._ctx.strokeRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
+  }
+
+
+  _drawHotCues() {
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      this._drawHotCue(this._hotCues[i]);
+    }
+  }
+
+
+  _drawHotCue(hotcue) {
+    CanvasUtils.drawHotCue(this._cueCanvases[hotcue.canvasIndex], {
+      x: hotcue.xPos - (hotcue.canvasIndex * MAX_CANVAS_WIDTH),
+      y: 4,
+      size: 18,
+      label: hotcue.number
+    });
+  }
+
+
+  _hotCueClicked(x, y) {
+    if (y > 4 && y < 22) {
+      for (let i = 0; i < this._hotCues.length; ++i) {
+        let xPos = this._hotCues[i].xPos - (this._hotCues[i].canvasIndex * MAX_CANVAS_WIDTH);
+        if (x > xPos - (18 / 2) && x < xPos + (18 / 2)) {
+          return this._hotCues[i];
+        }
+      }
+    }
+
+    return false;
   }
 
 
@@ -529,30 +588,6 @@ class Timeline extends VisuComponentMono {
     request.responseType = 'arraybuffer';
     request.onload = () => { this._processAudioFile(request.response); };
     request.send();
-  }
-
-
-  _drawHotCue(hotcue) {
-    CanvasUtils.drawHotCue(this._cueCanvases[hotcue.canvasIndex], {
-      x: hotcue.xPos - (hotcue.canvasIndex * MAX_CANVAS_WIDTH),
-      y: 4,
-      size: 18,
-      label: hotcue.number
-    });
-  }
-
-
-  _clearCueCanvas() {
-    for (let i = 0; i < this._cueCanvases.length; ++i) {
-      this._cueCanvases[i].getContext('2d').clearRect(0, 0, this._cueCanvases[i].width, this._cueCanvases[i].height);
-    }
-  }
-
-
-  _fillCueCanvas() {
-    for (let i = 0; i < this._hotCues.length; ++i) {
-      this._drawHotCue(this._hotCues[i]);
-    }
   }
 
 
@@ -593,7 +628,7 @@ class Timeline extends VisuComponentMono {
    * @description <blockquote>Define a HotCue point. It will be attached to the nearest bar. It will only be
    * attached if no hotcue is registered on the targeted bar.</blockquote>
    * @return {object} The hotcue object with its information **/
-  setHotCuePoint() {
+  setHotCuePoint(timeOnly = false) {
     // The center coordinate when this method is called
     const center = Math.floor(this._player.currentTime * this._canvas.width / this._canvasSpeed);
     let matchingBeat = {};
@@ -630,10 +665,17 @@ class Timeline extends VisuComponentMono {
       // Save hot cue and return to the sender
       matchingBeat.number = this._hotCues.length + 1; // Attach hotcue number
       matchingBeat.time = matchingBeat.xPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
+      // If only time was requested, we return now
+      if (timeOnly) {
+        return matchingBeat.time;
+      }
+      // Otherwise save hot cue in stack
       this._hotCues.push(matchingBeat);
       // Draw hotcues if any
+      this._clearCanvas();
       this._drawHotCue(matchingBeat);
       this._drawTimeline(this._player.currentTime);
+
       return matchingBeat;
     } else {
       return null;
@@ -645,8 +687,8 @@ class Timeline extends VisuComponentMono {
     for (let i = 0; i < this._hotCues.length; ++i) {
       if (this._hotCues[i].beatCount === hotcue.beatCount) {
         this._hotCues.splice(i, 1);
-        this._clearCueCanvas();
-        this._fillCueCanvas();
+        this._clearCanvas(false, true);
+        this._drawHotCues();
         this._drawTimeline(this._player.currentTime);
         break;
       }
@@ -654,7 +696,7 @@ class Timeline extends VisuComponentMono {
   }
 
 
-}
+};
 
 
 export default Timeline;

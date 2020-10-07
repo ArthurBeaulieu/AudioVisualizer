@@ -1,4 +1,5 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
+import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
 'use strict';
 
@@ -21,7 +22,7 @@ class Waveform extends VisuComponentMono {
    * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
    * @param {object} [options.audioContext=null] - The audio context to base analysis from
    * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
-   * @param {object} [options.animation] - The track progress animation to be with <code>gradient</code> color
+   * @param {string} [options.animation] - The track progress animation to be <code>gradient</code> or <code>fade</code>
    * @param {object} [options.wave] - Wave potions
    * @param {string} [options.wave.align='center'] - Wave alignment in <code>top</code>/<code>center</code>/<code>bottom</code>
    * @param {number} [options.wave.barWidth=1] - The bar width in px
@@ -29,9 +30,10 @@ class Waveform extends VisuComponentMono {
    * @param {boolean} [options.wave.merged=true] - Symmetry if wave is align center
    * @param {boolean} [options.wave.noSignalLine=true] - Display a line when no signal
    * @param {object} [options.colors] - Waveform color potions
-   * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
-   * @param {object} [options.colors.track='#E7E9E7'] - The waveform background color in Hex/RGB/HSL
-   * @param {object} [options.colors.progress='#56D45B'] - The waveform progress color in Hex/RGB/HSL **/
+   * @param {string} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
+   * @param {string} [options.colors.track='#E7E9E7'] - The waveform background color in Hex/RGB/HSL
+   * @param {string} [options.colors.progress='#56D45B'] - The waveform progress color in Hex/RGB/HSL
+   * @param {object[]} [options.hotCues=[]] - Hotcues sorted array to load waveform with. Each array item must contain a time key with its value **/
   constructor(options) {
     super(options);
 
@@ -49,7 +51,9 @@ class Waveform extends VisuComponentMono {
   }
 
 
-  /*  ----------  VisuComponentMono overrides  ----------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
+  /*  --------------------------------------  VISUCOMPONENTMONO OVERRIDES  -----------------------------------------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
 
 
 
@@ -73,7 +77,8 @@ class Waveform extends VisuComponentMono {
    * @param {number} [options.wave.barWidth=1] - The bar width in px
    * @param {number} [options.wave.barMarginScale=0] - The margin scale of bar width in Float[0,1]
    * @param {boolean} [options.wave.merged=true] - Symmetry if wave is aligned to center
-   * @param {boolean} [options.wave.noSignalLine=true] - Display a line when no signal **/
+   * @param {boolean} [options.wave.noSignalLine=true] - Display a line when no signal
+   * @param {object[]} [options.hotCues=[]] - Hotcues sorted array to load waveform with. Each array item must contain a time key with its value **/
   _fillAttributes(options) {
     super._fillAttributes(options);
     this._animation = options.animation;
@@ -84,6 +89,8 @@ class Waveform extends VisuComponentMono {
       merged: options.wave ? options.wave.merged || true : true,
       noSignalLine: options.wave.noSignalLine ? options.wave.noSignalLine || true : false
     };
+    this._hotCues = options.hotCues || [];
+
     this._bars = null; // Computed on build or resize
     this._offlineCtx = null;
     this._offlineBuffer = null;
@@ -92,7 +99,7 @@ class Waveform extends VisuComponentMono {
     this._dataR = [];
     // Event binding
     this._trackLoaded = this._trackLoaded.bind(this);
-    this._seekPlayer = this._seekPlayer.bind(this);
+    this._onClick = this._onClick.bind(this);
   }
 
 
@@ -121,7 +128,7 @@ class Waveform extends VisuComponentMono {
   _addEvents() {
     super._addEvents();
     this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
-    this._dom.container.addEventListener('click', this._seekPlayer, false);
+    this._dom.container.addEventListener('click', this._onClick, false);
   }
 
 
@@ -136,7 +143,7 @@ class Waveform extends VisuComponentMono {
   _removeEvents() {
     super._removeEvents();
     this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
-    this._dom.container.removeEventListener('click', this._seekPlayer, false);
+    this._dom.container.removeEventListener('click', this._onClick, false);
   }
 
 
@@ -207,17 +214,28 @@ class Waveform extends VisuComponentMono {
 
 
   /** @method
-   * @name _seekPlayer
+   * @name _onClick
    * @private
    * @memberof Waveform
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Update waveform progress according to mouse seek event.</blockquote>
    * @param {object} event - The mouse event **/
-  _seekPlayer(event) {
-    const boundingBox = event.target.getBoundingClientRect();
-    const xOffset = event.clientX - boundingBox.left;
-    this._player.currentTime = (xOffset / this._canvas.width) * this._player.duration;
+  _onClick(event) {
+    const rect = event.target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const hotCue = this._hotCueClicked(x, y);
+    // Clicked on a hotcue
+    if (hotCue) {
+      this._player.currentTime = hotCue.time;      
+    } else {
+      // Seek player otherwise
+      const boundingBox = event.target.getBoundingClientRect();
+      const xOffset = event.clientX - boundingBox.left;
+      this._player.currentTime = (xOffset / this._canvas.width) * this._player.duration;
+    }
+    // Clear canvas and drawwaveform with curent curent time
     this._clearCanvas();
     this._drawFileWaveform(this._player.currentTime / this._player.duration);
   }
@@ -422,6 +440,40 @@ class Waveform extends VisuComponentMono {
     }
 
     this._ctx.closePath();
+    // Draw hot cues if any
+    this._drawHotCues();    
+  }
+
+
+  _drawHotCues() {
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      this._drawHotCue(this._hotCues[i], i);
+    }
+  }
+
+
+  _drawHotCue(hotCue, index) {
+    let xPos = (hotCue.time * this._canvas.width) / this._player.duration;
+    CanvasUtils.drawHotCue(this._canvas, {
+      x: xPos + (18 / 2), // By default, hotCue is centered on xPos. We don't wnat that behoavior here
+      y: 4,
+      size: 18,
+      label: index + 1
+    });    
+  }
+
+
+  _hotCueClicked(x, y) {
+    if (y > 4 && y < 22) {
+      for (let i = 0; i < this._hotCues.length; ++i) {
+        let xPos = (this._hotCues[i].time * this._canvas.width) / this._player.duration;
+        if (x > (xPos + (18/2)) && x < xPos + 2 * (18/2)) {
+          return this._hotCues[i];
+        }
+      }
+    }
+
+    return false;
   }
 
 
@@ -441,7 +493,18 @@ class Waveform extends VisuComponentMono {
   }
 
 
-}
+  setHotCuePoint(time) {
+    const hotCue = {
+      time: time,
+      number: this._hotCues.length + 1
+    };
+    // Actually draw hot cues
+    this._hotCues.push(hotCue);
+    this._drawHotCues();
+  }
+
+
+};
 
 
 export default Waveform;

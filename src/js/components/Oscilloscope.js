@@ -42,7 +42,9 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
-  /*  ----------  VisuComponentStereo overrides  ----------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
+  /*  -------------------------------------  VISUCOMPONENTSTEREO OVERRIDES  ----------------------------------------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
 
 
 
@@ -202,7 +204,7 @@ class Oscilloscope extends VisuComponentStereo {
   }
 
 
-}
+};
 
 
 export default Oscilloscope;

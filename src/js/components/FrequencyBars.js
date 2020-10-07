@@ -37,7 +37,9 @@ class FrequencyBars extends VisuComponentMono {
   }
 
 
-  /*  ----------  VisuComponentMono overrides  ----------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
+  /*  --------------------------------------  VISUCOMPONENTMONO OVERRIDES  -----------------------------------------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
 
 
   /** @method
@@ -78,7 +80,7 @@ class FrequencyBars extends VisuComponentMono {
   }
 
 
-}
+};
 
 
 export default FrequencyBars;

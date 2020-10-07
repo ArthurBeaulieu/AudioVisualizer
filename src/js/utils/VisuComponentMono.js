@@ -21,14 +21,17 @@ class VisuComponentMono extends BaseComponent {
    * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   constructor(options) {
     super();
-    // Audio nodes
+    /** @private
+     * @member {object} - Audio nodes from web audio API to manipulate data with */    
     this._nodes = {
       source: null, // HTML audio element
       analyser: null // Analysis node
     };
-    this._isPlaying = false;
-    // Canvas and context
+    /** @private
+     * @member {object} - The canvas to rendered mono data to */    
     this._canvas = null;
+    /** @private
+     * @member {object} - The canvas associated context */    
     this._ctx = null;
     // Construction sequence
     this._fillAttributes(options);
@@ -141,7 +144,7 @@ class VisuComponentMono extends BaseComponent {
   }
 
 
-}
+};
 
 
 export default VisuComponentMono;

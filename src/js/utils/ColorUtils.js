@@ -196,7 +196,7 @@ class ColorUtils {
    * @param {boolean} [vertical=false] - The gradient orientation, default to horizontal
    * @return {object} The rainbow gradient to apply **/
   static rainbowGradient(canvas, vertical = false) {
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
     if (vertical === true) {
       gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
@@ -262,7 +262,7 @@ class ColorUtils {
   }
 
 
-}
+};
 
 
 export default ColorUtils;

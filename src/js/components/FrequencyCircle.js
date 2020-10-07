@@ -28,7 +28,9 @@ class FrequencyCircle extends VisuComponentMono {
   }
 
 
-  /*  ----------  VisuComponentMono overrides  ----------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
+  /*  --------------------------------------  VISUCOMPONENTMONO OVERRIDES  -----------------------------------------  */
+  /*  --------------------------------------------------------------------------------------------------------------- */
 
 
 
@@ -373,7 +375,7 @@ class FrequencyCircle extends VisuComponentMono {
   }
 
 
-}
+};
 
 
 /*  ----------  Utils class for this visualisation  ----------  */
@@ -441,7 +443,7 @@ class BackgroundStar {
   }
 
 
-}
+};
 
 
 class OscilloscopeRadialPoint {
@@ -472,7 +474,7 @@ class OscilloscopeRadialPoint {
   }
 
 
-}
+};
 
 
 export default FrequencyCircle;

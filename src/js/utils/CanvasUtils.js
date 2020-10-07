@@ -343,18 +343,19 @@ class CanvasUtils {
 
 
   /** @method
-   * @name drawSquare
+   * @name drawHotCue
    * @public
    * @memberof CanvasUtils
    * @static
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Draw a square in given canvas.</blockquote>
-   * @param {object} canvas - The canvas to draw square in
+   * @description <blockquote>Draw a hotcue in given canvas. HotCue is a square with a label in it.</blockquote>
+   * @param {object} canvas - The canvas to draw hotcue in
    * @param {object} options - Peak meter options
-   * @param {number} options.x - The square x origin
-   * @param {number} options.y - The square y origin
-   * @param {number} options.size - The square dimension **/
+   * @param {number} options.x - The hotcue x origin
+   * @param {number} options.y - The hotcue y origin
+   * @param {number} options.size - The hotcue dimension (height/width)
+   * @param {number} options.label - The hotcue label **/
   static drawHotCue(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -385,7 +386,7 @@ class CanvasUtils {
   }
 
 
-}
+};
 
 
 export default CanvasUtils;

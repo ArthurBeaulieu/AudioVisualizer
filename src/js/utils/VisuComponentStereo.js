@@ -22,9 +22,11 @@ class VisuComponentStereo extends BaseComponent {
    * @param {boolean} [options.merged=false] - Merge channels into mono output **/
   constructor(options) {
     super();
-    // Merge L and R channel on output
+    /** @private
+     * @member {boolean} - Merge L and R channel on output */    
     this._merged = null;
-    // Audio nodes
+    /** @private
+     * @member {object} - Audio nodes from web audio API to manipulate data with */
     this._nodes = {
       source: null, // HTML audio element
       splitter: null, // Stereo channel splitting
@@ -33,10 +35,17 @@ class VisuComponentStereo extends BaseComponent {
       analyserL: null, // Left channel analysis
       analyserR: null // Right channel analysis
     };
-    // Canvas and context
+    /** @private
+     * @member {object} - The canvas to rendered left channed data to */       
     this._canvasL = null;
+    /** @private
+     * @member {object} - The canvas to rendered right channed data to */     
     this._canvasR = null;
+    /** @private
+     * @member {object} - The left canvas associated context */ 
     this._ctxL = null;
+    /** @private
+     * @member {object} - The right canvas associated context */     
     this._ctxR = null;
     // Construction sequence
     this._fillAttributes(options);
@@ -165,7 +174,7 @@ class VisuComponentStereo extends BaseComponent {
   }
 
 
-}
+};
 
 
 export default VisuComponentStereo;

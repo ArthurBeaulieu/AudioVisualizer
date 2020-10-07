@@ -24,6 +24,12 @@ button {
   padding: 5px 15px;
 }
 
+button[disabled] {
+  border-color: grey;
+  color: grey;
+  cursor: not-allowed;
+}
+
 nav {
   align-items: center;
   background-color: #181818;
@@ -94,6 +100,7 @@ audio {
     right: 410px;
   }
 }
+
 .view-switcher {
   align-items: center;
   border-bottom: solid 1px grey;
@@ -148,4 +155,20 @@ audio {
 .view {
   height: calc(100% - 30px);
   width: 100%;
+}
+
+.add-hot-cue {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 30px;
+  width: 130px;
+}
+
+.remove-hot-cue {
+  position: absolute;
+  left: 140px;
+  bottom: 0;
+  height: 30px;
+  width: 130px;
 }

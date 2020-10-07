@@ -11,6 +11,10 @@ const buttons = {
   timelineButton: document.getElementById('timeline'),
   waveformButton: document.getElementById('waveform')
 };
+// Timeline and Waveform hot cues
+let hotCues = [];
+let addHotCue = document.getElementById('add-hot-cue');
+let removeHotCues = document.getElementById('remove-hot-cue');
 // Current AudioVisualizer component and type
 let component = null;
 let selected = 'circle';
@@ -26,6 +30,9 @@ const buttonClicked = function() {
   document.querySelector('#audio-player').pause();
   this.classList.add('selected');
   selected = this.dataset.type;
+  // Clear Cue buttons and disable them
+  addHotCue.disabled = true;
+  removeHotCues.disabled = true;
   // Create AudioVisualizer according to button dataset type
   if (this.dataset.type === 'bars') {
     component = new AudioVisualizer({
@@ -110,8 +117,12 @@ const buttonClicked = function() {
         track: '#12B31D',
         mainBeat: '#FF6B67',
         subBeat: '#56D45B'
-      }
+      },
+      hotCues: hotCues
     });
+    // Clear Cue buttons and disable them
+    addHotCue.disabled = false;
+    removeHotCues.disabled = false;
   } else if (this.dataset.type === 'waveform') {
     component = new AudioVisualizer({
       type: 'waveform',
@@ -121,16 +132,17 @@ const buttonClicked = function() {
       animation: 'gradient',
       wave: {
         align: 'center',
-        barWidth: 1,
-        barMarginScale: 0,
-        merged: true,
-        noSignalLine: true
+        barWidth: 6,
+        barMarginScale: 0.1,
+        merged: false,
+        noSignalLine: false
       },
       colors: {
         background: '#1D1E25',
         track: '#E7E9E7',
         progress: '#56D45B'
-      }
+      },
+      hotCues: hotCues
     });
   }
 };
@@ -154,4 +166,21 @@ document.getElementById('demo-change-src').addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % sources.length; // Update source index
   document.getElementById('audio-player').src = `demo/audio/${sources[currentIndex]}`; // Update audio source
   document.getElementById('demo-current-src').innerHTML = sources[currentIndex]; // Update text feedback
+});
+// HotCue listeners
+addHotCue.addEventListener('click', () => {
+  if (addHotCue.disabled !== true) {
+    const hotCue = component.setHotCuePoint();
+    if (hotCue) {
+      hotCues.push(hotCue);
+    }
+  }
+});
+removeHotCues.addEventListener('click', () => {
+  if (addHotCue.disabled !== true) {
+    for (let i = 0; i < hotCues.length; ++i) {
+      component.removeHotCuePoint(hotCues[i]);
+    }
+    hotCues = [];
+  }
 });

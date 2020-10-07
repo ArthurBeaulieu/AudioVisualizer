@@ -4,32 +4,49 @@
 class BaseComponent {
 
 
-  /** @summary BaseComponent is the bedrock of any visualisation here. It must be inherited from Mono or Stereo component abstraction.
+  /** @summary BaseComponent is the bedrock of any visualisation here. It must be inherited from Mono or Stereo component abstractions.
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Store all base method, mostly to handle events, other processing methods needs to be overridden.</blockquote> **/
   constructor() {
-    // Attributes that can be sent as options
+    /** @private
+     * @member {string} - The component type. See supported componenets in AudioVisualizer factory */
     this._type = null;
-    this._player = null; // Source (HTML audio player)
-    this._renderTo = null; // Target div to render module in
-    this._fftSize = null; // FFT size used to analyse audio stream
-    // The Web Audio API context
+    /** @private
+     * @member {object} - The audio source (HTML audio player) */    
+    this._player = null;
+    /** @private
+     * @member {object} - Target div to render module in */
+    this._renderTo = null;
+    /** @private
+     * @member {number} - FFT size used to analyse audio stream. Must be a power of 2 */
+    this._fftSize = null;
+    /** @private
+     * @member {object} - The audio context */
     this._audioCtx = null;
-    this._inputNode = null; // Optional, the source node to chain from ; it will ignore the output of HTML audio player
-    // Display utils
+    /** @private
+     * @member {object} - The source node to chain from ; it will ignore the output of HTML audio player */    
+    this._inputNode = null;
+    /** @private
+     * @member {boolean} - The playing state of the player */    
+    this._isPlaying = false;    
+    /** @private
+     * @member {object} - Contains all useful DOM objects */    
     this._dom = {
       container: null
     };
-    // Render to original dimension for fullscreen
+    /** @private
+     * @member {object} - Save container dimension to restore when closing fullscreen */    
     this._parentDimension = {
       position: null,
       height: null,
       width: null,
       zIndex: null
     };
-    // Event binding
+    /** @private
+     * @member {object} - Resize observable to watch for any resize change */     
     this._resizeObserver = null;
+    // Event binding
     this._onResize = this._onResize.bind(this);
     this._play = this._play.bind(this);
     this._pause = this._pause.bind(this);
@@ -108,10 +125,13 @@ class BaseComponent {
    * @since 2020
    * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
   _addEvents() {
+    // Put observer on renderTo and callback onResize at each action
     this._resizeObserver = new ResizeObserver(this._onResize);
     this._resizeObserver.observe(this._renderTo);
+    // Playback events
     this._player.addEventListener('play', this._play, false);
     this._player.addEventListener('pause', this._pause, false);
+    // Double click handler (fullscreen for most components)
     this._dom.container.addEventListener('dblclick', this._dblClick, false);
   }
 
@@ -124,9 +144,12 @@ class BaseComponent {
    * @since 2020
    * @description <blockquote>Remove component events (resize, play, pause, dbclick).</blockquote> **/
   _removeEvents() {
+    // Clear observable
     this._resizeObserver.disconnect();
+    // Clear playback events
     this._player.removeEventListener('play', this._play, false);
     this._player.removeEventListener('pause', this._pause, false);
+    // Remove double click listener
     this._dom.container.removeEventListener('dblclick', this._dblClick, false);
   }
 
@@ -199,6 +222,7 @@ class BaseComponent {
           width: this._renderTo.style.width,
           zIndex: this._renderTo.style.zIndex || ''
         };
+        // Alter render to style to make it fullscreen
         this._renderTo.style.position = 'fixed';
         this._renderTo.style.height = '100vh';
         this._renderTo.style.width = '100vw';
@@ -220,7 +244,7 @@ class BaseComponent {
   }
 
 
-}
+};
 
 
 export default BaseComponent;
