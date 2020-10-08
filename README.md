@@ -197,6 +197,8 @@ const component = new AudioVisualizer({
 });
 ```
 
+If you need more information on those components, you can read the online [documentation](https://arthurbeaulieu.github.io/AudioVisualizer/doc/).
+
 # Development
 
 If you clone this repository, you can `npm install` to install development dependencies. This will allow you to build dist file, run the component tests or generate the documentation ;
