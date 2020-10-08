@@ -87,7 +87,7 @@ class Waveform extends VisuComponentMono {
       barWidth: options.wave ? options.wave.barWidth || 1 : 1,
       barMarginScale: options.wave ? (options.wave.barMarginScale / 2) : 0.125, // Divide by 2 because true range is [0, 0.5]
       merged: options.wave ? options.wave.merged || true : true,
-      noSignalLine: options.wave.noSignalLine ? options.wave.noSignalLine || true : false
+      noSignalLine: options.wave ? options.wave.noSignalLine || true : false
     };
     this._hotCues = options.hotCues || [];
 
@@ -228,7 +228,7 @@ class Waveform extends VisuComponentMono {
     const hotCue = this._hotCueClicked(x, y);
     // Clicked on a hotcue
     if (hotCue) {
-      this._player.currentTime = hotCue.time;      
+      this._player.currentTime = hotCue.time;
     } else {
       // Seek player otherwise
       const boundingBox = event.target.getBoundingClientRect();
@@ -427,7 +427,7 @@ class Waveform extends VisuComponentMono {
         this._ctx.fillRect(x * i + margin, (this._canvas.height / 2) - yU, x - margin * 2, yU);
         this._ctx.fillRect(x * i + margin, this._canvas.height / 2, x - margin * 2, yD);
         // Add tiny centered line
-        if (this._wave.noSignalLine) {        
+        if (this._wave.noSignalLine) {
           this._ctx.fillRect(x * i + margin, this._canvas.height / 2 - 0.5, x - margin * 2, 1);
         }
       } else if (this._wave.align === 'bottom') {
@@ -441,33 +441,33 @@ class Waveform extends VisuComponentMono {
 
     this._ctx.closePath();
     // Draw hot cues if any
-    this._drawHotCues();    
+    this._drawHotCues();
   }
 
 
   _drawHotCues() {
     for (let i = 0; i < this._hotCues.length; ++i) {
-      this._drawHotCue(this._hotCues[i], i);
+      this._drawHotCue(this._hotCues[i]);
     }
   }
 
 
-  _drawHotCue(hotCue, index) {
-    let xPos = (hotCue.time * this._canvas.width) / this._player.duration;
+  _drawHotCue(hotCue) {
     CanvasUtils.drawHotCue(this._canvas, {
-      x: xPos + (18 / 2), // By default, hotCue is centered on xPos. We don't wnat that behoavior here
-      y: 4,
+      x: (hotCue.time * this._canvas.width) / this._player.duration + (18 / 2), // By default, hotCue is centered on xPos. We don't wnat that behoavior here
+      y: 2,
       size: 18,
-      label: index + 1
-    });    
+      label: hotCue.label || hotCue.number,
+      color: hotCue.color
+    });
   }
 
 
   _hotCueClicked(x, y) {
-    if (y > 4 && y < 22) {
+    if (y > 2 && y < 20) {
       for (let i = 0; i < this._hotCues.length; ++i) {
         let xPos = (this._hotCues[i].time * this._canvas.width) / this._player.duration;
-        if (x > (xPos + (18/2)) && x < xPos + 2 * (18/2)) {
+        if (x > xPos && x < (xPos + 18)) {
           return this._hotCues[i];
         }
       }
@@ -493,14 +493,45 @@ class Waveform extends VisuComponentMono {
   }
 
 
-  setHotCuePoint(time) {
-    const hotCue = {
-      time: time,
-      number: this._hotCues.length + 1
-    };
-    // Actually draw hot cues
-    this._hotCues.push(hotCue);
+  setHotCuePoint(hotCue) { // This is just to add a new cuepoint, extracted from a Timeline component.
+    let existingHotCue = null;
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === hotCue.beatCount) {
+        existingHotCue = this._hotCues[i];
+        break;
+      }
+    }
+
+    if (!existingHotCue) {
+      this._hotCues.push(hotCue);
+      this._drawHotCues();
+    }
+  }
+
+
+  updateHotCuePoint(hotCue, options) {
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === hotCue.beatCount) {
+        if (options.label) {
+          this._hotCues[i].label = options.label;
+        }
+        if (options.color) {
+          this._hotCues[i].color = options.color;
+        }
+      }
+    }
     this._drawHotCues();
+  }
+
+
+  removeHotCuePoint(hotCue) {
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === hotCue.beatCount) {
+        this._hotCues.splice(i, 1);
+        this._drawHotCues();
+        break;
+      }
+    }
   }
 
 

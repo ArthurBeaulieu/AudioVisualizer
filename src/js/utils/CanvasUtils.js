@@ -359,14 +359,31 @@ class CanvasUtils {
   static drawHotCue(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.fillStyle = ColorUtils.defaultPrimaryColor;    
-    ctx.fillRect(options.x - (options.size / 2), options.y, options.size, options.size);
+    // HotCue border
     ctx.fillStyle = ColorUtils.defaultBackgroundColor;
-    ctx.font = 'bold 10pt Helvetica sans-serif';
+    ctx.fillRect(options.x - (options.size / 2) - 1, options.y - 1, options.size + 2, options.size + 2);
+    // Background rectangle
+    ctx.fillStyle = options.color || ColorUtils.defaultPrimaryColor;
+    ctx.fillRect(options.x - (options.size / 2), options.y, options.size, options.size);
+    // Label text drawing
+    ctx.fillStyle = ColorUtils.defaultBackgroundColor;
+    ctx.font = 'bold 8pt sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(options.label || '', options.x, options.y + (3 * options.size / 4));
     ctx.closePath();
-  }  
+  }
+
+
+  static drawBeatCount(canvas, options) {
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    // Label text drawing
+    ctx.fillStyle = ColorUtils.defaultPrimaryColor;
+    ctx.font = 'bold 10pt sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${options.label} Bars`, options.x, options.y);
+    ctx.closePath();
+  }
 
 
   /** @method

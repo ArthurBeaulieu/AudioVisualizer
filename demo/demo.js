@@ -112,6 +112,9 @@ const buttonClicked = function() {
         bpm: 105,
         timeSignature: 4
       },
+      wave: {
+        align: 'center'
+      },
       colors: {
         background: '#1D1E25',
         track: '#12B31D',
@@ -135,7 +138,7 @@ const buttonClicked = function() {
         barWidth: 6,
         barMarginScale: 0.1,
         merged: false,
-        noSignalLine: false
+        noSignalLine: true
       },
       colors: {
         background: '#1D1E25',
@@ -170,7 +173,10 @@ document.getElementById('demo-change-src').addEventListener('click', () => {
 // HotCue listeners
 addHotCue.addEventListener('click', () => {
   if (addHotCue.disabled !== true) {
-    const hotCue = component.setHotCuePoint();
+    const hotCue = component.setHotCuePoint({
+      color: '#FF0000',
+      label: hotCues.length + 1
+    });
     if (hotCue) {
       hotCues.push(hotCue);
     }

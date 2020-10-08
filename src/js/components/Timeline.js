@@ -29,6 +29,8 @@ class Timeline extends VisuComponentMono {
    * @param {object} [options.beat.offset=null] - offset before first beat
    * @param {object} [options.beat.bpm=null] - The track bpm
    * @param {object} [options.beat.timeSignature=null] - The track time signature to put emphasis on main beats
+   * @param {object} [options.wave] - The wave options
+   * @param {object} [options.wave.align='center'] - The alignment of the wave, can be either 'top', 'center' or 'bottom'
    * @param {object} [options.colors] - Timeline color potions
    * @param {object} [options.colors.background='#1D1E25'] - Canvas background color in Hex/RGB/HSL
    * @param {object} [options.colors.track='#12B31D'] - The timeline color in Hex/RGB/HSL
@@ -54,9 +56,14 @@ class Timeline extends VisuComponentMono {
       bpm: options.beat ? options.beat.bpm : null,
       timeSignature: options.beat ? options.beat.timeSignature : null,
     };
+
+    this._wave = {
+      align: options.wave ? options.wave.align || 'center' : 'center'
+    };
     // HotCues and beats arrays
     this._hotCues = [...options.hotCues] || [];
     this._beatsArray = [];
+    this._beatCount = '0.0';
     // Offline canvas -> main canvas is divided with 32k px wide canvases
     this._canvases = [];
     this._cueCanvases = [];
@@ -390,14 +397,20 @@ class Timeline extends VisuComponentMono {
             }
           }
           // Set waveform color according to sample intensity
-          ctx.fillStyle = ColorUtils.lightenDarkenColor(this._colors.track, (max * 150)); // 150, not 255 to avoid full white on sample at max value
+          ctx.fillStyle = ColorUtils.lightenDarkenColor(this._colors.track, (max * 190)); // 190, not 255 to avoid full white on sample at max value
           // Update max to scale in half canvas height
-          max = Math.floor(max * ((this._canvas.height * .9) / 2)); // Scale on 90% height max
-          // Fill up and down side of timeline
-          ctx.fillRect(j, this._canvas.height / 2, 1, -max);
-          ctx.fillRect(j, this._canvas.height / 2, 1, +max);
-          // Add tiny centered line
-          ctx.fillRect(j, (this._canvas.height / 2) - 0.5, 1, 1);
+          max = Math.floor(max * ((this._canvas.height * .95))); // Scale on 95% height max
+          if (this._wave.align === 'center') {
+            // Fill up and down side of timeline
+            ctx.fillRect(j, this._canvas.height / 2, 1, -(max / 2));
+            ctx.fillRect(j, this._canvas.height / 2, 1, (max / 2));
+            // Add tiny centered line
+            ctx.fillRect(j, (this._canvas.height / 2) - 0.5, 1, 1);
+          } else if (this._wave.align === 'top') {
+            ctx.fillRect(j, 1, 1, max);
+          } else if (this._wave.align === 'bottom') {
+            ctx.fillRect(j, this._canvas.height - 1, 1, -max);
+          }
         }
         // Store canvas to properly animate Timeline on progress
         this._canvases.push(canvas);
@@ -468,22 +481,23 @@ class Timeline extends VisuComponentMono {
     // Upper triangle
     CanvasUtils.drawTriangle(canvas, {
       x: x % MAX_CANVAS_WIDTH,
-      y: 4,
+      y: 1,
       radius: 6,
-      top: 12
+      top: 10
     });
     // Down triangle
     CanvasUtils.drawTriangle(canvas, {
       x: x % MAX_CANVAS_WIDTH,
-      y: this._canvas.height - 4,
+      y: this._canvas.height - 1,
       radius: 6,
-      top: this._canvas.height - 12
+      top: this._canvas.height - 10
     });
     // Update beats array with new beat bar
     this._beatsArray.push({
       primaryBeat: (beatCount % this._beat.timeSignature === 0),
       beatCount: beatCount,
-      xPos: x
+      xPos: x,
+      time: x * this._canvasSpeed / this._canvas.width
     });
   }
 
@@ -537,10 +551,31 @@ class Timeline extends VisuComponentMono {
     }
     // Draw centered vertical bar
     this._ctx.fillStyle = ColorUtils.defaultAntiPrimaryColor;
-    this._ctx.fillRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
+    this._ctx.fillRect(this._canvas.width / 2, 1, 3, this._canvas.height - 2);
     this._ctx.strokeStyle = 'black';
     this._ctx.lineWidth = 1;
-    this._ctx.strokeRect(this._canvas.width / 2, 3, 3, this._canvas.height - 6);
+    this._ctx.strokeRect(this._canvas.width / 2, 1, 3, this._canvas.height - 2);
+    // Draw beat count next to centered line
+    if (this._beatsArray.length > 0) {
+      let label = '0.0';
+      for (let i = 0; i < this._beatsArray.length; ++i) {
+        if (time <= this._beatsArray[i].time) {
+          let measureCount = Math.floor((this._beatsArray[i].beatCount - 1) / this._beat.timeSignature) + 1;
+          let timeCount = (this._beatsArray[i].beatCount - 1) % this._beat.timeSignature;
+          label = `${measureCount}.${timeCount === -1 ? 0 : timeCount}`;
+          break;
+        }
+      }
+      let top = 14;
+      if (this._wave.align === 'top') {
+        top = this._canvas.height - 4;
+      }
+      CanvasUtils.drawBeatCount(this._canvas, {
+        label: label,
+        x: (this._canvas.width / 2) + 8,
+        y: top
+      });
+    }
   }
 
 
@@ -551,21 +586,26 @@ class Timeline extends VisuComponentMono {
   }
 
 
-  _drawHotCue(hotcue) {
-    CanvasUtils.drawHotCue(this._cueCanvases[hotcue.canvasIndex], {
-      x: hotcue.xPos - (hotcue.canvasIndex * MAX_CANVAS_WIDTH),
-      y: 4,
+  _drawHotCue(hotCue) {
+    let top = 2;
+    if (this._wave.align === 'top') {
+      top = this._canvas.height - 20;
+    }
+    CanvasUtils.drawHotCue(this._cueCanvases[hotCue.canvasIndex], {
+      x: hotCue.xPos - (hotCue.canvasIndex * MAX_CANVAS_WIDTH) + (18 / 2),
+      y: top,
       size: 18,
-      label: hotcue.number
+      label: hotCue.label || hotCue.number,
+      color: hotCue.color
     });
   }
 
 
   _hotCueClicked(x, y) {
-    if (y > 4 && y < 22) {
+    if (y > 2 && y < 20) {
       for (let i = 0; i < this._hotCues.length; ++i) {
         let xPos = this._hotCues[i].xPos - (this._hotCues[i].canvasIndex * MAX_CANVAS_WIDTH);
-        if (x > xPos - (18 / 2) && x < xPos + (18 / 2)) {
+        if (x > xPos && x < (xPos + 18)) {
           return this._hotCues[i];
         }
       }
@@ -605,7 +645,7 @@ class Timeline extends VisuComponentMono {
    * @memberof Timeline
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Update the beat position.</blockquote>
+   * @description <blockquote>Update the beat values. To be calle don change track</blockquote>
    * @param {object} options - Track beat options
    * @param {number} [options.beat.offset=null] - offset before first beat
    * @param {number} [options.beat.bpm=null] - The track bpm
@@ -628,7 +668,79 @@ class Timeline extends VisuComponentMono {
    * @description <blockquote>Define a HotCue point. It will be attached to the nearest bar. It will only be
    * attached if no hotcue is registered on the targeted bar.</blockquote>
    * @return {object} The hotcue object with its information **/
-  setHotCuePoint(timeOnly = false) {
+  setHotCuePoint(options) {
+    let matchingBeat = this.getClosestBeat();
+    // Search for existing hotcue at the target bar
+    let existingHotCue = null;
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === matchingBeat.beatCount) {
+        existingHotCue = this._hotCues[i];
+        break;
+      }
+    }
+    // Only append hotcue if it's not already registered, return existing hot cue otherwise
+    if (!existingHotCue) {
+      // Save hot cue and return to the sender
+      matchingBeat.number = this._hotCues.length + 1; // Attach hotcue number
+      matchingBeat.time = matchingBeat.xPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
+      if (options.label) {
+        matchingBeat.label = options.label;
+      }
+      if (options.color) {
+        matchingBeat.color = options.color;
+      }
+      // Otherwise save hot cue in stack
+      this._hotCues.push(matchingBeat);
+      // Draw hotcues if any
+      this._clearCanvas();
+      this._drawHotCue(matchingBeat);
+      this._drawTimeline(this._player.currentTime);
+
+      return matchingBeat;
+    } else {
+      return existingHotCue;
+    }
+  }
+
+
+  updateHotCuePoint(hotCue, options) {
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === hotCue.beatCount) {
+        if (options.label) {
+          this._hotCues[i].label = options.label;
+        }
+        if (options.color) {
+          this._hotCues[i].color = options.color;
+        }
+      }
+    }
+    this._clearCanvas(false, true);
+    this._drawHotCues();
+    this._drawTimeline(this._player.currentTime);
+  }
+
+
+  removeHotCuePoint(hotcue) {
+    for (let i = 0; i < this._hotCues.length; ++i) {
+      if (this._hotCues[i].beatCount === hotcue.beatCount) {
+        this._hotCues.splice(i, 1);
+        this._clearCanvas(false, true);
+        this._drawHotCues();
+        this._drawTimeline(this._player.currentTime);
+        break;
+      }
+    }
+  }
+
+
+  /** @method
+   * @name getClosestBeat
+   * @public
+   * @memberof Timeline
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote></blockquote> **/
+  getClosestBeat(timeOnly = false) {
     // The center coordinate when this method is called
     const center = Math.floor(this._player.currentTime * this._canvas.width / this._canvasSpeed);
     let matchingBeat = {};
@@ -652,47 +764,12 @@ class Timeline extends VisuComponentMono {
     } else {
       matchingBeat.canvasIndex = 0;
     }
-    // Search for existing hotcue at the target bar
-    let existing = false;
-    for (let i = 0; i < this._hotCues.length; ++i) {
-      if (this._hotCues[i].beatCount === matchingBeat.beatCount) {
-        existing = true;
-        break;
-      }
+    // Only return time if requested
+    if (timeOnly) {
+      return matchingBeat.time;
     }
-    // Only append hotcue if it's not already registered, return null otherwise
-    if (!existing) {
-      // Save hot cue and return to the sender
-      matchingBeat.number = this._hotCues.length + 1; // Attach hotcue number
-      matchingBeat.time = matchingBeat.xPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
-      // If only time was requested, we return now
-      if (timeOnly) {
-        return matchingBeat.time;
-      }
-      // Otherwise save hot cue in stack
-      this._hotCues.push(matchingBeat);
-      // Draw hotcues if any
-      this._clearCanvas();
-      this._drawHotCue(matchingBeat);
-      this._drawTimeline(this._player.currentTime);
 
-      return matchingBeat;
-    } else {
-      return null;
-    }
-  }
-
-
-  removeHotCuePoint(hotcue) {
-    for (let i = 0; i < this._hotCues.length; ++i) {
-      if (this._hotCues[i].beatCount === hotcue.beatCount) {
-        this._hotCues.splice(i, 1);
-        this._clearCanvas(false, true);
-        this._drawHotCues();
-        this._drawTimeline(this._player.currentTime);
-        break;
-      }
-    }
+    return matchingBeat;
   }
 
 

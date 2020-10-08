@@ -1,6 +1,6 @@
 # AudioVisualizer
 
-![](https://badgen.net/badge/version/0.9.5/blue)
+![](https://badgen.net/badge/version/0.9.6/blue)
 ![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
@@ -150,6 +150,9 @@ const component = new AudioVisualizer({
     offset: null, // Time in s
     bpm: null,
     timeSignature: null
+  },
+  wave: {
+    align: 'center' // 'top', 'center' or 'bottom'
   },
   colors: {
     background: '#1D1E25',

@@ -8,8 +8,8 @@ import Waveform from './components/Waveform.js';
 'use strict';
 
 
-/* AudioVisualizer version 0.9.5 */
-const AudioVisualizerVersion = '0.9.5';
+/* AudioVisualizer version 0.9.6 */
+const AudioVisualizerVersion = '0.9.6';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
