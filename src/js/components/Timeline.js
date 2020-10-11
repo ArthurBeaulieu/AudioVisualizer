@@ -58,7 +58,8 @@ class Timeline extends VisuComponentMono {
     };
 
     this._wave = {
-      align: options.wave ? options.wave.align || 'center' : 'center'
+      align: options.wave ? options.wave.align || 'center' : 'center',
+      scale: options.wave ? options.wave.scale || .95 : .95
     };
     // HotCues and beats arrays
     this._hotCues = [...options.hotCues] || [];
@@ -128,8 +129,13 @@ class Timeline extends VisuComponentMono {
   _addEvents() {
     super._addEvents();
     this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
-    this._player.addEventListener('seeking', this._onProgress, false);
+    this._player.addEventListener('timeupdate', this._onProgress, false);
     this._canvas.addEventListener('mousedown', this._mouseDown, false);
+
+    if (!this._player.paused) {
+      this._isPlaying = true;
+      requestAnimationFrame(this._processAudioBin);
+    }
   }
 
 
@@ -144,7 +150,7 @@ class Timeline extends VisuComponentMono {
   _removeEvents() {
     super._removeEvents();
     this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
-    this._player.removeEventListener('seeking', this._onProgress, false);
+    this._player.removeEventListener('timeupdate', this._onProgress, false);
   }
 
 
@@ -399,7 +405,7 @@ class Timeline extends VisuComponentMono {
           // Set waveform color according to sample intensity
           ctx.fillStyle = ColorUtils.lightenDarkenColor(this._colors.track, (max * 190)); // 190, not 255 to avoid full white on sample at max value
           // Update max to scale in half canvas height
-          max = Math.floor(max * ((this._canvas.height * .95))); // Scale on 95% height max
+          max = Math.floor(max * (this._canvas.height * this._wave.scale));
           if (this._wave.align === 'center') {
             // Fill up and down side of timeline
             ctx.fillRect(j, this._canvas.height / 2, 1, -(max / 2));
@@ -683,6 +689,7 @@ class Timeline extends VisuComponentMono {
       // Save hot cue and return to the sender
       matchingBeat.number = this._hotCues.length + 1; // Attach hotcue number
       matchingBeat.time = matchingBeat.xPos * this._canvasSpeed / this._canvas.width; // Save the bar timecode into the hotcue object
+      matchingBeat.label = this._hotCues.length + 1; // Default label
       if (options.label) {
         matchingBeat.label = options.label;
       }

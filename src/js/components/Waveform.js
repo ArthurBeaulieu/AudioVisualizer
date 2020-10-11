@@ -99,6 +99,7 @@ class Waveform extends VisuComponentMono {
     this._dataR = [];
     // Event binding
     this._trackLoaded = this._trackLoaded.bind(this);
+    this._onProgress = this._onProgress.bind(this);
     this._onClick = this._onClick.bind(this);
   }
 
@@ -128,6 +129,7 @@ class Waveform extends VisuComponentMono {
   _addEvents() {
     super._addEvents();
     this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
+    this._player.addEventListener('seeking', this._onProgress, false);
     this._dom.container.addEventListener('click', this._onClick, false);
   }
 
@@ -143,6 +145,7 @@ class Waveform extends VisuComponentMono {
   _removeEvents() {
     super._removeEvents();
     this._player.removeEventListener('loadedmetadata', this._trackLoaded, false);
+    this._player.removeEventListener('seeking', this._onProgress, false);
     this._dom.container.removeEventListener('click', this._onClick, false);
   }
 
@@ -159,6 +162,12 @@ class Waveform extends VisuComponentMono {
     super._onResize();
     this._bars = this._canvas.width / this._wave.barWidth;
     this._fillData();
+    this._clearCanvas();
+    this._drawFileWaveform(this._player.currentTime / this._player.duration);
+  }
+
+
+  _onProgress() {
     this._clearCanvas();
     this._drawFileWaveform(this._player.currentTime / this._player.duration);
   }
@@ -520,7 +529,8 @@ class Waveform extends VisuComponentMono {
         }
       }
     }
-    this._drawHotCues();
+    this._clearCanvas();
+    this._drawFileWaveform(this._player.currentTime / this._player.duration);
   }
 
 
@@ -528,7 +538,8 @@ class Waveform extends VisuComponentMono {
     for (let i = 0; i < this._hotCues.length; ++i) {
       if (this._hotCues[i].beatCount === hotCue.beatCount) {
         this._hotCues.splice(i, 1);
-        this._drawHotCues();
+        this._clearCanvas();
+        this._drawFileWaveform(this._player.currentTime / this._player.duration);
         break;
       }
     }
