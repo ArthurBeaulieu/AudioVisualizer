@@ -184,6 +184,12 @@ class ColorUtils {
   }
 
 
+  static _alphaColor(color, alpha) {
+    const num = parseInt(color, 16);
+    return `rgba(${num >> 16}, ${(num >> 8) & 0x00FF}, ${num & 0x0000FF}, ${alpha})`;
+  }
+
+
   /** @method
    * @name rainbowGradient
    * @public
@@ -250,6 +256,22 @@ class ColorUtils {
    * @member {string} - The default dark primary color, #12B31D */
   static get defaultDarkPrimaryColor() {
     return '#12B31D';
+  }
+
+
+  /** @public
+   * @static
+   * @member {string} - The default dark primary color, #FFAD67 */
+  static get defaultLoopColor() {
+    return '#FFAD67';
+  }
+
+
+  /** @public
+   * @static
+   * @member {string} - The default dark primary color, #FFAD67 */
+  static get defaultLoopAlphaColor() {
+    return this._alphaColor('FFAD67', '.5');
   }
 
 

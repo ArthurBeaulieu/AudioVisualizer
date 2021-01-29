@@ -197,6 +197,7 @@ const component = new AudioVisualizer({
 });
 ```
 
+The audio HTML element is used to benefit its native streaming mechanism, so the track loading is faster, but also to react to each playback events. The optional input is to use if you have a node chain in your app and wish to apply a visualization after your audio treatment. The
 If you need more information on those components, you can read the online [documentation](https://arthurbeaulieu.github.io/AudioVisualizer/doc/).
 
 # Development

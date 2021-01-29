@@ -44,7 +44,9 @@ class Timeline extends VisuComponentMono {
       background: options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor,
       track: options.colors ? options.colors.track || ColorUtils.defaultDarkPrimaryColor : ColorUtils.defaultDarkPrimaryColor,
       mainBeat: options.colors ? options.colors.mainBeat || ColorUtils.defaultPrimaryColor : ColorUtils.defaultPrimaryColor,
-      subBeat: options.colors ? options.colors.subBeat || ColorUtils.defaultAntiPrimaryColor : ColorUtils.defaultAntiPrimaryColor
+      subBeat: options.colors ? options.colors.subBeat || ColorUtils.defaultAntiPrimaryColor : ColorUtils.defaultAntiPrimaryColor,
+      loop: options.colors ? options.colors.loop || ColorUtils.defaultLoopColor : ColorUtils.defaultLoopColor,
+      loopAlpha: options.colors ? options.colors.loopAlpha || ColorUtils.defaultLoopAlphaColor : ColorUtils.defaultLoopAlphaColor
     };
 
     this._canvas.style.backgroundColor = this._colors.background;
@@ -65,10 +67,19 @@ class Timeline extends VisuComponentMono {
     this._hotCues = [...options.hotCues] || [];
     this._beatsArray = [];
     this._beatCount = '0.0';
+    // Loop utils
+    this._loopEntry = null;
+    this._loopEnd = null;
+    this._loopBuffer = null;
+    this._isLooping = false;
+    this._loopStartedAt = 0;
+    this._playerPausedAt = 0;
+    this._audioBuffer = null; // Store audio buffer to avoid multiple loading of file during loop process
     // Offline canvas -> main canvas is divided with 32k px wide canvases
     this._canvases = [];
     this._cueCanvases = [];
     this._beatCanvases = [];
+    this._loopCanvases = [];
     // Drag canvas utils
     this._isDragging = false;
     this._wasPlaying = false;
@@ -170,7 +181,7 @@ class Timeline extends VisuComponentMono {
   }
 
 
-  _clearCanvas(clearBeat, clearHotCue) {
+  _clearCanvas(clearBeat, clearHotCue, clearLoop) {
     super._clearCanvas();
     // Clear beat bars canvas
     if (clearBeat) {
@@ -182,6 +193,12 @@ class Timeline extends VisuComponentMono {
     if (clearHotCue) {
       for (let i = 0; i < this._cueCanvases.length; ++i) {
         this._cueCanvases[i].getContext('2d').clearRect(0, 0, this._cueCanvases[i].width, this._cueCanvases[i].height);
+      }
+    }
+    // Clear loop canvas
+    if (clearLoop) {
+      for (let i = 0; i < this._loopCanvases.length; ++i) {
+        this._loopCanvases[i].getContext('2d').clearRect(0, 0, this._loopCanvases[i].width, this._loopCanvases[i].height);
       }
     }
   }
@@ -210,7 +227,12 @@ class Timeline extends VisuComponentMono {
    * @description <blockquote>Real time method called by WebAudioAPI to process PCM data. Here we make a 8 bit frequency
    * and time analysis.</blockquote> **/
   _processAudioBin() {
-    if (this._isPlaying === true) {
+    if (this._isPlaying === true || this._isLooping === true) {
+      // So UI keeps being update while player is virtually paused
+      if (this._isLooping === true) {
+        this._player.currentTime = this._loopEntry.time + (this._playerPausedAt + this._audioCtx.currentTime - this._loopStartedAt) % (this._loopEnd.time - this._loopEntry.time);
+      }
+      // Draw timeline and request new process in raf
       this._clearCanvas();
       this._drawTimeline(this._player.currentTime);
       requestAnimationFrame(this._processAudioBin);
@@ -219,6 +241,31 @@ class Timeline extends VisuComponentMono {
 
 
   /*  ----------  Timeline internal methods  ----------  */
+
+
+  _startLoopSequence(immediateLoop) {
+    if (immediateLoop) {
+      this._player.currentTime = this._loopEntry.time;
+    }
+
+    const workingBuffer = this._audioBuffer.slice();
+    this._audioCtx.decodeAudioData(workingBuffer, buffer => {
+      this._loopBuffer = this._audioCtx.createBufferSource();
+      this._loopBuffer.buffer = buffer;
+      this._loopBuffer.connect(this._audioCtx.destination);
+      this._loopBuffer.loop = true;
+      this._loopBuffer.loopStart = this._loopEntry.time;
+      this._loopBuffer.loopEnd = this._loopEnd.time;
+
+      this._loopBuffer.start(0, this._player.currentTime);
+      this._player.pause();
+
+      this._loopStartedAt = this._audioCtx.currentTime;
+      this._playerPausedAt = this._player.currentTime;
+      this._isLooping = true;
+      this._processAudioBin();
+    });
+  }
 
 
   /** @method
@@ -338,6 +385,7 @@ class Timeline extends VisuComponentMono {
    * @description <blockquote>Perform an offline analysis on whole track.</blockquote>
    * @param {object} response - HTTP response for audio track to extract buffer from **/
   _processAudioFile(response) {
+    this._audioBuffer = response.slice();
     // Set offline context according to track duration to get its full samples
     this._offlineCtx = new OfflineAudioContext(2, this._audioCtx.sampleRate * this._player.duration, this._audioCtx.sampleRate);
     this._offlineSource = this._offlineCtx.createBufferSource();
@@ -369,6 +417,7 @@ class Timeline extends VisuComponentMono {
       this._canvases = [];
       this._cueCanvases = [];
       this._beatCanvases = [];
+      this._loopCanvases = [];
       // Compute useful values
       const data = this._genScaledMonoData(this._offlineBuffer);
       const step = (this._canvasSpeed * this._offlineBuffer.sampleRate) / this._canvas.width;
@@ -380,6 +429,7 @@ class Timeline extends VisuComponentMono {
         const ctx = canvas.getContext('2d');
         const cueCanvas = document.createElement('CANVAS');
         const beatCanvas = document.createElement('CANVAS');
+        const loopCanvas = document.createElement('CANVAS');
 
         let width = totalLength - i;
         width = (width > MAX_CANVAS_WIDTH) ? MAX_CANVAS_WIDTH : width;
@@ -390,6 +440,8 @@ class Timeline extends VisuComponentMono {
         cueCanvas.height = this._canvas.height;
         beatCanvas.width = width;
         beatCanvas.height = this._canvas.height;
+        loopCanvas.width = width;
+        loopCanvas.height = this._canvas.height;
         // Clear offline context
         ctx.clearRect(0, 0, totalLength, this._canvas.height);
         // Draw the canvas
@@ -422,6 +474,7 @@ class Timeline extends VisuComponentMono {
         this._canvases.push(canvas);
         this._cueCanvases.push(cueCanvas);
         this._beatCanvases.push(beatCanvas);
+        this._loopCanvases.push(loopCanvas);
       }
 
       if (this._beat.bpm !== null && this._beat.offset !== null) {
@@ -440,14 +493,17 @@ class Timeline extends VisuComponentMono {
   _fillBeatBars(options) {
     let beatOffset = options.beatOffset;
     let canvasIndex = 0; // The offline canvas to consider
-    // We floor because last beat is pretsty irrelevant
+    // We floor because last beat is pretty irrelevant
     for (let i = 0; i < Math.floor(options.totalWidth / options.beatWidth); ++i) {
       // We reached MAX_CANVAS_WIDTH, using next offline canvas
       if ((i * options.beatWidth + beatOffset) >= MAX_CANVAS_WIDTH + (canvasIndex * MAX_CANVAS_WIDTH)) {
         // Increment offline canvas to use
         ++canvasIndex;
         // When changing canvas, the beatOffset is dependant to last beat saved position.
-        beatOffset = options.beatWidth - (MAX_CANVAS_WIDTH - this._beatsArray[this._beatsArray.length - 1].xPos);
+        for (let j = 1; j < canvasIndex; ++i) {
+          // We iterate for each canvas, and sums the offset per canvas so they cumulates
+          beatOffset += options.beatWidth - ((MAX_CANVAS_WIDTH * j) - (this._beatsArray[this._beatsArray.length - 1].xPos % (MAX_CANVAS_WIDTH * j)));
+        }
       }
       // Draw beat bar, x position is loop index times a space between beats, plus the beat offset,
       // modulo max canvas width to fit in offline canvases
@@ -462,7 +518,7 @@ class Timeline extends VisuComponentMono {
    * @memberof Timeline
    * @author Arthur Beaulieu
    * @since 2020
-   * @description <blockquote>Draw a beat bard with its triangle with color that depends on main beat or sub beat.</blockquote>
+   * @description <blockquote>Draw a beat bar with its triangle with color that depends on main beat or sub beat.</blockquote>
    * @param {object} beatCount - The beat number from first
    * @param {object} canvas - The canvas to draw in
    * @param {object} ctx - The associated context
@@ -503,7 +559,8 @@ class Timeline extends VisuComponentMono {
       primaryBeat: (beatCount % this._beat.timeSignature === 0),
       beatCount: beatCount,
       xPos: x,
-      time: x * this._canvasSpeed / this._canvas.width
+      time: x * this._canvasSpeed / this._canvas.width,
+      canvasIndex: canvasIndex
     });
   }
 
@@ -554,6 +611,7 @@ class Timeline extends VisuComponentMono {
       this._ctx.drawImage(this._canvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
       this._ctx.drawImage(this._beatCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
       this._ctx.drawImage(this._cueCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
+      this._ctx.drawImage(this._loopCanvases[i], (this._canvas.width / 2) - center + (MAX_CANVAS_WIDTH * i), 0);
     }
     // Draw centered vertical bar
     this._ctx.fillStyle = ColorUtils.defaultAntiPrimaryColor;
@@ -568,7 +626,7 @@ class Timeline extends VisuComponentMono {
         if (time <= this._beatsArray[i].time) {
           let measureCount = Math.floor((this._beatsArray[i].beatCount - 1) / this._beat.timeSignature) + 1;
           let timeCount = (this._beatsArray[i].beatCount - 1) % this._beat.timeSignature;
-          label = `${measureCount}.${timeCount === -1 ? 0 : timeCount}`;
+          label = `${measureCount}.${timeCount === -1 ? 1 : timeCount + 1}`;
           break;
         }
       }
@@ -621,6 +679,51 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  _drawLoop() {
+    if (this._loopEntry) {
+      const ctx = this._loopCanvases[this._loopEntry.canvasIndex].getContext('2d');
+      ctx.fillStyle = this._colors.loop;
+      CanvasUtils.drawTriangle(this._loopCanvases[this._loopEntry.canvasIndex], {
+        x: this._loopEntry.xPos % MAX_CANVAS_WIDTH + 1,
+        y: 1,
+        radius: 9,
+        top: 14
+      });
+      CanvasUtils.drawTriangle(this._loopCanvases[this._loopEntry.canvasIndex], {
+        x: this._loopEntry.xPos % MAX_CANVAS_WIDTH + 1,
+        y: this._loopCanvases[this._loopEntry.canvasIndex].height - 1,
+        radius: 9,
+        top: this._loopCanvases[this._loopEntry.canvasIndex].height - 14
+      });
+    }
+
+    if (this._loopEnd) {
+      const ctx = this._loopCanvases[this._loopEntry.canvasIndex].getContext('2d');
+      ctx.fillStyle = this._colors.loop;
+      CanvasUtils.drawTriangle(this._loopCanvases[this._loopEnd.canvasIndex], {
+        x: this._loopEnd.xPos % MAX_CANVAS_WIDTH + 1,
+        y: 1,
+        radius: 9,
+        top: 14
+      });
+      CanvasUtils.drawTriangle(this._loopCanvases[this._loopEnd.canvasIndex], {
+        x: this._loopEnd.xPos % MAX_CANVAS_WIDTH + 1,
+        y: this._loopCanvases[this._loopEnd.canvasIndex].height - 1,
+        radius: 9,
+        top: this._loopCanvases[this._loopEnd.canvasIndex].height - 14
+      });
+    }
+
+    if (this._loopEntry && this._loopEnd) {
+      const ctx = this._loopCanvases[this._loopEntry.canvasIndex].getContext('2d');
+      ctx.fillStyle = this._colors.loopAlpha;
+      if (this._loopEntry.canvasIndex === this._loopEnd.canvasIndex) {
+        ctx.fillRect(this._loopEntry.xPos, 30, this._loopEnd.xPos - this._loopEntry.xPos, this._loopCanvases[this._loopEntry.canvasIndex].height - 60);
+      }
+    }
+  }
+
+
   /** @method
    * @name _getPlayerSourceFile
    * @private
@@ -641,7 +744,7 @@ class Timeline extends VisuComponentMono {
   /*  ----------------------------------------  TIMELINE PUBLIC METHODS  -------------------------------------------  */
   /*                                                                                                                  */
   /*  These methods allow the caller to update the beat info (on change track for example), or to add/remove a hot    */
-  /*  cue in the timeline.                                                                                            */
+  /*  cue in the timeline, or to configure loop entry and exit                                                        */
   /*  --------------------------------------------------------------------------------------------------------------- */
 
 
@@ -740,6 +843,53 @@ class Timeline extends VisuComponentMono {
   }
 
 
+  setLoopEntryPoint() {
+    this._loopEntry = this.getClosestBeat();
+    this._clearCanvas(false, false, true);
+    this._drawLoop();
+    this._drawTimeline(this._player.currentTime);
+  }
+
+
+  setLoopEndPoint(beatDuration) {
+    if (this._loopEntry) {
+      // Determine end by closest beat
+      if (!beatDuration) {
+        let matchingBeat = this.getClosestBeat();
+        // Only save end if not equal to entry and is located after in time
+        if (matchingBeat !== this._loopEntry && this._loopEntry.time < matchingBeat.time) {
+          this._loopEnd = matchingBeat;
+        }
+      } else { // Determine end by a beat count after loop entry
+        if (this._loopEntry.beatCount + beatDuration < this._beatsArray.length) {
+          this._loopEnd = this._beatsArray[this._loopEntry.beatCount + beatDuration];
+        } else {
+          this._loopEnd = this._beatsArray[this._beatsArray.length - 1];
+        }
+      }
+
+      this._clearCanvas(false, false, true);
+      this._drawLoop();
+      this._drawTimeline(this._player.currentTime);
+      //this._startLoopSequence(!beatDuration);
+    }
+  }
+
+
+  exitLoop() {
+    //this._loopBuffer.stop();
+    //this._player.play();
+    this._loopEntry = null;
+    this._loopEnd = null;
+    this._loopBuffer = null;
+    this._isLooping = false;
+    this._loopStartedAt = 0;
+    this._playerPausedAt = 0;
+    this._clearCanvas(false, false, true);
+    this._drawTimeline(this._player.currentTime);
+  }
+
+
   /** @method
    * @name getClosestBeat
    * @public
@@ -764,12 +914,6 @@ class Timeline extends VisuComponentMono {
           break;
         }
       }
-    }
-    // Save sub-canvas index in which the hot cue applies
-    if (matchingBeat.xPos > MAX_CANVAS_WIDTH) {
-      matchingBeat.canvasIndex = Math.floor(matchingBeat.xPos / MAX_CANVAS_WIDTH);
-    } else {
-      matchingBeat.canvasIndex = 0;
     }
     // Only return time if requested
     if (timeOnly) {

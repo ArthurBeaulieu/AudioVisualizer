@@ -22,16 +22,16 @@ class VisuComponentMono extends BaseComponent {
   constructor(options) {
     super();
     /** @private
-     * @member {object} - Audio nodes from web audio API to manipulate data with */    
+     * @member {object} - Audio nodes from web audio API to manipulate data with */
     this._nodes = {
       source: null, // HTML audio element
       analyser: null // Analysis node
     };
     /** @private
-     * @member {object} - The canvas to rendered mono data to */    
+     * @member {object} - The canvas to rendered mono data to */
     this._canvas = null;
     /** @private
-     * @member {object} - The canvas associated context */    
+     * @member {object} - The canvas associated context */
     this._ctx = null;
     // Construction sequence
     this._fillAttributes(options);

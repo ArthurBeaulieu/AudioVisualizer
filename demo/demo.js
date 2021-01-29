@@ -15,6 +15,9 @@ const buttons = {
 let hotCues = [];
 let addHotCue = document.getElementById('add-hot-cue');
 let removeHotCues = document.getElementById('remove-hot-cue');
+let loopEntry = document.getElementById('loop-entry');
+let loopEnd = document.getElementById('loop-end');
+let loopExit = document.getElementById('loop-exit');
 // Current AudioVisualizer component and type
 let component = null;
 let selected = 'circle';
@@ -33,6 +36,9 @@ const buttonClicked = function() {
   // Clear Cue buttons and disable them
   addHotCue.disabled = true;
   removeHotCues.disabled = true;
+  loopEntry.disabled = true;
+  loopEnd.disabled = true;
+  loopExit.disabled = true;
   // Create AudioVisualizer according to button dataset type
   if (this.dataset.type === 'bars') {
     component = new AudioVisualizer({
@@ -126,6 +132,9 @@ const buttonClicked = function() {
     // Clear Cue buttons and disable them
     addHotCue.disabled = false;
     removeHotCues.disabled = false;
+    loopEntry.disabled = false;
+    loopEnd.disabled = false;
+    loopExit.disabled = false;
   } else if (this.dataset.type === 'waveform') {
     component = new AudioVisualizer({
       type: 'waveform',
@@ -183,10 +192,26 @@ addHotCue.addEventListener('click', () => {
   }
 });
 removeHotCues.addEventListener('click', () => {
-  if (addHotCue.disabled !== true) {
+  if (removeHotCues.disabled !== true) {
     for (let i = 0; i < hotCues.length; ++i) {
       component.removeHotCuePoint(hotCues[i]);
     }
     hotCues = [];
+  }
+});
+// Loop listeners
+loopEntry.addEventListener('click', () => {
+  if (loopEntry.disabled !== true) {
+    component.setLoopEntryPoint();
+  }
+});
+loopEnd.addEventListener('click', () => {
+  if (loopEnd.disabled !== true) {
+    component.setLoopEndPoint();
+  }
+});
+loopExit.addEventListener('click', () => {
+  if (loopExit.disabled !== true) {
+    component.exitLoop();
   }
 });

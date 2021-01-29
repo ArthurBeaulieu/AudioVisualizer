@@ -172,3 +172,27 @@ audio {
   height: 30px;
   width: 130px;
 }
+
+.loop-entry {
+  position: absolute;
+  left: 280px;
+  bottom: 0;
+  height: 30px;
+  width: 130px;
+}
+
+.loop-end {
+  position: absolute;
+  left: 420px;
+  bottom: 0;
+  height: 30px;
+  width: 130px;
+}
+
+.loop-exit {
+  position: absolute;
+  left: 560px;
+  bottom: 0;
+  height: 30px;
+  width: 130px;
+}

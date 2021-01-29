@@ -13,7 +13,7 @@ class BaseComponent {
      * @member {string} - The component type. See supported componenets in AudioVisualizer factory */
     this._type = null;
     /** @private
-     * @member {object} - The audio source (HTML audio player) */    
+     * @member {object} - The audio source (HTML audio player) */
     this._player = null;
     /** @private
      * @member {object} - Target div to render module in */
@@ -25,18 +25,18 @@ class BaseComponent {
      * @member {object} - The audio context */
     this._audioCtx = null;
     /** @private
-     * @member {object} - The source node to chain from ; it will ignore the output of HTML audio player */    
+     * @member {object} - The source node to chain from ; it will ignore the output of HTML audio player */
     this._inputNode = null;
     /** @private
-     * @member {boolean} - The playing state of the player */    
-    this._isPlaying = false;    
+     * @member {boolean} - The playing state of the player */
+    this._isPlaying = false;
     /** @private
-     * @member {object} - Contains all useful DOM objects */    
+     * @member {object} - Contains all useful DOM objects */
     this._dom = {
       container: null
     };
     /** @private
-     * @member {object} - Save container dimension to restore when closing fullscreen */    
+     * @member {object} - Save container dimension to restore when closing fullscreen */
     this._parentDimension = {
       position: null,
       height: null,
@@ -44,7 +44,7 @@ class BaseComponent {
       zIndex: null
     };
     /** @private
-     * @member {object} - Resize observable to watch for any resize change */     
+     * @member {object} - Resize observable to watch for any resize change */
     this._resizeObserver = null;
     // Event binding
     this._onResize = this._onResize.bind(this);
