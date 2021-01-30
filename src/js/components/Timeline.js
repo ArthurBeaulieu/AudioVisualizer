@@ -1,7 +1,6 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
-'use strict';
 
 
 const MAX_CANVAS_WIDTH = 32000;
@@ -924,7 +923,7 @@ class Timeline extends VisuComponentMono {
   }
 
 
-};
+}
 
 
 export default Timeline;

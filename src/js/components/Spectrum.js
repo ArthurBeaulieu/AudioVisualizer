@@ -1,5 +1,4 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
-'use strict';
 
 
 class Spectrum extends VisuComponentStereo {
@@ -442,7 +441,7 @@ class Spectrum extends VisuComponentStereo {
   }
 
 
-};
+}
 
 
 export default Spectrum;

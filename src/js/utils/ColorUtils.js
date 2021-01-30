@@ -1,6 +1,3 @@
-'use strict';
-
-
 class ColorUtils {
 
 
@@ -284,7 +281,7 @@ class ColorUtils {
   }
 
 
-};
+}
 
 
 export default ColorUtils;

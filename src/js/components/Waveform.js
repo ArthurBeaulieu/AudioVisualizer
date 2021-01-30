@@ -1,7 +1,6 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
-'use strict';
 
 
 class Waveform extends VisuComponentMono {
@@ -546,7 +545,7 @@ class Waveform extends VisuComponentMono {
   }
 
 
-};
+}
 
 
 export default Waveform;

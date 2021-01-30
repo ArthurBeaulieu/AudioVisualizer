@@ -1,7 +1,6 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
-'use strict';
 
 
 class FrequencyCircle extends VisuComponentMono {
@@ -375,7 +374,7 @@ class FrequencyCircle extends VisuComponentMono {
   }
 
 
-};
+}
 
 
 /*  ----------  Utils class for this visualisation  ----------  */
@@ -443,7 +442,7 @@ class BackgroundStar {
   }
 
 
-};
+}
 
 
 class OscilloscopeRadialPoint {
@@ -474,7 +473,7 @@ class OscilloscopeRadialPoint {
   }
 
 
-};
+}
 
 
 export default FrequencyCircle;

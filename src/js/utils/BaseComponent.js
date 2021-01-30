@@ -1,6 +1,3 @@
-'use strict';
-
-
 class BaseComponent {
 
 
@@ -244,7 +241,7 @@ class BaseComponent {
   }
 
 
-};
+}
 
 
 export default BaseComponent;

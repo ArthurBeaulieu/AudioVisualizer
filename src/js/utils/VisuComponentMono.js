@@ -1,5 +1,4 @@
 import BaseComponent from "./BaseComponent.js";
-'use strict';
 
 
 class VisuComponentMono extends BaseComponent {
@@ -144,7 +143,7 @@ class VisuComponentMono extends BaseComponent {
   }
 
 
-};
+}
 
 
 export default VisuComponentMono;

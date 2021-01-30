@@ -1,7 +1,6 @@
 import VisuComponentStereo from '../utils/VisuComponentStereo.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
-'use strict';
 
 
 class PeakMeter extends VisuComponentStereo {
@@ -221,7 +220,7 @@ class PeakMeter extends VisuComponentStereo {
     // Compute average power over the interval and average power attenuation in DB
     let sumOfSquares = 0;
     for (let i = 0; i < data.length; i++) {
-      sumOfSquares += data[i] ** 2;
+      sumOfSquares += data[i] * data[i];
     }
 
     const avgPowerDecibels = 10 * Math.log10(sumOfSquares / data.length);
@@ -275,12 +274,12 @@ class PeakMeter extends VisuComponentStereo {
     let sumOfSquaresL = 0;
     let sumOfSquaresR = 0;
     for (let i = 0; i < dataL.length; i++) {
-      sumOfSquaresL += dataL[i] ** 2;
-      sumOfSquaresR += dataR[i] ** 2;
+      sumOfSquaresL += dataL[i] * dataL[i];
+      sumOfSquaresR += dataR[i] * dataL[i];
     }
     const avgPowerDecibelsL = 10 * Math.log10(sumOfSquaresL / dataL.length);
     const avgPowerDecibelsR = 10 * Math.log10(sumOfSquaresR / dataR.length);
-    // Compure amplitude from width or height depending on orientation
+    // Compute amplitude from width or height depending on orientation
     const dbScaleBound = this._dbScaleMin * -1;
     if (this._orientation === 'horizontal') {
       this._amplitudeL = Math.floor((avgPowerDecibelsL * this._canvasL.width) / dbScaleBound);
@@ -472,7 +471,7 @@ class PeakMeter extends VisuComponentStereo {
   }
 
 
-};
+}
 
 
 export default PeakMeter;

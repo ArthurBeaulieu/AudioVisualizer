@@ -174,7 +174,6 @@
   position: relative;
 
   img {
-    animation-play-state: running;
     bottom: 0;
     height: calc((100% / 2) - 12.5%);
     left: 0;
@@ -184,6 +183,7 @@
     top: 0;
 
     animation: rotate 64s linear infinite;
+    animation-play-state: running;
 
     &.paused {
       animation-play-state: paused;

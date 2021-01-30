@@ -1,5 +1,4 @@
 import ColorUtils from './ColorUtils.js';
-'use strict';
 
 
 class CanvasUtils {
@@ -403,7 +402,7 @@ class CanvasUtils {
   }
 
 
-};
+}
 
 
 export default CanvasUtils;

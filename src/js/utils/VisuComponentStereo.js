@@ -1,5 +1,4 @@
 import BaseComponent from "./BaseComponent.js";
-'use strict';
 
 
 class VisuComponentStereo extends BaseComponent {
@@ -174,7 +173,7 @@ class VisuComponentStereo extends BaseComponent {
   }
 
 
-};
+}
 
 
 export default VisuComponentStereo;

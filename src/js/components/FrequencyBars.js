@@ -1,7 +1,6 @@
 import VisuComponentMono from '../utils/VisuComponentMono.js';
 import CanvasUtils from '../utils/CanvasUtils.js';
 import ColorUtils from '../utils/ColorUtils.js';
-'use strict';
 
 
 class FrequencyBars extends VisuComponentMono {
@@ -80,7 +79,7 @@ class FrequencyBars extends VisuComponentMono {
   }
 
 
-};
+}
 
 
 export default FrequencyBars;

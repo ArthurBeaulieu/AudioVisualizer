@@ -1,7 +1,7 @@
 module.exports = env => {
   // Webpack clean and uglify plugins
   const path = require('path');
-  const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+  const OptimizeCSSAssetsPlugin = require('optimize-css-assets-tools-plugin');
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
   const { CleanWebpackPlugin } = require('clean-webpack-plugin');
   // Utils path
