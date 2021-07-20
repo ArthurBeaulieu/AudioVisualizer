@@ -2,45 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: CanvasUtils | AudioVisualizer</title>
+    <title>JSDoc: Class: CanvasUtils</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
-
-    
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
-<body>
-<nav class="lnb" id="lnb">
-    <div class="logo" style="width: 20px; height: 20px">
-        
-            <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" rel="noopener noreferrer" target="_blank">
-                <img src="../demo/logo.png" width="100%" height="100%">
-            </a>
-        
-    </div>
-    <div class="title">
-        <h1><a href="index.html" class="link">AudioVisualizer</a></h1>
-        
-            <span class="version">v0.9.7</span>
-        
-    </div>
-    <div class="search-container" id="search-container">
-        <input type="text" placeholder="Search">
-        <ul></ul>
-    </div>
-    
-    <div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="AudioVisualizer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AudioVisualizer.html#.version">version</a></li></ul></div></li><li><a href="BackgroundStar.html">BackgroundStar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BackgroundStar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BackgroundStar.html#.updatePosition">updatePosition</a></li></ul></div></li><li><a href="BaseComponent.html">BaseComponent</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BaseComponent_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="BaseComponent.html#_audioCtx">_audioCtx</a></li><li><a href="BaseComponent.html#_dom">_dom</a></li><li><a href="BaseComponent.html#_fftSize">_fftSize</a></li><li><a href="BaseComponent.html#_inputNode">_inputNode</a></li><li><a href="BaseComponent.html#_isPlaying">_isPlaying</a></li><li><a href="BaseComponent.html#_parentDimension">_parentDimension</a></li><li><a href="BaseComponent.html#_player">_player</a></li><li><a href="BaseComponent.html#_renderTo">_renderTo</a></li><li><a href="BaseComponent.html#_resizeObserver">_resizeObserver</a></li><li><a href="BaseComponent.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="BaseComponent.html#._addEvents">_addEvents</a></li><li><a href="BaseComponent.html#._buildUI">_buildUI</a></li><li><a href="BaseComponent.html#._clearCanvas">_clearCanvas</a></li><li><a href="BaseComponent.html#._dblClick">_dblClick</a></li><li><a href="BaseComponent.html#._fillAttributes">_fillAttributes</a></li><li><a href="BaseComponent.html#._onResize">_onResize</a></li><li><a href="BaseComponent.html#._pause">_pause</a></li><li><a href="BaseComponent.html#._play">_play</a></li><li><a href="BaseComponent.html#._processAudioBin">_processAudioBin</a></li><li><a href="BaseComponent.html#._removeEvents">_removeEvents</a></li><li><a href="BaseComponent.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="BaseComponent.html#.destroy">destroy</a></li></ul></div></li><li><a href="CanvasUtils.html">CanvasUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="CanvasUtils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="CanvasUtils.html#.drawCircle">drawCircle</a></li><li><a href="CanvasUtils.html#.drawCircleGlow">drawCircleGlow</a></li><li><a href="CanvasUtils.html#.drawDisc">drawDisc</a></li><li><a href="CanvasUtils.html#.drawHotCue">drawHotCue</a></li><li><a href="CanvasUtils.html#.drawOscilloscope">drawOscilloscope</a></li><li><a href="CanvasUtils.html#.drawPeakMeter">drawPeakMeter</a></li><li><a href="CanvasUtils.html#.drawPointsOscilloscope">drawPointsOscilloscope</a></li><li><a href="CanvasUtils.html#.drawRadialBar">drawRadialBar</a></li><li><a href="CanvasUtils.html#.drawRadialOscilloscope">drawRadialOscilloscope</a></li><li><a href="CanvasUtils.html#.drawTriangle">drawTriangle</a></li><li><a href="CanvasUtils.html#.drawVerticalBar">drawVerticalBar</a></li><li><a href="CanvasUtils.html#.precisionRound">precisionRound</a></li></ul></div></li><li><a href="ColorUtils.html">ColorUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="ColorUtils_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="ColorUtils.html#.defaultAntiPrimaryColor">defaultAntiPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultAudioGradient">defaultAudioGradient</a></li><li><a href="ColorUtils.html#.defaultBackgroundColor">defaultBackgroundColor</a></li><li><a href="ColorUtils.html#.defaultDarkPrimaryColor">defaultDarkPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultLoopAlphaColor">defaultLoopAlphaColor</a></li><li><a href="ColorUtils.html#.defaultLoopColor">defaultLoopColor</a></li><li><a href="ColorUtils.html#.defaultPrimaryColor">defaultPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultTextColor">defaultTextColor</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="ColorUtils.html#.drawRadialGlowGradient">drawRadialGlowGradient</a></li><li><a href="ColorUtils.html#.drawRadialGradient">drawRadialGradient</a></li><li><a href="ColorUtils.html#.drawVerticalGradient">drawVerticalGradient</a></li><li><a href="ColorUtils.html#.lightenDarkenColor">lightenDarkenColor</a></li><li><a href="ColorUtils.html#.peakMeterGradient">peakMeterGradient</a></li><li><a href="ColorUtils.html#.rainbowGradient">rainbowGradient</a></li></ul></div></li><li><a href="FrequencyBars.html">FrequencyBars</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyBars_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="FrequencyBars.html#_audioCtx">_audioCtx</a></li><li><a href="FrequencyBars.html#_canvas">_canvas</a></li><li><a href="FrequencyBars.html#_ctx">_ctx</a></li><li><a href="FrequencyBars.html#_dom">_dom</a></li><li><a href="FrequencyBars.html#_fftSize">_fftSize</a></li><li><a href="FrequencyBars.html#_inputNode">_inputNode</a></li><li><a href="FrequencyBars.html#_isPlaying">_isPlaying</a></li><li><a href="FrequencyBars.html#_nodes">_nodes</a></li><li><a href="FrequencyBars.html#_parentDimension">_parentDimension</a></li><li><a href="FrequencyBars.html#_player">_player</a></li><li><a href="FrequencyBars.html#_renderTo">_renderTo</a></li><li><a href="FrequencyBars.html#_resizeObserver">_resizeObserver</a></li><li><a href="FrequencyBars.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyBars.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="FrequencyCircle.html">FrequencyCircle</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyCircle_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="FrequencyCircle.html#_audioCtx">_audioCtx</a></li><li><a href="FrequencyCircle.html#_canvas">_canvas</a></li><li><a href="FrequencyCircle.html#_ctx">_ctx</a></li><li><a href="FrequencyCircle.html#_dom">_dom</a></li><li><a href="FrequencyCircle.html#_fftSize">_fftSize</a></li><li><a href="FrequencyCircle.html#_inputNode">_inputNode</a></li><li><a href="FrequencyCircle.html#_isPlaying">_isPlaying</a></li><li><a href="FrequencyCircle.html#_nodes">_nodes</a></li><li><a href="FrequencyCircle.html#_parentDimension">_parentDimension</a></li><li><a href="FrequencyCircle.html#_player">_player</a></li><li><a href="FrequencyCircle.html#_renderTo">_renderTo</a></li><li><a href="FrequencyCircle.html#_resizeObserver">_resizeObserver</a></li><li><a href="FrequencyCircle.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyCircle.html#._animateCircleBars">_animateCircleBars</a></li><li><a href="FrequencyCircle.html#._animateCircleGlow">_animateCircleGlow</a></li><li><a href="FrequencyCircle.html#._animateOscilloscopes">_animateOscilloscopes</a></li><li><a href="FrequencyCircle.html#._animateStars">_animateStars</a></li><li><a href="FrequencyCircle.html#._buildUI">_buildUI</a></li><li><a href="FrequencyCircle.html#._fillAttributes">_fillAttributes</a></li><li><a href="FrequencyCircle.html#._getAverageFrequency">_getAverageFrequency</a></li><li><a href="FrequencyCircle.html#._onResize">_onResize</a></li><li><a href="FrequencyCircle.html#._pause">_pause</a></li><li><a href="FrequencyCircle.html#._play">_play</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="Oscilloscope.html">Oscilloscope</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Oscilloscope_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Oscilloscope.html#_audioCtx">_audioCtx</a></li><li><a href="Oscilloscope.html#_canvasL">_canvasL</a></li><li><a href="Oscilloscope.html#_canvasR">_canvasR</a></li><li><a href="Oscilloscope.html#_ctxL">_ctxL</a></li><li><a href="Oscilloscope.html#_ctxR">_ctxR</a></li><li><a href="Oscilloscope.html#_dom">_dom</a></li><li><a href="Oscilloscope.html#_fftSize">_fftSize</a></li><li><a href="Oscilloscope.html#_inputNode">_inputNode</a></li><li><a href="Oscilloscope.html#_isPlaying">_isPlaying</a></li><li><a href="Oscilloscope.html#_merged">_merged</a></li><li><a href="Oscilloscope.html#_nodes">_nodes</a></li><li><a href="Oscilloscope.html#_parentDimension">_parentDimension</a></li><li><a href="Oscilloscope.html#_player">_player</a></li><li><a href="Oscilloscope.html#_renderTo">_renderTo</a></li><li><a href="Oscilloscope.html#_resizeObserver">_resizeObserver</a></li><li><a href="Oscilloscope.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Oscilloscope.html#._buildUI">_buildUI</a></li><li><a href="Oscilloscope.html#._fillAttributes">_fillAttributes</a></li><li><a href="Oscilloscope.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Oscilloscope.html#._onResize">_onResize</a></li><li><a href="Oscilloscope.html#._processAudioBin">_processAudioBin</a></li><li><a href="Oscilloscope.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Oscilloscope.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="OscilloscopeRadialPoint_sub"></div></li><li><a href="PeakMeter.html">PeakMeter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="PeakMeter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="PeakMeter.html#_audioCtx">_audioCtx</a></li><li><a href="PeakMeter.html#_canvasL">_canvasL</a></li><li><a href="PeakMeter.html#_canvasR">_canvasR</a></li><li><a href="PeakMeter.html#_ctxL">_ctxL</a></li><li><a href="PeakMeter.html#_ctxR">_ctxR</a></li><li><a href="PeakMeter.html#_dom">_dom</a></li><li><a href="PeakMeter.html#_fftSize">_fftSize</a></li><li><a href="PeakMeter.html#_inputNode">_inputNode</a></li><li><a href="PeakMeter.html#_isPlaying">_isPlaying</a></li><li><a href="PeakMeter.html#_merged">_merged</a></li><li><a href="PeakMeter.html#_nodes">_nodes</a></li><li><a href="PeakMeter.html#_parentDimension">_parentDimension</a></li><li><a href="PeakMeter.html#_player">_player</a></li><li><a href="PeakMeter.html#_renderTo">_renderTo</a></li><li><a href="PeakMeter.html#_resizeObserver">_resizeObserver</a></li><li><a href="PeakMeter.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="PeakMeter.html#._buildUI">_buildUI</a></li><li><a href="PeakMeter.html#._createPeakLabel">_createPeakLabel</a></li><li><a href="PeakMeter.html#._createScaleTicks">_createScaleTicks</a></li><li><a href="PeakMeter.html#._fillAttributes">_fillAttributes</a></li><li><a href="PeakMeter.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="PeakMeter.html#._onResize">_onResize</a></li><li><a href="PeakMeter.html#._pause">_pause</a></li><li><a href="PeakMeter.html#._processAudioBin">_processAudioBin</a></li><li><a href="PeakMeter.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="PeakMeter.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="PeakMeter.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Spectrum.html">Spectrum</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Spectrum_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Spectrum.html#_audioCtx">_audioCtx</a></li><li><a href="Spectrum.html#_canvasL">_canvasL</a></li><li><a href="Spectrum.html#_canvasR">_canvasR</a></li><li><a href="Spectrum.html#_ctxL">_ctxL</a></li><li><a href="Spectrum.html#_ctxR">_ctxR</a></li><li><a href="Spectrum.html#_dom">_dom</a></li><li><a href="Spectrum.html#_fftSize">_fftSize</a></li><li><a href="Spectrum.html#_inputNode">_inputNode</a></li><li><a href="Spectrum.html#_isPlaying">_isPlaying</a></li><li><a href="Spectrum.html#_merged">_merged</a></li><li><a href="Spectrum.html#_nodes">_nodes</a></li><li><a href="Spectrum.html#_parentDimension">_parentDimension</a></li><li><a href="Spectrum.html#_player">_player</a></li><li><a href="Spectrum.html#_renderTo">_renderTo</a></li><li><a href="Spectrum.html#_resizeObserver">_resizeObserver</a></li><li><a href="Spectrum.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Spectrum.html#._buildUI">_buildUI</a></li><li><a href="Spectrum.html#._clickedElsewhere">_clickedElsewhere</a></li><li><a href="Spectrum.html#._computeLogSampleHeight">_computeLogSampleHeight</a></li><li><a href="Spectrum.html#._createLogarithmicScaleHeights">_createLogarithmicScaleHeights</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._fillAttributes">_fillAttributes</a></li><li><a href="Spectrum.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Spectrum.html#._onResize">_onResize</a></li><li><a href="Spectrum.html#._processAudioBin">_processAudioBin</a></li><li><a href="Spectrum.html#._removeEvents">_removeEvents</a></li><li><a href="Spectrum.html#._scaleLinearIndexToHeight">_scaleLinearIndexToHeight</a></li><li><a href="Spectrum.html#._settingsClicked">_settingsClicked</a></li><li><a href="Spectrum.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Spectrum.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Timeline.html">Timeline</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Timeline_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Timeline.html#_audioCtx">_audioCtx</a></li><li><a href="Timeline.html#_canvas">_canvas</a></li><li><a href="Timeline.html#_ctx">_ctx</a></li><li><a href="Timeline.html#_dom">_dom</a></li><li><a href="Timeline.html#_fftSize">_fftSize</a></li><li><a href="Timeline.html#_inputNode">_inputNode</a></li><li><a href="Timeline.html#_isPlaying">_isPlaying</a></li><li><a href="Timeline.html#_nodes">_nodes</a></li><li><a href="Timeline.html#_parentDimension">_parentDimension</a></li><li><a href="Timeline.html#_player">_player</a></li><li><a href="Timeline.html#_renderTo">_renderTo</a></li><li><a href="Timeline.html#_resizeObserver">_resizeObserver</a></li><li><a href="Timeline.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Timeline.html#._addEvents">_addEvents</a></li><li><a href="Timeline.html#._dblClick">_dblClick</a></li><li><a href="Timeline.html#._drawBeatBar">_drawBeatBar</a></li><li><a href="Timeline.html#._drawTimeline">_drawTimeline</a></li><li><a href="Timeline.html#._fillAttributes">_fillAttributes</a></li><li><a href="Timeline.html#._fillData">_fillData</a></li><li><a href="Timeline.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Timeline.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseUp">_mouseUp</a></li><li><a href="Timeline.html#._onProgress">_onProgress</a></li><li><a href="Timeline.html#._onResize">_onResize</a></li><li><a href="Timeline.html#._processAudioBin">_processAudioBin</a></li><li><a href="Timeline.html#._processAudioFile">_processAudioFile</a></li><li><a href="Timeline.html#._removeEvents">_removeEvents</a></li><li><a href="Timeline.html#._trackLoaded">_trackLoaded</a></li><li><a href="Timeline.html#.getClosestBeat">getClosestBeat</a></li><li><a href="Timeline.html#.setHotCuePoint">setHotCuePoint</a></li><li><a href="Timeline.html#.updateBeatInfo">updateBeatInfo</a></li></ul></div></li><li><a href="VisuComponentMono.html">VisuComponentMono</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentMono_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VisuComponentMono.html#_audioCtx">_audioCtx</a></li><li><a href="VisuComponentMono.html#_canvas">_canvas</a></li><li><a href="VisuComponentMono.html#_ctx">_ctx</a></li><li><a href="VisuComponentMono.html#_dom">_dom</a></li><li><a href="VisuComponentMono.html#_fftSize">_fftSize</a></li><li><a href="VisuComponentMono.html#_inputNode">_inputNode</a></li><li><a href="VisuComponentMono.html#_isPlaying">_isPlaying</a></li><li><a href="VisuComponentMono.html#_nodes">_nodes</a></li><li><a href="VisuComponentMono.html#_parentDimension">_parentDimension</a></li><li><a href="VisuComponentMono.html#_player">_player</a></li><li><a href="VisuComponentMono.html#_renderTo">_renderTo</a></li><li><a href="VisuComponentMono.html#_resizeObserver">_resizeObserver</a></li><li><a href="VisuComponentMono.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentMono.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentMono.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentMono.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentMono.html#._onResize">_onResize</a></li><li><a href="VisuComponentMono.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentStereo_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VisuComponentStereo.html#_audioCtx">_audioCtx</a></li><li><a href="VisuComponentStereo.html#_canvasL">_canvasL</a></li><li><a href="VisuComponentStereo.html#_canvasR">_canvasR</a></li><li><a href="VisuComponentStereo.html#_ctxL">_ctxL</a></li><li><a href="VisuComponentStereo.html#_ctxR">_ctxR</a></li><li><a href="VisuComponentStereo.html#_dom">_dom</a></li><li><a href="VisuComponentStereo.html#_fftSize">_fftSize</a></li><li><a href="VisuComponentStereo.html#_inputNode">_inputNode</a></li><li><a href="VisuComponentStereo.html#_isPlaying">_isPlaying</a></li><li><a href="VisuComponentStereo.html#_merged">_merged</a></li><li><a href="VisuComponentStereo.html#_nodes">_nodes</a></li><li><a href="VisuComponentStereo.html#_parentDimension">_parentDimension</a></li><li><a href="VisuComponentStereo.html#_player">_player</a></li><li><a href="VisuComponentStereo.html#_renderTo">_renderTo</a></li><li><a href="VisuComponentStereo.html#_resizeObserver">_resizeObserver</a></li><li><a href="VisuComponentStereo.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentStereo.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentStereo.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentStereo.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentStereo.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="Waveform.html">Waveform</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Waveform_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Waveform.html#_audioCtx">_audioCtx</a></li><li><a href="Waveform.html#_canvas">_canvas</a></li><li><a href="Waveform.html#_ctx">_ctx</a></li><li><a href="Waveform.html#_dom">_dom</a></li><li><a href="Waveform.html#_fftSize">_fftSize</a></li><li><a href="Waveform.html#_inputNode">_inputNode</a></li><li><a href="Waveform.html#_isPlaying">_isPlaying</a></li><li><a href="Waveform.html#_nodes">_nodes</a></li><li><a href="Waveform.html#_parentDimension">_parentDimension</a></li><li><a href="Waveform.html#_player">_player</a></li><li><a href="Waveform.html#_renderTo">_renderTo</a></li><li><a href="Waveform.html#_resizeObserver">_resizeObserver</a></li><li><a href="Waveform.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Waveform.html#._addEvents">_addEvents</a></li><li><a href="Waveform.html#._buildUI">_buildUI</a></li><li><a href="Waveform.html#._dblClick">_dblClick</a></li><li><a href="Waveform.html#._drawFileWaveform">_drawFileWaveform</a></li><li><a href="Waveform.html#._fillAttributes">_fillAttributes</a></li><li><a href="Waveform.html#._fillData">_fillData</a></li><li><a href="Waveform.html#._genScaledData">_genScaledData</a></li><li><a href="Waveform.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Waveform.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Waveform.html#._onClick">_onClick</a></li><li><a href="Waveform.html#._onResize">_onResize</a></li><li><a href="Waveform.html#._processAudioBin">_processAudioBin</a></li><li><a href="Waveform.html#._processAudioFile">_processAudioFile</a></li><li><a href="Waveform.html#._removeEvents">_removeEvents</a></li><li><a href="Waveform.html#._scaleDataToHeight">_scaleDataToHeight</a></li><li><a href="Waveform.html#._trackLoaded">_trackLoaded</a></li></ul></div></li></ul></div>
-</nav>
-<div id="resizer"></div>
 
-<div class="main" id="main">
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: CanvasUtils</h1>
+
     
 
 
@@ -56,60 +34,37 @@
 </header>
 
 <article>
+    <div class="container-overview">
     
-        <div class="container-overview">
         
-            
-
-<dt>
-    
-        <h4 class="name" id="CanvasUtils">
-            
-                new <span class="type-signature"></span>CanvasUtils<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line13">line 13</a></code>
-            </div>
-            
-        </h4>
-
-        
-        <p class="summary"><p>CanvasUtils provides several method to manipulate basic geometries in canvas</p></p>
-        
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
+
+    
+    <h4 class="name" id="CanvasUtils"><span class="type-signature"></span>new CanvasUtils<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+    <p class="summary"><p>CanvasUtils provides several method to manipulate basic geometries in canvas</p></p>
+    
+
+
+
+<div class="description">
+    <blockquote>This class doesn't need to be instantiated, as all its methods are static in order to
 make those utils methods available with constraints. Refer to each method for their associated documentation.</blockquote>
-    </div>
-    
+</div>
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
-    
 
 
 <dl class="details">
@@ -149,6 +104,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -156,13 +118,26 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-        
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
+    </div>
 
     
 
@@ -181,44 +156,34 @@ make those utils methods available with constraints. Refer to each method for th
     
         <h3 class="subsection-title">Methods</h3>
 
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id=".drawCircle">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawCircle<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line52">line 52</a></code>
-            </div>
-            
-        </h4>
-
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a circle in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawCircle"><span class="type-signature">(static) </span>drawCircle<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a circle in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -283,6 +248,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Circle options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -473,22 +439,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -528,6 +481,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line51">line 51</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -535,48 +495,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawCircleGlow">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawCircleGlow<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line80">line 80</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a circle with glow effect made with radial gradients in inner and outer circle.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawCircleGlow"><span class="type-signature">(static) </span>drawCircleGlow<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a circle with glow effect made with radial gradients in inner and outer circle.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -641,6 +605,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Circle glow options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -831,22 +796,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -886,6 +838,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -893,48 +852,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawDisc">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawDisc<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line106">line 106</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a disc in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawDisc"><span class="type-signature">(static) </span>drawDisc<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a disc in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -999,6 +962,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Disc options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -1166,22 +1130,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -1221,6 +1172,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line105">line 105</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1228,48 +1186,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawHotCue">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawHotCue<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line345">line 345</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a hotcue in given canvas. HotCue is a square with a label in it.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawHotCue"><span class="type-signature">(static) </span>drawHotCue<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a hotcue in given canvas. HotCue is a square with a label in it.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -1334,6 +1296,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Peak meter options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -1455,22 +1418,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -1510,6 +1460,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line344">line 344</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1517,48 +1474,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawOscilloscope">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line155">line 155</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw an oscilloscope of frequencies in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawOscilloscope"><span class="type-signature">(static) </span>drawOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw an oscilloscope of frequencies in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -1623,6 +1584,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Oscilloscope options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -1721,22 +1683,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -1776,6 +1725,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line154">line 154</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1783,48 +1739,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawPeakMeter">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawPeakMeter<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line283">line 283</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a peakmeter in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawPeakMeter"><span class="type-signature">(static) </span>drawPeakMeter<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a peakmeter in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -1889,6 +1849,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Peak meter options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -2010,22 +1971,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -2065,6 +2013,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line282">line 282</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -2072,48 +2027,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawPointsOscilloscope">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawPointsOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line199">line 199</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw an oscilloscope as points only in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawPointsOscilloscope"><span class="type-signature">(static) </span>drawPointsOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw an oscilloscope as points only in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -2178,6 +2137,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Oscilloscope options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -2276,22 +2236,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -2331,6 +2278,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line198">line 198</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -2338,48 +2292,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawRadialBar">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawRadialBar<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line16">line 16</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a radial bar with its height and color being computed from the frequency intensity.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawRadialBar"><span class="type-signature">(static) </span>drawRadialBar<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a radial bar with its height and color being computed from the frequency intensity.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -2444,6 +2402,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Radial bar options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -2634,22 +2593,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -2689,6 +2635,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -2696,48 +2649,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawRadialOscilloscope">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawRadialOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line230">line 230</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a radial oscilloscope as points only in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawRadialOscilloscope"><span class="type-signature">(static) </span>drawRadialOscilloscope<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a radial oscilloscope as points only in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -2802,6 +2759,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Oscilloscope options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -2992,22 +2950,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -3047,6 +2992,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line229">line 229</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -3054,48 +3006,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawTriangle">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawTriangle<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line320">line 320</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a triangle in given canvas.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawTriangle"><span class="type-signature">(static) </span>drawTriangle<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a triangle in given canvas.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -3160,6 +3116,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Peak meter options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -3281,22 +3238,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -3336,6 +3280,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line319">line 319</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -3343,48 +3294,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".drawVerticalBar">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>drawVerticalBar<span class="signature">(canvas, options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line132">line 132</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Draw a disc vertical bar in given canvas with given gradient.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".drawVerticalBar"><span class="type-signature">(static) </span>drawVerticalBar<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Draw a disc vertical bar in given canvas with given gradient.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -3449,6 +3404,7 @@ make those utils methods available with constraints. Refer to each method for th
             <td class="description last"><p>Vertical bar options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -3570,22 +3526,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -3625,6 +3568,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -3632,48 +3582,52 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id=".precisionRound">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>precisionRound<span class="signature">(value, precision)</span><span class="type-signature"> &rarr; {number}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a></code>,
-                <code><a href="utils_CanvasUtils.js.html#line389">line 389</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Round a floating number with a given precision after coma.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id=".precisionRound"><span class="type-signature">(static) </span>precisionRound<span class="signature">(value, precision)</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Round a floating number with a given precision after coma.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -3742,45 +3696,9 @@ make those utils methods available with constraints. Refer to each method for th
     </tbody>
 </table>
 
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
 
 
 
-<span class="param-type">number</span>
-
-
-
-
-
-- <ul>
-<li>The rounded value</li>
-</ul>
-
-
-
-
-            
-    </div>
-    
-
-    
 
 
 <dl class="details">
@@ -3820,6 +3738,13 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line388">line 388</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -3827,11 +3752,49 @@ make those utils methods available with constraints. Refer to each method for th
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>The rounded value</li>
+</ul>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
     
 
-</dd>
 
-            </dl>
+
+
+
+        
     
 
     
@@ -3846,24 +3809,17 @@ make those utils methods available with constraints. Refer to each method for th
 
 </div>
 
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a></li><li><a href="BackgroundStar.html">BackgroundStar</a></li><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="CanvasUtils.html">CanvasUtils</a></li><li><a href="ColorUtils.html">ColorUtils</a></li><li><a href="FrequencyBars.html">FrequencyBars</a></li><li><a href="FrequencyCircle.html">FrequencyCircle</a></li><li><a href="Oscilloscope.html">Oscilloscope</a></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a></li><li><a href="PeakMeter.html">PeakMeter</a></li><li><a href="Spectrum.html">Spectrum</a></li><li><a href="Timeline.html">Timeline</a></li><li><a href="VisuComponentMono.html">VisuComponentMono</a></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a></li><li><a href="Waveform.html">Waveform</a></li></ul>
+</nav>
+
+<br class="clear">
+
 <footer>
-    <img class="logo" src="../demo/logo.png" style="width: 20px; height: 20px">
-    <div class="footer-text">AudioVisualizer</div>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jul 20 2021 11:16:44 GMT+0200 (GMT+02:00)
 </footer>
-<script>prettyPrint();</script>
-<script src="scripts/jquery.min.js"></script>
-<script src="scripts/tui-doc.js"></script>
-<script src="scripts/linenumber.js"></script>
 
-    <script>
-        var id = 'CanvasUtils_sub'.replace(/"/g, '_');
-        var selectedApi = document.getElementById(id); // do not use jquery selector
-        var $selectedApi = $(selectedApi);
-
-        $selectedApi.removeClass('hidden');
-        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
-        showLnbApi();
-    </script>
-
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>

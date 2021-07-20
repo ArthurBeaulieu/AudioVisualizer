@@ -1,7 +1,10 @@
 # AudioVisualizer
 
-![](https://badgen.net/badge/version/0.9.7/blue)
+![](https://badgen.net/badge/version/0.9.8/blue)
 ![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
+![Doc](https://badgen.net/badge/documentation/written/green)
+![Test](https://badgen.net/badge/test/wip/orange)
+![Dep](https://badgen.net/badge/dependancies/none/green)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
 
@@ -12,7 +15,7 @@ To get started, simply include the bundled files in the `dist` folder and refere
 ## Bars
 
 <p>
-  <img src="/demo/screenshots/Bars.png" width="960" alt="bars" />
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Bars.png" width="960" alt="bars" />
 </p>
 
 ```javascript
@@ -38,7 +41,7 @@ const component = new AudioVisualizer({
 ## Circle
 
 <p>
-  <img src="/demo/screenshots/Circle.png" width="960"  alt="circle"/>
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Circle.png" width="960"  alt="circle"/>
 </p>
 
 ```javascript
@@ -57,7 +60,7 @@ const component = new AudioVisualizer({
 ## Oscilloscope
 
 <p>
-  <img src="/demo/screenshots/Oscilloscope.png" width="960" alt="oscilloscope" />
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Oscilloscope.png" width="960" alt="oscilloscope" />
 </p>
 
 ```javascript
@@ -80,7 +83,7 @@ const component = new AudioVisualizer({
 ## Peak meter
 
 <p>
-  <img src="/demo/screenshots/Peakmeter.png" width="960" alt="peakmeter" />
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Peakmeter.png" width="960" alt="peakmeter" />
 </p>
 
 ```javaScript
@@ -112,7 +115,7 @@ const component = new AudioVisualizer({
 ## Spectrum
 
 <p>
-  <img src="/demo/screenshots/Spectrum.png" width="960" alt="spectrum" />
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Spectrum.png" width="960" alt="spectrum" />
 </p>
 
 ```javascript
@@ -133,7 +136,7 @@ const component = new AudioVisualizer({
 ## Timeline
 
 <p>
-  <img src="/demo/screenshots/Timeline.png" width="960" alt="timeline" />
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Timeline.png" width="960" alt="timeline" />
 </p>
 
 ```javascript
@@ -167,7 +170,7 @@ const component = new AudioVisualizer({
 ## Waveform
 
 <p>
-  <img src="/demo/screenshots/Waveform.png" width="960" alt="waveform" />
+  <img src="https://raw.githubusercontent.com/ArthurBeaulieu/AudioVisualizer/master/demo/screenshots/Waveform.png" width="960" alt="waveform" />
 </p>
 
 
@@ -205,10 +208,12 @@ If you need more information on those components, you can read the online [docum
 If you clone this repository, you can `npm install` to install development dependencies. This will allow you to build dist file, run the component tests or generate the documentation ;
 
 - `npm run build` to generate the minified file ;
-- `npm run dev` to watch for any change in source code ;
-- `npm run web-server` to launch a local development server ;
+- `npm run prod` to watch for any change in source code ;
+- `npm run server` to launch a local development server ;
 - `npm run doc` to generate documentation ;
-- `npm run beforecommit` to perform tests, generate doc and bundle the JavaScript.
+- `npm run test` to perform tests ;
+- `npm run test-dev` to debug tests ;
+- `npm run beforecommit` to perform tests, generate doc and bundle the source files.
 
 To avoid CORS when locally loading the example HTML file, run the web server. Please do not use it on a production environment. Unit tests are performed on both Firefox and Chrome ; ensure you have both installed before running tests, otherwise they might fail.
 

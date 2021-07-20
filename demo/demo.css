@@ -91,16 +91,6 @@ audio {
   margin: 0;
 }
 
-@-moz-document url-prefix() {
-  .demo-change-src {
-    right: 270px;
-  }
-
-  .demo-current-src {
-    right: 410px;
-  }
-}
-
 .view-switcher {
   align-items: center;
   border-bottom: solid 1px grey;

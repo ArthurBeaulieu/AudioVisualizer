@@ -2,45 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Class: VisuComponentStereo | AudioVisualizer</title>
+    <title>JSDoc: Class: VisuComponentStereo</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
-
-    
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
-<body>
-<nav class="lnb" id="lnb">
-    <div class="logo" style="width: 20px; height: 20px">
-        
-            <a href="https://github.com/ArthurBeaulieu/AudioVisualizer" rel="noopener noreferrer" target="_blank">
-                <img src="../demo/logo.png" width="100%" height="100%">
-            </a>
-        
-    </div>
-    <div class="title">
-        <h1><a href="index.html" class="link">AudioVisualizer</a></h1>
-        
-            <span class="version">v0.9.7</span>
-        
-    </div>
-    <div class="search-container" id="search-container">
-        <input type="text" placeholder="Search">
-        <ul></ul>
-    </div>
-    
-    <div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="AudioVisualizer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="AudioVisualizer.html#.version">version</a></li></ul></div></li><li><a href="BackgroundStar.html">BackgroundStar</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BackgroundStar_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="BackgroundStar.html#.updatePosition">updatePosition</a></li></ul></div></li><li><a href="BaseComponent.html">BaseComponent</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="BaseComponent_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="BaseComponent.html#_audioCtx">_audioCtx</a></li><li><a href="BaseComponent.html#_dom">_dom</a></li><li><a href="BaseComponent.html#_fftSize">_fftSize</a></li><li><a href="BaseComponent.html#_inputNode">_inputNode</a></li><li><a href="BaseComponent.html#_isPlaying">_isPlaying</a></li><li><a href="BaseComponent.html#_parentDimension">_parentDimension</a></li><li><a href="BaseComponent.html#_player">_player</a></li><li><a href="BaseComponent.html#_renderTo">_renderTo</a></li><li><a href="BaseComponent.html#_resizeObserver">_resizeObserver</a></li><li><a href="BaseComponent.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="BaseComponent.html#._addEvents">_addEvents</a></li><li><a href="BaseComponent.html#._buildUI">_buildUI</a></li><li><a href="BaseComponent.html#._clearCanvas">_clearCanvas</a></li><li><a href="BaseComponent.html#._dblClick">_dblClick</a></li><li><a href="BaseComponent.html#._fillAttributes">_fillAttributes</a></li><li><a href="BaseComponent.html#._onResize">_onResize</a></li><li><a href="BaseComponent.html#._pause">_pause</a></li><li><a href="BaseComponent.html#._play">_play</a></li><li><a href="BaseComponent.html#._processAudioBin">_processAudioBin</a></li><li><a href="BaseComponent.html#._removeEvents">_removeEvents</a></li><li><a href="BaseComponent.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="BaseComponent.html#.destroy">destroy</a></li></ul></div></li><li><a href="CanvasUtils.html">CanvasUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="CanvasUtils_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="CanvasUtils.html#.drawCircle">drawCircle</a></li><li><a href="CanvasUtils.html#.drawCircleGlow">drawCircleGlow</a></li><li><a href="CanvasUtils.html#.drawDisc">drawDisc</a></li><li><a href="CanvasUtils.html#.drawHotCue">drawHotCue</a></li><li><a href="CanvasUtils.html#.drawOscilloscope">drawOscilloscope</a></li><li><a href="CanvasUtils.html#.drawPeakMeter">drawPeakMeter</a></li><li><a href="CanvasUtils.html#.drawPointsOscilloscope">drawPointsOscilloscope</a></li><li><a href="CanvasUtils.html#.drawRadialBar">drawRadialBar</a></li><li><a href="CanvasUtils.html#.drawRadialOscilloscope">drawRadialOscilloscope</a></li><li><a href="CanvasUtils.html#.drawTriangle">drawTriangle</a></li><li><a href="CanvasUtils.html#.drawVerticalBar">drawVerticalBar</a></li><li><a href="CanvasUtils.html#.precisionRound">precisionRound</a></li></ul></div></li><li><a href="ColorUtils.html">ColorUtils</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="ColorUtils_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="ColorUtils.html#.defaultAntiPrimaryColor">defaultAntiPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultAudioGradient">defaultAudioGradient</a></li><li><a href="ColorUtils.html#.defaultBackgroundColor">defaultBackgroundColor</a></li><li><a href="ColorUtils.html#.defaultDarkPrimaryColor">defaultDarkPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultLoopAlphaColor">defaultLoopAlphaColor</a></li><li><a href="ColorUtils.html#.defaultLoopColor">defaultLoopColor</a></li><li><a href="ColorUtils.html#.defaultPrimaryColor">defaultPrimaryColor</a></li><li><a href="ColorUtils.html#.defaultTextColor">defaultTextColor</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="ColorUtils.html#.drawRadialGlowGradient">drawRadialGlowGradient</a></li><li><a href="ColorUtils.html#.drawRadialGradient">drawRadialGradient</a></li><li><a href="ColorUtils.html#.drawVerticalGradient">drawVerticalGradient</a></li><li><a href="ColorUtils.html#.lightenDarkenColor">lightenDarkenColor</a></li><li><a href="ColorUtils.html#.peakMeterGradient">peakMeterGradient</a></li><li><a href="ColorUtils.html#.rainbowGradient">rainbowGradient</a></li></ul></div></li><li><a href="FrequencyBars.html">FrequencyBars</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyBars_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="FrequencyBars.html#_audioCtx">_audioCtx</a></li><li><a href="FrequencyBars.html#_canvas">_canvas</a></li><li><a href="FrequencyBars.html#_ctx">_ctx</a></li><li><a href="FrequencyBars.html#_dom">_dom</a></li><li><a href="FrequencyBars.html#_fftSize">_fftSize</a></li><li><a href="FrequencyBars.html#_inputNode">_inputNode</a></li><li><a href="FrequencyBars.html#_isPlaying">_isPlaying</a></li><li><a href="FrequencyBars.html#_nodes">_nodes</a></li><li><a href="FrequencyBars.html#_parentDimension">_parentDimension</a></li><li><a href="FrequencyBars.html#_player">_player</a></li><li><a href="FrequencyBars.html#_renderTo">_renderTo</a></li><li><a href="FrequencyBars.html#_resizeObserver">_resizeObserver</a></li><li><a href="FrequencyBars.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyBars.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="FrequencyCircle.html">FrequencyCircle</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="FrequencyCircle_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="FrequencyCircle.html#_audioCtx">_audioCtx</a></li><li><a href="FrequencyCircle.html#_canvas">_canvas</a></li><li><a href="FrequencyCircle.html#_ctx">_ctx</a></li><li><a href="FrequencyCircle.html#_dom">_dom</a></li><li><a href="FrequencyCircle.html#_fftSize">_fftSize</a></li><li><a href="FrequencyCircle.html#_inputNode">_inputNode</a></li><li><a href="FrequencyCircle.html#_isPlaying">_isPlaying</a></li><li><a href="FrequencyCircle.html#_nodes">_nodes</a></li><li><a href="FrequencyCircle.html#_parentDimension">_parentDimension</a></li><li><a href="FrequencyCircle.html#_player">_player</a></li><li><a href="FrequencyCircle.html#_renderTo">_renderTo</a></li><li><a href="FrequencyCircle.html#_resizeObserver">_resizeObserver</a></li><li><a href="FrequencyCircle.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="FrequencyCircle.html#._animateCircleBars">_animateCircleBars</a></li><li><a href="FrequencyCircle.html#._animateCircleGlow">_animateCircleGlow</a></li><li><a href="FrequencyCircle.html#._animateOscilloscopes">_animateOscilloscopes</a></li><li><a href="FrequencyCircle.html#._animateStars">_animateStars</a></li><li><a href="FrequencyCircle.html#._buildUI">_buildUI</a></li><li><a href="FrequencyCircle.html#._fillAttributes">_fillAttributes</a></li><li><a href="FrequencyCircle.html#._getAverageFrequency">_getAverageFrequency</a></li><li><a href="FrequencyCircle.html#._onResize">_onResize</a></li><li><a href="FrequencyCircle.html#._pause">_pause</a></li><li><a href="FrequencyCircle.html#._play">_play</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li><li><a href="FrequencyCircle.html#._processAudioBin">_processAudioBin</a></li></ul></div></li><li><a href="Oscilloscope.html">Oscilloscope</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Oscilloscope_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Oscilloscope.html#_audioCtx">_audioCtx</a></li><li><a href="Oscilloscope.html#_canvasL">_canvasL</a></li><li><a href="Oscilloscope.html#_canvasR">_canvasR</a></li><li><a href="Oscilloscope.html#_ctxL">_ctxL</a></li><li><a href="Oscilloscope.html#_ctxR">_ctxR</a></li><li><a href="Oscilloscope.html#_dom">_dom</a></li><li><a href="Oscilloscope.html#_fftSize">_fftSize</a></li><li><a href="Oscilloscope.html#_inputNode">_inputNode</a></li><li><a href="Oscilloscope.html#_isPlaying">_isPlaying</a></li><li><a href="Oscilloscope.html#_merged">_merged</a></li><li><a href="Oscilloscope.html#_nodes">_nodes</a></li><li><a href="Oscilloscope.html#_parentDimension">_parentDimension</a></li><li><a href="Oscilloscope.html#_player">_player</a></li><li><a href="Oscilloscope.html#_renderTo">_renderTo</a></li><li><a href="Oscilloscope.html#_resizeObserver">_resizeObserver</a></li><li><a href="Oscilloscope.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Oscilloscope.html#._buildUI">_buildUI</a></li><li><a href="Oscilloscope.html#._fillAttributes">_fillAttributes</a></li><li><a href="Oscilloscope.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Oscilloscope.html#._onResize">_onResize</a></li><li><a href="Oscilloscope.html#._processAudioBin">_processAudioBin</a></li><li><a href="Oscilloscope.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Oscilloscope.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="OscilloscopeRadialPoint_sub"></div></li><li><a href="PeakMeter.html">PeakMeter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="PeakMeter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="PeakMeter.html#_audioCtx">_audioCtx</a></li><li><a href="PeakMeter.html#_canvasL">_canvasL</a></li><li><a href="PeakMeter.html#_canvasR">_canvasR</a></li><li><a href="PeakMeter.html#_ctxL">_ctxL</a></li><li><a href="PeakMeter.html#_ctxR">_ctxR</a></li><li><a href="PeakMeter.html#_dom">_dom</a></li><li><a href="PeakMeter.html#_fftSize">_fftSize</a></li><li><a href="PeakMeter.html#_inputNode">_inputNode</a></li><li><a href="PeakMeter.html#_isPlaying">_isPlaying</a></li><li><a href="PeakMeter.html#_merged">_merged</a></li><li><a href="PeakMeter.html#_nodes">_nodes</a></li><li><a href="PeakMeter.html#_parentDimension">_parentDimension</a></li><li><a href="PeakMeter.html#_player">_player</a></li><li><a href="PeakMeter.html#_renderTo">_renderTo</a></li><li><a href="PeakMeter.html#_resizeObserver">_resizeObserver</a></li><li><a href="PeakMeter.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="PeakMeter.html#._buildUI">_buildUI</a></li><li><a href="PeakMeter.html#._createPeakLabel">_createPeakLabel</a></li><li><a href="PeakMeter.html#._createScaleTicks">_createScaleTicks</a></li><li><a href="PeakMeter.html#._fillAttributes">_fillAttributes</a></li><li><a href="PeakMeter.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="PeakMeter.html#._onResize">_onResize</a></li><li><a href="PeakMeter.html#._pause">_pause</a></li><li><a href="PeakMeter.html#._processAudioBin">_processAudioBin</a></li><li><a href="PeakMeter.html#._setAudioNodes">_setAudioNodes</a></li><li><a href="PeakMeter.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="PeakMeter.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Spectrum.html">Spectrum</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Spectrum_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Spectrum.html#_audioCtx">_audioCtx</a></li><li><a href="Spectrum.html#_canvasL">_canvasL</a></li><li><a href="Spectrum.html#_canvasR">_canvasR</a></li><li><a href="Spectrum.html#_ctxL">_ctxL</a></li><li><a href="Spectrum.html#_ctxR">_ctxR</a></li><li><a href="Spectrum.html#_dom">_dom</a></li><li><a href="Spectrum.html#_fftSize">_fftSize</a></li><li><a href="Spectrum.html#_inputNode">_inputNode</a></li><li><a href="Spectrum.html#_isPlaying">_isPlaying</a></li><li><a href="Spectrum.html#_merged">_merged</a></li><li><a href="Spectrum.html#_nodes">_nodes</a></li><li><a href="Spectrum.html#_parentDimension">_parentDimension</a></li><li><a href="Spectrum.html#_player">_player</a></li><li><a href="Spectrum.html#_renderTo">_renderTo</a></li><li><a href="Spectrum.html#_resizeObserver">_resizeObserver</a></li><li><a href="Spectrum.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Spectrum.html#._buildUI">_buildUI</a></li><li><a href="Spectrum.html#._clickedElsewhere">_clickedElsewhere</a></li><li><a href="Spectrum.html#._computeLogSampleHeight">_computeLogSampleHeight</a></li><li><a href="Spectrum.html#._createLogarithmicScaleHeights">_createLogarithmicScaleHeights</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._drawSpectrogramForFrequencyBin">_drawSpectrogramForFrequencyBin</a></li><li><a href="Spectrum.html#._fillAttributes">_fillAttributes</a></li><li><a href="Spectrum.html#._mergedStereoAnalysis">_mergedStereoAnalysis</a></li><li><a href="Spectrum.html#._onResize">_onResize</a></li><li><a href="Spectrum.html#._processAudioBin">_processAudioBin</a></li><li><a href="Spectrum.html#._removeEvents">_removeEvents</a></li><li><a href="Spectrum.html#._scaleLinearIndexToHeight">_scaleLinearIndexToHeight</a></li><li><a href="Spectrum.html#._settingsClicked">_settingsClicked</a></li><li><a href="Spectrum.html#._stereoAnalysis">_stereoAnalysis</a></li><li><a href="Spectrum.html#._updateDimensions">_updateDimensions</a></li></ul></div></li><li><a href="Timeline.html">Timeline</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Timeline_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Timeline.html#_audioCtx">_audioCtx</a></li><li><a href="Timeline.html#_canvas">_canvas</a></li><li><a href="Timeline.html#_ctx">_ctx</a></li><li><a href="Timeline.html#_dom">_dom</a></li><li><a href="Timeline.html#_fftSize">_fftSize</a></li><li><a href="Timeline.html#_inputNode">_inputNode</a></li><li><a href="Timeline.html#_isPlaying">_isPlaying</a></li><li><a href="Timeline.html#_nodes">_nodes</a></li><li><a href="Timeline.html#_parentDimension">_parentDimension</a></li><li><a href="Timeline.html#_player">_player</a></li><li><a href="Timeline.html#_renderTo">_renderTo</a></li><li><a href="Timeline.html#_resizeObserver">_resizeObserver</a></li><li><a href="Timeline.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Timeline.html#._addEvents">_addEvents</a></li><li><a href="Timeline.html#._dblClick">_dblClick</a></li><li><a href="Timeline.html#._drawBeatBar">_drawBeatBar</a></li><li><a href="Timeline.html#._drawTimeline">_drawTimeline</a></li><li><a href="Timeline.html#._fillAttributes">_fillAttributes</a></li><li><a href="Timeline.html#._fillData">_fillData</a></li><li><a href="Timeline.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Timeline.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseDown">_mouseDown</a></li><li><a href="Timeline.html#._mouseUp">_mouseUp</a></li><li><a href="Timeline.html#._onProgress">_onProgress</a></li><li><a href="Timeline.html#._onResize">_onResize</a></li><li><a href="Timeline.html#._processAudioBin">_processAudioBin</a></li><li><a href="Timeline.html#._processAudioFile">_processAudioFile</a></li><li><a href="Timeline.html#._removeEvents">_removeEvents</a></li><li><a href="Timeline.html#._trackLoaded">_trackLoaded</a></li><li><a href="Timeline.html#.getClosestBeat">getClosestBeat</a></li><li><a href="Timeline.html#.setHotCuePoint">setHotCuePoint</a></li><li><a href="Timeline.html#.updateBeatInfo">updateBeatInfo</a></li></ul></div></li><li><a href="VisuComponentMono.html">VisuComponentMono</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentMono_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VisuComponentMono.html#_audioCtx">_audioCtx</a></li><li><a href="VisuComponentMono.html#_canvas">_canvas</a></li><li><a href="VisuComponentMono.html#_ctx">_ctx</a></li><li><a href="VisuComponentMono.html#_dom">_dom</a></li><li><a href="VisuComponentMono.html#_fftSize">_fftSize</a></li><li><a href="VisuComponentMono.html#_inputNode">_inputNode</a></li><li><a href="VisuComponentMono.html#_isPlaying">_isPlaying</a></li><li><a href="VisuComponentMono.html#_nodes">_nodes</a></li><li><a href="VisuComponentMono.html#_parentDimension">_parentDimension</a></li><li><a href="VisuComponentMono.html#_player">_player</a></li><li><a href="VisuComponentMono.html#_renderTo">_renderTo</a></li><li><a href="VisuComponentMono.html#_resizeObserver">_resizeObserver</a></li><li><a href="VisuComponentMono.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentMono.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentMono.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentMono.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentMono.html#._onResize">_onResize</a></li><li><a href="VisuComponentMono.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="VisuComponentStereo_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="VisuComponentStereo.html#_audioCtx">_audioCtx</a></li><li><a href="VisuComponentStereo.html#_canvasL">_canvasL</a></li><li><a href="VisuComponentStereo.html#_canvasR">_canvasR</a></li><li><a href="VisuComponentStereo.html#_ctxL">_ctxL</a></li><li><a href="VisuComponentStereo.html#_ctxR">_ctxR</a></li><li><a href="VisuComponentStereo.html#_dom">_dom</a></li><li><a href="VisuComponentStereo.html#_fftSize">_fftSize</a></li><li><a href="VisuComponentStereo.html#_inputNode">_inputNode</a></li><li><a href="VisuComponentStereo.html#_isPlaying">_isPlaying</a></li><li><a href="VisuComponentStereo.html#_merged">_merged</a></li><li><a href="VisuComponentStereo.html#_nodes">_nodes</a></li><li><a href="VisuComponentStereo.html#_parentDimension">_parentDimension</a></li><li><a href="VisuComponentStereo.html#_player">_player</a></li><li><a href="VisuComponentStereo.html#_renderTo">_renderTo</a></li><li><a href="VisuComponentStereo.html#_resizeObserver">_resizeObserver</a></li><li><a href="VisuComponentStereo.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="VisuComponentStereo.html#._buildUI">_buildUI</a></li><li><a href="VisuComponentStereo.html#._clearCanvas">_clearCanvas</a></li><li><a href="VisuComponentStereo.html#._fillAttributes">_fillAttributes</a></li><li><a href="VisuComponentStereo.html#._setAudioNodes">_setAudioNodes</a></li></ul></div></li><li><a href="Waveform.html">Waveform</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="Waveform_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="Waveform.html#_audioCtx">_audioCtx</a></li><li><a href="Waveform.html#_canvas">_canvas</a></li><li><a href="Waveform.html#_ctx">_ctx</a></li><li><a href="Waveform.html#_dom">_dom</a></li><li><a href="Waveform.html#_fftSize">_fftSize</a></li><li><a href="Waveform.html#_inputNode">_inputNode</a></li><li><a href="Waveform.html#_isPlaying">_isPlaying</a></li><li><a href="Waveform.html#_nodes">_nodes</a></li><li><a href="Waveform.html#_parentDimension">_parentDimension</a></li><li><a href="Waveform.html#_player">_player</a></li><li><a href="Waveform.html#_renderTo">_renderTo</a></li><li><a href="Waveform.html#_resizeObserver">_resizeObserver</a></li><li><a href="Waveform.html#_type">_type</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="Waveform.html#._addEvents">_addEvents</a></li><li><a href="Waveform.html#._buildUI">_buildUI</a></li><li><a href="Waveform.html#._dblClick">_dblClick</a></li><li><a href="Waveform.html#._drawFileWaveform">_drawFileWaveform</a></li><li><a href="Waveform.html#._fillAttributes">_fillAttributes</a></li><li><a href="Waveform.html#._fillData">_fillData</a></li><li><a href="Waveform.html#._genScaledData">_genScaledData</a></li><li><a href="Waveform.html#._genScaledMonoData">_genScaledMonoData</a></li><li><a href="Waveform.html#._getPlayerSourceFile">_getPlayerSourceFile</a></li><li><a href="Waveform.html#._onClick">_onClick</a></li><li><a href="Waveform.html#._onResize">_onResize</a></li><li><a href="Waveform.html#._processAudioBin">_processAudioBin</a></li><li><a href="Waveform.html#._processAudioFile">_processAudioFile</a></li><li><a href="Waveform.html#._removeEvents">_removeEvents</a></li><li><a href="Waveform.html#._scaleDataToHeight">_scaleDataToHeight</a></li><li><a href="Waveform.html#._trackLoaded">_trackLoaded</a></li></ul></div></li></ul></div>
-</nav>
-<div id="resizer"></div>
 
-<div class="main" id="main">
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: VisuComponentStereo</h1>
+
     
 
 
@@ -56,50 +34,39 @@
 </header>
 
 <article>
+    <div class="container-overview">
     
-        <div class="container-overview">
         
-            
-
-<dt>
-    
-        <h4 class="name" id="VisuComponentStereo">
-            
-                new <span class="type-signature"></span>VisuComponentStereo<span class="signature">(options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-                <code><a href="utils_VisuComponentStereo.js.html#line23">line 23</a></code>
-            </div>
-            
-        </h4>
-
-        
-        <p class="summary"><p>VisuComponentStereo is an abstraction for stereo visualisation components. It must be inherited.</p></p>
-        
-    
-</dt>
-<dd>
 
     
-    <div class="description">
-        <blockquote>Stereo components inherit this class to benefit its node routing and canvas
+
+    
+    <h4 class="name" id="VisuComponentStereo"><span class="type-signature"></span>new VisuComponentStereo<span class="signature">(options)</span><span class="type-signature"></span></h4>
+    
+
+    
+    <p class="summary"><p>VisuComponentStereo is an abstraction for stereo visualisation components. It must be inherited.</p></p>
+    
+
+
+
+<div class="description">
+    <blockquote>Stereo components inherit this class to benefit its node routing and canvas
 configuration. It is meant to use a L/R canvas for stereo or merged L/R one. This class extends BaseComponent to
 benefits all shared properties between visualisations.</blockquote>
-    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
 
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
 <table class="params">
     <thead>
     <tr>
@@ -141,6 +108,7 @@ benefits all shared properties between visualisations.</blockquote>
             <td class="description last"><p>The visualizer root options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -431,22 +399,9 @@ benefits all shared properties between visualisations.</blockquote>
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -486,6 +441,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -493,13 +455,26 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-</dd>
 
-        
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
+    </div>
 
     
         <h3 class="subsection-title">Extends</h3>
@@ -527,44 +502,31 @@ benefits all shared properties between visualisations.</blockquote>
     
         <h3 class="subsection-title">Members</h3>
 
-        <dl>
+        
             
-
-<dt>
-<h4 class="name" id="_audioCtx">
-    <span class="type-signature"><span class="icon green">private</span> </span>_audioCtx<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line26">line 26</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_audioCtx"><span class="type-signature">(private) </span>_audioCtx<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The audio context</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The audio context</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -599,6 +561,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -606,49 +575,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_canvasL">
-    <span class="type-signature"><span class="icon green">private</span> </span>_canvasL<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-        <code><a href="utils_VisuComponentStereo.js.html#line40">line 40</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_canvasL"><span class="type-signature">(private) </span>_canvasL<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The canvas to rendered left channed data to</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The canvas to rendered left channed data to</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -678,6 +633,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -685,49 +647,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_canvasR">
-    <span class="type-signature"><span class="icon green">private</span> </span>_canvasR<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-        <code><a href="utils_VisuComponentStereo.js.html#line43">line 43</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_canvasR"><span class="type-signature">(private) </span>_canvasR<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The canvas to rendered right channed data to</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The canvas to rendered right channed data to</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -757,6 +705,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -764,49 +719,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_ctxL">
-    <span class="type-signature"><span class="icon green">private</span> </span>_ctxL<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-        <code><a href="utils_VisuComponentStereo.js.html#line46">line 46</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_ctxL"><span class="type-signature">(private) </span>_ctxL<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The left canvas associated context</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The left canvas associated context</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -836,6 +777,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -843,49 +791,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_ctxR">
-    <span class="type-signature"><span class="icon green">private</span> </span>_ctxR<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-        <code><a href="utils_VisuComponentStereo.js.html#line49">line 49</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_ctxR"><span class="type-signature">(private) </span>_ctxR<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The right canvas associated context</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The right canvas associated context</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -915,6 +849,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -922,49 +863,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_dom">
-    <span class="type-signature"><span class="icon green">private</span> </span>_dom<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line35">line 35</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_dom"><span class="type-signature">(private) </span>_dom<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Contains all useful DOM objects</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>Contains all useful DOM objects</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -999,6 +926,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1006,49 +940,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_fftSize">
-    <span class="type-signature"><span class="icon green">private</span> </span>_fftSize<span class="type-signature"> :number</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line23">line 23</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_fftSize"><span class="type-signature">(private) </span>_fftSize<span class="type-signature"> :number</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>FFT size used to analyse audio stream. Must be a power of 2</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>FFT size used to analyse audio stream. Must be a power of 2</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">number</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1083,6 +1003,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1090,49 +1017,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_inputNode">
-    <span class="type-signature"><span class="icon green">private</span> </span>_inputNode<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line29">line 29</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_inputNode"><span class="type-signature">(private) </span>_inputNode<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The source node to chain from ; it will ignore the output of HTML audio player</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The source node to chain from ; it will ignore the output of HTML audio player</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1167,6 +1080,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1174,49 +1094,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_isPlaying">
-    <span class="type-signature"><span class="icon green">private</span> </span>_isPlaying<span class="type-signature"> :boolean</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line32">line 32</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_isPlaying"><span class="type-signature">(private) </span>_isPlaying<span class="type-signature"> :boolean</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The playing state of the player</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The playing state of the player</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">boolean</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1251,6 +1157,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1258,128 +1171,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_merged">
-    <span class="type-signature"><span class="icon green">private</span> </span>_merged<span class="type-signature"> :boolean</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-        <code><a href="utils_VisuComponentStereo.js.html#line27">line 27</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_merged"><span class="type-signature">(private) </span>_merged<span class="type-signature"> :boolean</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Merge L and R channel on output</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>Merge L and R channel on output</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">boolean</span>
 
 
-            </li>
-        </ul>
-    
-    -->
-
-    
+        </li>
+    </ul>
 
 
-<dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-
-<dt>
-<h4 class="name" id="_nodes">
-    <span class="type-signature"><span class="icon green">private</span> </span>_nodes<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-        <code><a href="utils_VisuComponentStereo.js.html#line30">line 30</a></code>
-    </div>
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Audio nodes from web audio API to manipulate data with</p>
-    </div>
-    
-
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">object</span>
-
-
-            </li>
-        </ul>
-    
-    -->
-
-    
 
 
 <dl class="details">
@@ -1409,6 +1229,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1416,49 +1243,107 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_parentDimension">
-    <span class="type-signature"><span class="icon green">private</span> </span>_parentDimension<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line40">line 40</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_nodes"><span class="type-signature">(private) </span>_nodes<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Save container dimension to restore when closing fullscreen</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>Audio nodes from web audio API to manipulate data with</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="_parentDimension"><span class="type-signature">(private) </span>_parentDimension<span class="type-signature"> :object</span></h4>
+
+
+
+
+<div class="description">
+    <p>Save container dimension to restore when closing fullscreen</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">object</span>
+
+
+        </li>
+    </ul>
+
+
+
 
 
 <dl class="details">
@@ -1493,6 +1378,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line37">line 37</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1500,49 +1392,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_player">
-    <span class="type-signature"><span class="icon green">private</span> </span>_player<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line17">line 17</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_player"><span class="type-signature">(private) </span>_player<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The audio source (HTML audio player)</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The audio source (HTML audio player)</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1577,6 +1455,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1584,49 +1469,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_renderTo">
-    <span class="type-signature"><span class="icon green">private</span> </span>_renderTo<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line20">line 20</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_renderTo"><span class="type-signature">(private) </span>_renderTo<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Target div to render module in</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>Target div to render module in</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1661,6 +1532,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1668,49 +1546,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_resizeObserver">
-    <span class="type-signature"><span class="icon green">private</span> </span>_resizeObserver<span class="type-signature"> :object</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line48">line 48</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_resizeObserver"><span class="type-signature">(private) </span>_resizeObserver<span class="type-signature"> :object</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>Resize observable to watch for any resize change</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>Resize observable to watch for any resize change</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">object</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1745,6 +1609,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1752,49 +1623,35 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
+
+
 
         
             
-
-<dt>
-<h4 class="name" id="_type">
-    <span class="type-signature"><span class="icon green">private</span> </span>_type<span class="type-signature"> :string</span>
-    
-    <div class="container-source members">
-        <code><a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a></code>,
-        <code><a href="utils_BaseComponent.js.html#line14">line 14</a></code>
-    </div>
-    
-</h4>
+<h4 class="name" id="_type"><span class="type-signature">(private) </span>_type<span class="type-signature"> :string</span></h4>
 
 
-</dt>
-<dd>
-    
-    <div class="description">
-        <p>The component type. See supported componenets in AudioVisualizer factory</p>
-    </div>
-    
 
-    <!--
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+<div class="description">
+    <p>The component type. See supported componenets in AudioVisualizer factory</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">string</span>
 
 
-            </li>
-        </ul>
-    
-    -->
+        </li>
+    </ul>
 
-    
+
+
 
 
 <dl class="details">
@@ -1829,6 +1686,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_BaseComponent.js.html">utils/BaseComponent.js</a>, <a href="utils_BaseComponent.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1836,66 +1700,43 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-    
-</dd>
 
-        </dl>
+
+
+        
     
 
     
         <h3 class="subsection-title">Methods</h3>
 
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id="._buildUI">
-            
-                <span class="type-signature"><span class="icon green">private</span>, <span class="icon green">static</span> </span>_buildUI<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-                <code><a href="utils_VisuComponentStereo.js.html#line85">line 85</a></code>
-            </div>
-            
-        </h4>
-
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Create and configure canvas then append it to given DOM element.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id="._buildUI"><span class="type-signature">(private, static) </span>_buildUI<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
-    
 
-    
 
-    
+<div class="description">
+    <blockquote>Create and configure canvas then append it to given DOM element.</blockquote>
+</div>
 
-    
 
-    
 
-    
 
-    
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -1935,6 +1776,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -1942,59 +1790,51 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id="._clearCanvas">
-            
-                <span class="type-signature"><span class="icon green">private</span>, <span class="icon green">static</span> </span>_clearCanvas<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-                <code><a href="utils_VisuComponentStereo.js.html#line163">line 163</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Clear component canvas contexts from their content.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id="._clearCanvas"><span class="type-signature">(private, static) </span>_clearCanvas<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
-    
 
-    
 
-    
+<div class="description">
+    <blockquote>Clear component canvas contexts from their content.</blockquote>
+</div>
 
-    
 
-    
 
-    
 
-    
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -2034,6 +1874,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line162">line 162</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -2041,48 +1888,52 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id="._fillAttributes">
-            
-                <span class="type-signature"><span class="icon green">private</span>, <span class="icon green">static</span> </span>_fillAttributes<span class="signature">(options)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-                <code><a href="utils_VisuComponentStereo.js.html#line58">line 58</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id="._fillAttributes"><span class="type-signature">(private, static) </span>_fillAttributes<span class="signature">(options)</span><span class="type-signature"></span></h4>
     
 
     
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
+
+
+
+<div class="description">
+    <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -2124,6 +1975,7 @@ benefits all shared properties between visualisations.</blockquote>
             <td class="description last"><p>The visualizer root options</p>
                 <h6>Properties</h6>
                 
+
 <table class="params">
     <thead>
     <tr>
@@ -2414,22 +2266,9 @@ benefits all shared properties between visualisations.</blockquote>
     </tbody>
 </table>
 
-    </div>
-    
 
-    
 
-    
 
-    
-
-    
-
-    
-
-    
-
-    
 
 
 <dl class="details">
@@ -2469,6 +2308,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -2476,59 +2322,51 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-</dd>
 
-            
-                
 
-<dt>
-    
-        <h4 class="name" id="._setAudioNodes">
-            
-                <span class="type-signature"><span class="icon green">private</span>, <span class="icon green">static</span> </span>_setAudioNodes<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a></code>,
-                <code><a href="utils_VisuComponentStereo.js.html#line110">line 110</a></code>
-            </div>
-            
-        </h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        <blockquote>Build audio chain with source -> splitter -> analyzerL/R -> merger -> destination.</blockquote>
-    </div>
-    
+            
 
     
 
     
-
+    <h4 class="name" id="._setAudioNodes"><span class="type-signature">(private, static) </span>_setAudioNodes<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
-    
 
-    
 
-    
+<div class="description">
+    <blockquote>Build audio chain with source -> splitter -> analyzerL/R -> merger -> destination.</blockquote>
+</div>
 
-    
 
-    
 
-    
 
-    
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -2568,6 +2406,13 @@ benefits all shared properties between visualisations.</blockquote>
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_VisuComponentStereo.js.html">utils/VisuComponentStereo.js</a>, <a href="utils_VisuComponentStereo.js.html#line109">line 109</a>
+    </li></ul></dd>
+    
+
+    
 
     
 
@@ -2575,11 +2420,25 @@ benefits all shared properties between visualisations.</blockquote>
 </dl>
 
 
-    
 
-</dd>
 
-            </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -2594,24 +2453,17 @@ benefits all shared properties between visualisations.</blockquote>
 
 </div>
 
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AudioVisualizer.html">AudioVisualizer</a></li><li><a href="BackgroundStar.html">BackgroundStar</a></li><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="CanvasUtils.html">CanvasUtils</a></li><li><a href="ColorUtils.html">ColorUtils</a></li><li><a href="FrequencyBars.html">FrequencyBars</a></li><li><a href="FrequencyCircle.html">FrequencyCircle</a></li><li><a href="Oscilloscope.html">Oscilloscope</a></li><li><a href="OscilloscopeRadialPoint.html">OscilloscopeRadialPoint</a></li><li><a href="PeakMeter.html">PeakMeter</a></li><li><a href="Spectrum.html">Spectrum</a></li><li><a href="Timeline.html">Timeline</a></li><li><a href="VisuComponentMono.html">VisuComponentMono</a></li><li><a href="VisuComponentStereo.html">VisuComponentStereo</a></li><li><a href="Waveform.html">Waveform</a></li></ul>
+</nav>
+
+<br class="clear">
+
 <footer>
-    <img class="logo" src="../demo/logo.png" style="width: 20px; height: 20px">
-    <div class="footer-text">AudioVisualizer</div>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jul 20 2021 11:16:44 GMT+0200 (GMT+02:00)
 </footer>
-<script>prettyPrint();</script>
-<script src="scripts/jquery.min.js"></script>
-<script src="scripts/tui-doc.js"></script>
-<script src="scripts/linenumber.js"></script>
 
-    <script>
-        var id = 'VisuComponentStereo_sub'.replace(/"/g, '_');
-        var selectedApi = document.getElementById(id); // do not use jquery selector
-        var $selectedApi = $(selectedApi);
-
-        $selectedApi.removeClass('hidden');
-        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
-        showLnbApi();
-    </script>
-
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>

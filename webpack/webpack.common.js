@@ -15,7 +15,7 @@ module.exports = {
   },
   output: {
     filename: 'AudioVisualizer.bundle.js',
-    path: path.resolve(__dirname, '../../dist'),
+    path: path.resolve(__dirname, '../dist'),
     library: 'AudioVisualizer', // We set a library name to bundle the export default of the class
     libraryTarget: 'window', // Make it globally available
     libraryExport: 'default' // Make AudioVisualizer.default become AudioVisualizer

@@ -58,7 +58,7 @@ const buttonClicked = function() {
       player: document.querySelector('#audio-player'),
       renderTo: document.getElementById('view'),
       fftSize: 512,
-      image: 'demo/logo.png'
+      image: 'logo.png'
     });
   } else if (this.dataset.type === 'oscilloscope') {
     component = new AudioVisualizer({
@@ -165,7 +165,7 @@ component = new AudioVisualizer({
   player: document.querySelector('#audio-player'),
   renderTo: document.getElementById('view'),
   fftSize: 512,
-  image: 'demo/logo.png'
+  image: 'logo.png'
 });
 // Switch source type events
 const sources = ['Teminite - Hot Fizz.mp3', 'FrequencyTest.flac', 'FrequencyTest.ogg', 'FrequencyTest.wav'];
@@ -173,7 +173,7 @@ let currentIndex = 0;
 document.getElementById('demo-current-src').innerHTML = sources[currentIndex]; // Set initial src text
 document.getElementById('demo-change-src').addEventListener('click', () => {
   currentIndex = (currentIndex + 1) % sources.length; // Update source index
-  document.getElementById('audio-player').src = `demo/audio/${sources[currentIndex]}`; // Update audio source
+  document.getElementById('audio-player').src = `audio/${sources[currentIndex]}`; // Update audio source
   document.getElementById('demo-current-src').innerHTML = sources[currentIndex]; // Update text feedback
 });
 // HotCue listeners

@@ -2,8 +2,8 @@
   "plugins": ["plugins/markdown"],
   "recurseDepth": 10,
   "source": {
-    "include": ["./src/js"],
-    "exclude": ["./dist/"],
+    "include": ["./src/"],
+    "exclude": ["./dist/", "./doc/", "./node_modules/", "./test/"],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
@@ -25,13 +25,15 @@
     }
   },
   "opts": {
-    "template": "node_modules/tui-jsdoc-template",
     "destination": "./doc/",
-    "readme": "./README.md",
-    "package": "./package.json",
+    "template": "templates/default",
+    "encoding": "utf8",
+    "readme": "README.md",
+    "package": "",
     "access": "all",
     "recurse": true,
     "verbose": true,
-    "private": true
+    "private": true,
+    "pedantic": true
   }
 }
