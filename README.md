@@ -8,6 +8,8 @@
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
 
+[See it live](https://arthurbeaulieu.github.io/AudioVisualizer/demo/example.html) or [Read the documentation](https://arthurbeaulieu.github.io/AudioVisualizer/doc/index.html)
+
 To get started, simply include the bundled files in the `dist` folder and reference them in your project HTML. If you want to bundle it yourself, just reference `audiovisualizer.js` and `audiovisualizer.scss` as entry points. You can now access this module using the `window.AudioVisualizer` object to build the following visualizations.
 
 *NB: You must provide an HTML audio element, and a DOM element with the dimension you need to render visualization in.*
