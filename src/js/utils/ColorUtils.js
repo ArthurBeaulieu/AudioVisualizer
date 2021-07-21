@@ -117,7 +117,16 @@ class ColorUtils {
    * @param {boolean} [vertical=false] - The gradient orientation, default to horizontal
    * @return {object} The rainbow gradient to apply **/
   static rainbowLinearGradient(canvas, vertical = false) {
-    return ColorUtils.colorGradient(canvas, {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null)) {
+      return new Error('ColorUtils.rainbowLinearGradient : Missing arguments canvas');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof vertical !== 'boolean') {
+      return new Error('ColorUtils.rainbowLinearGradient : Invalid type for canvas or vertical');
+    }
+    // Perform method purpose
+    return ColorUtils.linearGradient(canvas, {
       vertical: vertical,
       colors: [{
         color: 'red',
@@ -161,17 +170,43 @@ class ColorUtils {
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Lighten or darken a given color from an amount. Inspired from https://jsfiddle.net/gabrieleromanato/hrJ4X/</blockquote>
-   * @param {string} color - The color to alter in Hex/RGB/HSL
+   * @param {string} color - The color to alter in Hex
    * @param {number} amount - The percentage amount to lighten or darken in Float[-100,100]
    * @return {string} The altered color in Hex **/
   static lightenDarkenColor(color, amount) {
+    // Test that caller sent mandatory arguments
+    if ((color === undefined || color === null) || (amount === undefined || amount === null)) {
+      return new Error('ColorUtils.lightenDarkenColor : Missing arguments color or amount');
+    }
+    // Test those arguments proper types
+    if (typeof color !== 'string' || typeof amount !== 'number') {
+      return new Error('ColorUtils.lightenDarkenColor : Invalid type for color or amount');
+    }
+    // Pound color value to remove # char and memorize it had one
     let usePound = false;
     if (color[0] === '#') {
       color = color.slice(1);
       usePound = true;
     }
-
-    amount += 16;
+    // Test that color is an hex code
+    if (!/^[a-fA-F0-9]+$/i.test(color)) {
+      return new Error('ColorUtils.lightenDarkenColor : Color is not a valid hexadecimal value');
+    }
+    // Check that alpha value is properly bounded to [0, 1]
+    if (amount < -100) {
+      amount = -100;
+    } else if (amount > 100) {
+      amount = 100;
+    } else if (amount === 0) {
+      return (usePound ? '#' : '') + color.toLowerCase();
+    }
+    
+    if (amount > 0) {
+      amount += 16;
+    } else {
+       amount -= 16;
+    }
+    // Perform method purpose
     const num = parseInt(color, 16);
     // Red channel bounding
     let r = (num >> 16) + amount;
@@ -194,7 +229,7 @@ class ColorUtils {
     } else if (g < 0) {
       g = 0;
     }
-
+    // Format returned hex value
     return (usePound ? '#' : '') + (g | (b << 8) | (r << 16)).toString(16);
   }
 
@@ -207,10 +242,33 @@ class ColorUtils {
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Add transparency on an existing color.</blockquote>
-   * @param {string} color - The color to make transparent in Hex/RGB/HSL
-   * @param {number} alpha - The amount of transparency applied on color in Float[0,255]
+   * @param {string} color - The color to make transparent in Hex
+   * @param {number} alpha - The amount of transparency applied on color in Float[0,1]
    * @return {string} The transparent color in rgba **/
   static alphaColor(color, alpha) {
+    // Test that caller sent mandatory arguments
+    if ((color === undefined || color === null) || (alpha === undefined || alpha === null)) {
+      return new Error('ColorUtils.alphaColor : Missing arguments color or alpha');
+    }
+    // Test those arguments proper types
+    if (typeof color !== 'string' || typeof alpha !== 'number') {
+      return new Error('ColorUtils.alphaColor : Invalid type for color or alpha');
+    }
+    // Remove # symbol if any on color value
+    if (color[0] === '#') {
+      color = color.slice(1);
+    }
+    // Test that color is an hex code
+    if (!/^[a-fA-F0-9]+$/i.test(color)) {
+      return new Error('ColorUtils.alphaColor : Color is not a valid hexadecimal value');
+    }
+    // Check that alpha value is properly bounded to [0, 1]
+    if (alpha < 0) {
+      alpha = 0;
+    } else if (alpha > 1) {
+      alpha = 1;
+    }
+    // Perform method purpose
     const num = parseInt(color, 16);
     return `rgba(${num >> 16}, ${(num >> 8) & 0x00FF}, ${num & 0x0000FF}, ${alpha})`;
   }
@@ -273,7 +331,7 @@ class ColorUtils {
    * @static
    * @member {string} - The default dark primary color, #FFAD67 */
   static get defaultLoopAlphaColor() {
-    return this.alphaColor('FFAD67', '.5');
+    return this.alphaColor('FFAD67', 0.5);
   }
 
 
