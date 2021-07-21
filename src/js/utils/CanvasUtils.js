@@ -96,8 +96,9 @@ class CanvasUtils {
   static drawCircleGlow(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
-    ColorUtils.drawRadialGlowGradient(canvas, options);
+    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);    
+    ctx.fillStyle = ColorUtils.radialGlowGradient(canvas, options);
+    ctx.fill();
     ctx.closePath();
   }
 
@@ -146,7 +147,9 @@ class CanvasUtils {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);
-    ColorUtils.drawVerticalGradient(canvas, options);
+    options.vertical = true; // Enforce vertical gradient
+    ctx.fillStyle = ColorUtils.linearGradient(canvas, options);
+    ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);    
     ctx.closePath();
   }
 
@@ -163,7 +166,7 @@ class CanvasUtils {
    * @param {object} options - Oscilloscope options
    * @param {number} options.samples - The x origin in canvas dimension
    * @param {number} options.timeDomain - The height of the frequency bin in canvas dimension
-   * @param {string} options.color - the oscilloscope color in Hex/RGB/HSL or <code>rainbow</code> **/
+   * @param {string|array} options.color - the oscilloscope color in Hex/RGB/HSL or <code>rainbow</code> **/
   static drawOscilloscope(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
@@ -184,10 +187,12 @@ class CanvasUtils {
       cursorX += frequencyWidth;
     }
 
-    if (options.color === 'rainbow') {
-      ctx.strokeStyle = ColorUtils.rainbowGradient(canvas);
+    if (options.colors === 'rainbow') {
+      ctx.strokeStyle = ColorUtils.rainbowLinearGradient(canvas);
+    } else if (Array.isArray(options.colors)) {
+      ctx.strokeStyle = ColorUtils.linearGradient(canvas, options);
     } else {
-      ctx.strokeStyle = options.color;
+      ctx.strokeStyle = options.colors;
     }
 
     ctx.stroke();
@@ -295,8 +300,10 @@ class CanvasUtils {
    * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static drawPeakMeter(canvas, options) {
     const ctx = canvas.getContext('2d');
-    ColorUtils.peakMeterGradient(canvas, options);
-
+    options.vertical = (options.orientation === 'vertical');
+    ctx.fillStyle = ColorUtils.linearGradient(canvas, options);
+    ctx.fill();
+    
     if (options.orientation === 'horizontal') {
       const ledWidth = canvas.width - options.amplitude;
       ctx.fillRect(0, 0, ledWidth, canvas.height);
@@ -304,7 +311,7 @@ class CanvasUtils {
       const ledHeight = canvas.height - options.amplitude;
       ctx.fillRect(0, canvas.height - ledHeight, canvas.width, ledHeight);
     }
-
+    // Draw maximus bar
     ctx.fillStyle = '#FF6B67';
     if (options.orientation === 'horizontal') {
       const ledWidth = canvas.width - options.peak;

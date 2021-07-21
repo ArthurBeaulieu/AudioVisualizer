@@ -210,7 +210,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line246">line 246</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line251">line 251</a>
     </li></ul></dd>
     
 
@@ -282,7 +282,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line278">line 278</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line283">line 283</a>
     </li></ul></dd>
     
 
@@ -354,7 +354,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line222">line 222</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line227">line 227</a>
     </li></ul></dd>
     
 
@@ -426,7 +426,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line254">line 254</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line259">line 259</a>
     </li></ul></dd>
     
 
@@ -498,7 +498,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line270">line 270</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line275">line 275</a>
     </li></ul></dd>
     
 
@@ -570,7 +570,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line262">line 262</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line267">line 267</a>
     </li></ul></dd>
     
 
@@ -642,7 +642,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line238">line 238</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line243">line 243</a>
     </li></ul></dd>
     
 
@@ -714,7 +714,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line230">line 230</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line235">line 235</a>
     </li></ul></dd>
     
 
@@ -742,7 +742,7 @@ make those utils methods available without constraints. Refer to each method for
     
 
     
-    <h4 class="name" id=".drawRadialGlowGradient"><span class="type-signature">(static) </span>drawRadialGlowGradient<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".alphaColor"><span class="type-signature">(static) </span>alphaColor<span class="signature">(color, alpha)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -750,7 +750,7 @@ make those utils methods available without constraints. Refer to each method for
 
 
 <div class="description">
-    <blockquote>Fill context with radial glowing gradient according to options object.</blockquote>
+    <blockquote>Add transparency on an existing color.</blockquote>
 </div>
 
 
@@ -786,13 +786,13 @@ make those utils methods available without constraints. Refer to each method for
 
         <tr>
             
-                <td class="name"><code>canvas</code></td>
+                <td class="name"><code>color</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
 
 
             
@@ -802,56 +802,14 @@ make those utils methods available without constraints. Refer to each method for
 
             
 
-            <td class="description last"><p>The canvas to draw radial glowing gradient in</p></td>
+            <td class="description last"><p>The color to make transparent in Hex/RGB/HSL</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Radial glowing gradient options</p>
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>centerX</code></td>
+                <td class="name"><code>alpha</code></td>
             
 
             <td class="type">
@@ -867,83 +825,7 @@ make those utils methods available without constraints. Refer to each method for
 
             
 
-            <td class="description last"><p>The center x origin in canvas dimension</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>centerY</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The center y origin in canvas dimension</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>radius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The circle radius in canvas dimension</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>colors</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>The amount of transparency applied on color in Float[0,255]</p></td>
         </tr>
 
     
@@ -994,7 +876,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line75">line 75</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line202">line 202</a>
     </li></ul></dd>
     
 
@@ -1019,6 +901,28 @@ make those utils methods available without constraints. Refer to each method for
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The transparent color in rgba</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1351,295 +1255,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line12">line 12</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".drawVerticalGradient"><span class="type-signature">(static) </span>drawVerticalGradient<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <blockquote>Fill context with vertical gradient according to options object.</blockquote>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>canvas</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The canvas to draw vertical gradient in</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Vertical gradient options</p>
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>originX</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The bar x origin in canvas dimension</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>height</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The bar height in canvas dimension</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The bar width in canvas dimension</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>colors</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Arthur Beaulieu</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line45">line 45</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -1809,7 +1425,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line138">line 138</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
@@ -1838,7 +1454,7 @@ make those utils methods available without constraints. Refer to each method for
 
         
 <div class="param-desc">
-    <p>The altered color in Hex/RGB/HSL</p>
+    <p>The altered color in Hex</p>
 </div>
 
 
@@ -1867,7 +1483,7 @@ make those utils methods available without constraints. Refer to each method for
     
 
     
-    <h4 class="name" id=".peakMeterGradient"><span class="type-signature">(static) </span>peakMeterGradient<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".linearGradient"><span class="type-signature">(static) </span>linearGradient<span class="signature">(canvas, options)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
 
     
@@ -1875,7 +1491,291 @@ make those utils methods available without constraints. Refer to each method for
 
 
 <div class="description">
-    <blockquote>Fill peakmeter context with audio gradient according to options.</blockquote>
+    <blockquote>Returns a linear gradient according to options object.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw radial glowing gradient in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Linear gradient options</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>vertical</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Draw the gradient vertically</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;object></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2021</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line80">line 80</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The linear gradient to apply</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".radialGlowGradient"><span class="type-signature">(static) </span>radialGlowGradient<span class="signature">(canvas, options)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <blockquote>Returns a radial glowing gradient according to options object.</blockquote>
 </div>
 
 
@@ -1976,13 +1876,13 @@ make those utils methods available without constraints. Refer to each method for
 
         <tr>
             
-                <td class="name"><code>orientation</code></td>
+                <td class="name"><code>centerX</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
             
@@ -1992,7 +1892,53 @@ make those utils methods available without constraints. Refer to each method for
 
             
 
-            <td class="description last"><p>The peak meter orientation (<code>vertical</code> or <code>horizontal</code>)</p></td>
+            <td class="description last"><p>The center x origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>centerY</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The center y origin in canvas dimension</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The circle radius in canvas dimension</p></td>
         </tr>
 
     
@@ -2073,7 +2019,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line105">line 105</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -2098,6 +2044,28 @@ make those utils methods available without constraints. Refer to each method for
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The radial glowing gradient to apply</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -2109,7 +2077,7 @@ make those utils methods available without constraints. Refer to each method for
     
 
     
-    <h4 class="name" id=".rainbowGradient"><span class="type-signature">(static) </span>rainbowGradient<span class="signature">(canvas, vertical<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id=".rainbowLinearGradient"><span class="type-signature">(static) </span>rainbowLinearGradient<span class="signature">(canvas, vertical<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
 
     
@@ -2117,7 +2085,7 @@ make those utils methods available without constraints. Refer to each method for
 
 
 <div class="description">
-    <blockquote>Return a vertical or horizontal rainbow gradient.</blockquote>
+    <blockquote>Returns a vertical or horizontal rainbow gradient.</blockquote>
 </div>
 
 
@@ -2275,7 +2243,7 @@ make those utils methods available without constraints. Refer to each method for
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line190">line 190</a>
+        <a href="utils_ColorUtils.js.html">utils/ColorUtils.js</a>, <a href="utils_ColorUtils.js.html#line108">line 108</a>
     </li></ul></dd>
     
 
@@ -2349,7 +2317,7 @@ make those utils methods available without constraints. Refer to each method for
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Jul 20 2021 11:27:35 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jul 21 2021 11:13:05 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>

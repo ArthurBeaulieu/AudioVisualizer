@@ -24,13 +24,11 @@ class FrequencyBars extends VisuComponentMono {
   constructor(options) {
     super(options);
     // Peak gradient
-    this._barGradient = [
-      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], index: 0 }, // Green
-      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], index: 0.7 }, // Light Green
-      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], index: 0.833 }, // Orange
-      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], index: 0.9 }, // Red
-      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], index: 1 } // Light Red
-    ];
+    if (!options.colors || !options.colors.gradient) {
+      this._barGradient = ColorUtils.defaultAudioGradient;
+    } else {
+      this._barGradient = options.colors.gradient;
+    }
     // Update canvas CSS background color
     this._canvas.style.backgroundColor = options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor;
   }

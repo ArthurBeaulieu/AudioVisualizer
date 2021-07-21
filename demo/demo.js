@@ -45,11 +45,22 @@ const buttonClicked = function() {
       fftSize: 1024,
       colors: {
         background: '#1D1E25',
-        min: '#56D45B',
-        step0: '#AFF2B3',
-        step1: '#FFAD67',
-        step2: '#FF6B67',
-        max: '#FFBAB8'
+        gradient: [{
+          color: '#56D45B',
+          index: 0
+        }, {
+          color: '#AFF2B3',
+          index: 0.7
+        }, {
+          color: '#FFAD67',
+          index: 0.833
+        }, {
+          color: '#FF6B67',
+          index: 0.9
+        }, {
+          color: '#FFBAB8',
+          index: 1
+        }]
       }
     });
   } else if (this.dataset.type === 'circle') {
@@ -69,7 +80,7 @@ const buttonClicked = function() {
       merged: false,
       colors: { // Optional
         background: '#1D1E25',
-        signal: '#56D45B'
+        signal: 'rainbow'
       }
     });
   } else if (this.dataset.type === 'peakmeter') {
@@ -86,11 +97,22 @@ const buttonClicked = function() {
       },
       colors: {
         background: '#1D1E25',
-        min: '#56D45B',
-        step0: '#AFF2B3',
-        step1: '#FFAD67',
-        step2: '#FF6B67',
-        max: '#FFBAB8'
+        gradient: [{
+          color: '#56D45B',
+          index: 0
+        }, {
+          color: '#AFF2B3',
+          index: 0.7
+        }, {
+          color: '#FFAD00',
+          index: 0.833
+        }, {
+          color: '#006B67',
+          index: 0.9
+        }, {
+          color: '#00BAB8',
+          index: 1
+        }]
       }
     });
   } else if (this.dataset.type === 'spectrum') {

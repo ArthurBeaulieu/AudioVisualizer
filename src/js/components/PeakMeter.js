@@ -33,13 +33,11 @@ class PeakMeter extends VisuComponentStereo {
   constructor(options) {
     super(options);
     // Peak gradient
-    this._peakGradient = [
-      { color: options.colors ? options.colors.min || ColorUtils.defaultAudioGradient[0] : ColorUtils.defaultAudioGradient[0], center: 0 }, // Green
-      { color: options.colors ? options.colors.step0 || ColorUtils.defaultAudioGradient[1] : ColorUtils.defaultAudioGradient[1], center: 0.7 }, // Light Green
-      { color: options.colors ? options.colors.step1 || ColorUtils.defaultAudioGradient[2] : ColorUtils.defaultAudioGradient[2], center: 0.833 }, // Orange
-      { color: options.colors ? options.colors.step2 || ColorUtils.defaultAudioGradient[3] : ColorUtils.defaultAudioGradient[3], center: 0.9 }, // Red
-      { color: options.colors ? options.colors.max || ColorUtils.defaultAudioGradient[4] : ColorUtils.defaultAudioGradient[4], center: 1 } // Light Red
-    ];
+    if (!options.colors || !options.colors.gradient) {
+      this._peakGradient = ColorUtils.defaultAudioGradient;
+    } else {
+      this._peakGradient = options.colors.gradient;
+    }
     // Update canvas CSS background color
     const bgColor = (options.colors ? options.colors.background || ColorUtils.defaultBackgroundColor : ColorUtils.defaultBackgroundColor);
     if (this._merged === true) {

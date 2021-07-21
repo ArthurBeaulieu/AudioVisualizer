@@ -4,13 +4,13 @@
 ![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
 ![Doc](https://badgen.net/badge/documentation/written/green)
 ![Test](https://badgen.net/badge/test/wip/orange)
-![Dep](https://badgen.net/badge/dependancies/none/green)
+![Dep](https://badgen.net/badge/dependencies/none/green)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
 
 [See it live](https://arthurbeaulieu.github.io/AudioVisualizer/demo/example.html) or [Read the documentation](https://arthurbeaulieu.github.io/AudioVisualizer/doc/index.html)
 
-To get started, simply include the bundled files in the `dist` folder and reference them in your project HTML. If you want to bundle it yourself, just reference `audiovisualizer.js` and `audiovisualizer.scss` as entry points. You can now access this module using the `window.AudioVisualizer` object to build the following visualizations.
+To get started, simply include the bundled files in the `dist` folder and reference them in your project HTML. If you want to bundle it yourself, just reference `audiovisualizer.js` as entry points. You can now access this module using the `window.AudioVisualizer` object to build the following visualizations.
 
 *NB: You must provide an HTML audio element, and a DOM element with the dimension you need to render visualization in.*
 
@@ -31,11 +31,13 @@ const component = new AudioVisualizer({
   inputNode: null,  
   colors: {
     background: '#1D1E25',
-    min: '#56D45B', // Green, gradient index 0
-    step0: '#AFF2B3', // Light green, gradient index 0.7
-    step1: '#FFAD67', // Orange, gradient index 0.833
-    step2: '#FF6B67', // Red, gradient index 0.9
-    max: '#FFBAB8' // Light red, gradient index 1
+    gradient: [ // Must be sorted by index, with index in Float[0, 1]
+      { color: '#56D45B', index: 0 },
+      { color: '#AFF2B3', index: 0.7 },
+      { color: '#FFAD67', index: 0.833 },
+      { color: '#FF6B67', index: 0.9 },
+      { color: '#FFBAB8', index: 1 }
+    ]
   }
 });
 ```
@@ -77,7 +79,7 @@ const component = new AudioVisualizer({
   merged: false, // Merge left and right channels
   colors: {
     background: '#1D1E25', // Hex/RGB/HSL
-    signal: '#56D45B' // Hex/RGB/HSL or 'rainbow'
+    signal: '#56D45B' // Hex/RGB/HSL or 'rainbow'or gradient color array (see Bars or Peak Meter)
   }
 });
 ```
@@ -104,12 +106,14 @@ const component = new AudioVisualizer({
     dbScaleTicks: 15
   },
   colors: {
-    background: '#1D1E25', // Mzk background
-    min: '#56D45B', // Mzk green, gradient index 0
-    step0: '#AFF2B3', // Light green, gradient index 0.7
-    step1: '#FFAD67', // Orange, gradient index 0.833
-    step2: '#FF6B67', // Red, gradient index 0.9
-    max: '#FFBAB8' // Light red, gradient index 1
+    background: '#1D1E25',
+    gradient: [ // Must be sorted by index, with index in [0, 1]
+      { color: '#56D45B', index: 0 },
+      { color: '#AFF2B3', index: 0.7 },
+      { color: '#FFAD67', index: 0.833 },
+      { color: '#FF6B67', index: 0.9 },
+      { color: '#FFBAB8', index: 1 }
+    ]
   }
 });
 ```
@@ -203,7 +207,7 @@ const component = new AudioVisualizer({
 ```
 
 The audio HTML element is used to benefit its native streaming mechanism, so the track loading is faster, but also to react to each playback events. The optional input is to use if you have a node chain in your app and wish to apply a visualization after your audio treatment. The
-If you need more information on those components, you can read the online [documentation](https://arthurbeaulieu.github.io/AudioVisualizer/doc/).
+If you need more information on those components methods and internals, you can read the online [documentation](https://arthurbeaulieu.github.io/AudioVisualizer/doc/).
 
 # Development
 
