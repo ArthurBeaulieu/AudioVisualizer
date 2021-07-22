@@ -299,6 +299,23 @@ class CanvasUtils {
    * @param {number} options.peak - The peak value
    * @param {object[]} options.colors - The peak meter gradient colors, must be objects with color and index (in Float[0,1]) properties **/
   static drawPeakMeter(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('CanvasUtils.drawPeakMeter : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('CanvasUtils.drawPeakMeter : Invalid type for canvas or options');
+    }
+    // Test if options contains other mandatory args
+    if ((options.orientation === undefined || options.orientation === null) || (options.amplitude === undefined || options.amplitude === null) || (options.peak === undefined || options.peak === null) || (options.colors === undefined || options.colors === null)) {
+      return new Error('CanvasUtils.drawPeakMeter : Missing arguments options.orientation or options.amplitude or options.peak or options.top');
+    }
+    // Test mandatory arguments proper types
+    if (typeof options.orientation !== 'string' || typeof options.y !== 'number' || typeof options.radius !== 'number' || typeof options.colors !== 'number') {
+      return new Error('CanvasUtils.drawPeakMeter : Invalid type for options.x or options.y or options.radius or options.top');
+    }
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     options.vertical = (options.orientation === 'vertical');
     ctx.fillStyle = ColorUtils.linearGradient(canvas, options);
@@ -338,6 +355,23 @@ class CanvasUtils {
    * @param {number} options.radius - The triangle base
    * @param {number} options.top - The triangle top position **/
   static drawTriangle(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('CanvasUtils.drawTriangle : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('CanvasUtils.drawTriangle : Invalid type for canvas or options');
+    }
+    // Test if options contains other mandatory args
+    if ((options.x === undefined || options.x === null) || (options.y === undefined || options.y === null) || (options.radius === undefined || options.radius === null) || (options.top === undefined || options.top === null)) {
+      return new Error('CanvasUtils.drawTriangle : Missing arguments options.x or options.y or options.radius or options.top');
+    }
+    // Test mandatory arguments proper types
+    if (typeof options.x !== 'number' || typeof options.y !== 'number' || typeof options.radius !== 'number' || typeof options.top !== 'number') {
+      return new Error('CanvasUtils.drawTriangle : Invalid type for options.x or options.y or options.radius or options.top');
+    }
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     ctx.moveTo(options.x - options.radius, options.y);
@@ -357,12 +391,30 @@ class CanvasUtils {
    * @since 2020
    * @description <blockquote>Draw a hotcue in given canvas. HotCue is a square with a label in it.</blockquote>
    * @param {object} canvas - The canvas to draw hotcue in
-   * @param {object} options - Peak meter options
+   * @param {object} options - Hot cue options
    * @param {number} options.x - The hotcue x origin
    * @param {number} options.y - The hotcue y origin
    * @param {number} options.size - The hotcue dimension (height/width)
+   * @param {string} [options.color] - The hotcue color in Hex or css color
    * @param {number} options.label - The hotcue label **/
   static drawHotCue(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('CanvasUtils.drawHotCue : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('CanvasUtils.drawHotCue : Invalid type for canvas or options');
+    }
+    // Test if options contains other mandatory args
+    if ((options.x === undefined || options.x === null) || (options.y === undefined || options.y === null) || (options.size === undefined || options.size === null) || (options.label === undefined || options.label === null)) {
+      return new Error('CanvasUtils.drawHotCue : Missing arguments options.x or options.y or options.size or options.label');
+    }
+    // Test mandatory arguments proper types
+    if (typeof options.x !== 'number' || typeof options.y !== 'number' || typeof options.size !== 'number' || typeof options.label !== 'string') {
+      return new Error('CanvasUtils.drawHotCue : Invalid type for options.x or options.y or options.size or options.label');
+    }
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     // HotCue border
@@ -380,7 +432,37 @@ class CanvasUtils {
   }
 
 
+  /** @method
+   * @name drawBeatCount
+   * @public
+   * @memberof CanvasUtils
+   * @static
+   * @author Arthur Beaulieu
+   * @since 2020
+   * @description <blockquote>Draw in canvas the beat count and the bar count of current playback.</blockquote>
+   * @param {object} canvas - The canvas to draw hotcue in
+   * @param {object} options - Peak meter options
+   * @param {number} options.x - The hotcue x origin
+   * @param {number} options.y - The hotcue y origin
+   * @param {string} options.label - The bar count label **/
   static drawBeatCount(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('CanvasUtils.drawBeatCount : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('CanvasUtils.drawBeatCount : Invalid type for canvas or options');
+    }
+    // Test if options contains other mandatory args
+    if ((options.x === undefined || options.x === null) || (options.y === undefined || options.y === null) || (options.label === undefined || options.label === null)) {
+      return new Error('CanvasUtils.drawBeatCount : Missing arguments options.x or options.y or options.label');
+    }
+    // Test mandatory arguments proper types
+    if (typeof options.x !== 'number' || typeof options.y !== 'number' || typeof options.label !== 'string') {
+      return new Error('CanvasUtils.drawBeatCount : Invalid type for options.x or options.y or options.label');
+    }
+    // Perform method purpose 
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     // Label text drawing
@@ -404,6 +486,15 @@ class CanvasUtils {
    * @param {number} precision - the amount of number we want to have after floating point
    * @return {number} - The rounded value **/
   static precisionRound(value, precision) {
+    // Test that caller sent mandatory arguments
+    if ((value === undefined || value === null) || (precision === undefined || precision === null)) {
+      return new Error('CanvasUtils.precisionRound : Missing arguments value or precision');
+    }
+    // Test those arguments proper types
+    if (typeof value !== 'number' || typeof precision !== 'number') {
+      return new Error('CanvasUtils.precisionRound : Invalid type for value or precision');
+    }
+    // Perform method purpose    
     const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
   }

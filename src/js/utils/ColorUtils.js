@@ -32,6 +32,46 @@ class ColorUtils {
    * @param {number} options.r1 - The radius of the end circle in Float[0,2PI]
    * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties **/
   static drawRadialGradient(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('ColorUtils.drawRadialGradient : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('ColorUtils.drawRadialGradient : Invalid type for canvas or options');
+    }
+    // Test if options.colors is properly formed
+    if (!options.colors || !Array.isArray(options.colors)) {
+      return new Error('ColorUtils.drawRadialGradient : Options object is not properly formed');
+    }
+    // Test if sent colors if properly formed of color/index objects
+    for (let i = 0; i < options.colors.length; ++i) {
+      if (options.colors[i].index === undefined || options.colors[i].index === null || typeof options.colors[i].index !== 'number' || options.colors[i].color === undefined || options.colors[i].color === null || typeof options.colors[i].color !== 'string') {
+        return new Error('ColorUtils.drawRadialGradient : Invalid type for a color sent in options object');
+      } else {
+        // Test tha index is in [0,1]
+        if (options.colors[i].index < 0 || options.colors[i].index > 1) {
+          return new Error('ColorUtils.drawRadialGradient : An index sent in options object is not a valid float in [0, 1]');
+        }
+      }
+    }
+    // Test if options contains other mandatory args (origin)
+    if ((options.x0 === undefined || options.x0 === null) || (options.y0 === undefined || options.y0 === null) || (options.r0 === undefined || options.r0 === null)) {
+      return new Error('ColorUtils.drawRadialGradient : Missing arguments options.x0 or options.y0 or options.r0');
+    }
+    // Test mandatory arguments proper types (origin)
+    if (typeof options.x0 !== 'number' || typeof options.y0 !== 'number' || typeof options.r0 !== 'number') {
+      return new Error('ColorUtils.drawRadialGradient : Invalid type for options.x0 or options.y0 or options.r0');
+    }
+    // Test if options contains other mandatory args (destination)
+    if ((options.x1 === undefined || options.x1 === null) || (options.y1 === undefined || options.y1 === null) || (options.r1 === undefined || options.r1 === null)) {
+      return new Error('ColorUtils.drawRadialGradient : Missing arguments options.x1 or options.y1 or options.r1');
+    }
+    // Test mandatory arguments proper types (destination)
+    if (typeof options.x1 !== 'number' || typeof options.y1 !== 'number' || typeof options.r1 !== 'number') {
+      return new Error('ColorUtils.drawRadialGradient : Invalid type for options.x1 or options.y1 or options.r1');
+    }    
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
       options.x0, options.y0, options.r0,
@@ -63,6 +103,38 @@ class ColorUtils {
    * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties
    * @return {object} The radial glowing gradient to apply **/
   static radialGlowGradient(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('ColorUtils.radialGlowGradient : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('ColorUtils.radialGlowGradient : Invalid type for canvas or options');
+    }
+    // Test if options.colors is properly formed
+    if (!options.colors || !Array.isArray(options.colors)) {
+      return new Error('ColorUtils.radialGlowGradient : Options object is not properly formed');
+    }
+    // Test if sent colors if properly formed of color/index objects
+    for (let i = 0; i < options.colors.length; ++i) {
+      if (options.colors[i].index === undefined || options.colors[i].index === null || typeof options.colors[i].index !== 'number' || options.colors[i].color === undefined || options.colors[i].color === null || typeof options.colors[i].color !== 'string') {
+        return new Error('ColorUtils.radialGlowGradient : Invalid type for a color sent in options object');
+      } else {
+        // Test tha index is in [0,1]
+        if (options.colors[i].index < 0 || options.colors[i].index > 1) {
+          return new Error('ColorUtils.radialGlowGradient : An index sent in options object is not a valid float in [0, 1]');
+        }
+      }
+    }
+    // Test if options contains other mandatory args
+    if ((options.centerX === undefined || options.centerX === null) || (options.centerY === undefined || options.centerY === null) || (options.radius === undefined || options.radius === null)) {
+      return new Error('ColorUtils.radialGlowGradient : Missing arguments options.centerX or options.centerY or options.radius');
+    }
+    // Test mandatory arguments proper types
+    if (typeof options.centerX !== 'number' || typeof options.centerY !== 'number' || typeof options.radius !== 'number') {
+      return new Error('ColorUtils.radialGlowGradient : Invalid type for options.centerX or options.centerY or options.radius');
+    }
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
       options.centerX, options.centerY, 0,
@@ -88,9 +160,33 @@ class ColorUtils {
    * @param {object} canvas - The canvas to draw radial glowing gradient in
    * @param {object} options - Linear gradient options
    * @param {boolean} [options.vertical] - Draw the gradient vertically
-   * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex/RGB/HSL) and index (in Float[0,1]) properties
+   * @param {object[]} options.colors - The color gradient, must be objects with color (in Hex or css colors) and index (in Float[0,1]) properties
    * @return {object} The linear gradient to apply **/
   static linearGradient(canvas, options) {
+    // Test that caller sent mandatory arguments
+    if ((canvas === undefined || canvas === null) || (options === undefined || options === null)) {
+      return new Error('ColorUtils.linearGradient : Missing arguments canvas or options');
+    }
+    // Test those arguments proper types
+    if (canvas.nodeName !== 'CANVAS' || typeof options !== 'object') {
+      return new Error('ColorUtils.linearGradient : Invalid type for canvas or options');
+    }
+    // Test if options.colors is properly formed
+    if (!options.colors || !Array.isArray(options.colors)) {
+      return new Error('ColorUtils.linearGradient : Options object is not properly formed');
+    }
+    // Test if sent colors if properly formed of color/index objects
+    for (let i = 0; i < options.colors.length; ++i) {
+      if (options.colors[i].index === undefined || options.colors[i].index === null || typeof options.colors[i].index !== 'number' || options.colors[i].color === undefined || options.colors[i].color === null || typeof options.colors[i].color !== 'string') {
+        return new Error('ColorUtils.linearGradient : Invalid type for a color sent in options object');
+      } else {
+        // Test tha index is in [0,1]
+        if (options.colors[i].index < 0 || options.colors[i].index > 1) {
+          return new Error('ColorUtils.linearGradient : An index sent in options object is not a valid float in [0, 1]');
+        }
+      }
+    }
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
     if (options.vertical === true) {
@@ -193,11 +289,11 @@ class ColorUtils {
       return new Error('ColorUtils.lightenDarkenColor : Color is not a valid hexadecimal value');
     }
     // Check that alpha value is properly bounded to [0, 1]
-    if (amount < -100) {
-      amount = -100;
-    } else if (amount > 100) {
-      amount = 100;
-    } else if (amount === 0) {
+    if (amount < -100 || amount > 100) {
+      return new Error('ColorUtils.lightenDarkenColor : Amount is not a valid float in [-100, 100]');
+    }
+
+    if (amount === 0) {
       return (usePound ? '#' : '') + color.toLowerCase();
     }
     
@@ -263,10 +359,8 @@ class ColorUtils {
       return new Error('ColorUtils.alphaColor : Color is not a valid hexadecimal value');
     }
     // Check that alpha value is properly bounded to [0, 1]
-    if (alpha < 0) {
-      alpha = 0;
-    } else if (alpha > 1) {
-      alpha = 1;
+    if (alpha < 0 || alpha > 1) {
+      return new Error('ColorUtils.alphaColor : Alpha is not a valid float in [0, 1]');      
     }
     // Perform method purpose
     const num = parseInt(color, 16);

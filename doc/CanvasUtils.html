@@ -162,6 +162,271 @@ make those utils methods available with constraints. Refer to each method for th
     
 
     
+    <h4 class="name" id=".drawBeatCount"><span class="type-signature">(static) </span>drawBeatCount<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <blockquote>Draw in canvas the beat count and the bar count of current playback.</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>canvas</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The canvas to draw hotcue in</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Peak meter options</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The hotcue x origin</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The hotcue y origin</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>label</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The bar count label</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2020</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Arthur Beaulieu</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line435">line 435</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id=".drawCircle"><span class="type-signature">(static) </span>drawCircle<span class="signature">(canvas, options)</span><span class="type-signature"></span></h4>
     
 
@@ -1293,7 +1558,7 @@ make those utils methods available with constraints. Refer to each method for th
 
             
 
-            <td class="description last"><p>Peak meter options</p>
+            <td class="description last"><p>Hot cue options</p>
                 <h6>Properties</h6>
                 
 
@@ -1306,6 +1571,8 @@ make those utils methods available with constraints. Refer to each method for th
 
         <th>Type</th>
 
+        
+        <th>Attributes</th>
         
 
         
@@ -1332,6 +1599,14 @@ make those utils methods available with constraints. Refer to each method for th
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -1354,6 +1629,14 @@ make those utils methods available with constraints. Refer to each method for th
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1378,10 +1661,51 @@ make those utils methods available with constraints. Refer to each method for th
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last"><p>The hotcue dimension (height/width)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The hotcue color in Hex or css color</p></td>
         </tr>
 
     
@@ -1400,6 +1724,14 @@ make those utils methods available with constraints. Refer to each method for th
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -1462,7 +1794,7 @@ make those utils methods available with constraints. Refer to each method for th
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line351">line 351</a>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line385">line 385</a>
     </li></ul></dd>
     
 
@@ -3285,7 +3617,7 @@ make those utils methods available with constraints. Refer to each method for th
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line326">line 326</a>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line343">line 343</a>
     </li></ul></dd>
     
 
@@ -3743,7 +4075,7 @@ make those utils methods available with constraints. Refer to each method for th
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line395">line 395</a>
+        <a href="utils_CanvasUtils.js.html">utils/CanvasUtils.js</a>, <a href="utils_CanvasUtils.js.html#line477">line 477</a>
     </li></ul></dd>
     
 
@@ -3819,7 +4151,7 @@ make those utils methods available with constraints. Refer to each method for th
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Jul 21 2021 16:57:30 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Thu Jul 22 2021 16:43:07 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>

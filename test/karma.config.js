@@ -12,11 +12,13 @@ module.exports = config => {
     frameworks: ['jasmine'],
     client: {
       jasmine: {
+        clearContext: false,
         random: !config.dev // Randomly run test when not developping them
       }
     },
     files: [
       'test/testContext.js',
+      'test/testStyle.css',
       {
         pattern: 'demo/audio/*',
         included: false,
@@ -24,7 +26,7 @@ module.exports = config => {
         nocache: false
       }
     ],
-    reporters: ['progress'],
+    reporters: ['kjhtml', 'progress'],
     preprocessors: {
       'test/testContext.js': ['webpack']
     },
