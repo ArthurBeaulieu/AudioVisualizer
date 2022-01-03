@@ -159,6 +159,7 @@ class BaseComponent {
    * @since 2020
    * @description <blockquote>On play event callback.</blockquote> **/
   _play() {
+    this._audioCtx.resume();
     this._isPlaying = true;
     this._processAudioBin();
   }
@@ -172,6 +173,7 @@ class BaseComponent {
    * @since 2020
    * @description <blockquote>On pause event callback.</blockquote> **/
   _pause() {
+    this._audioCtx.suspend();
     this._isPlaying = false;
   }
 

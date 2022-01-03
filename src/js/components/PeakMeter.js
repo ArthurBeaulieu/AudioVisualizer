@@ -273,7 +273,7 @@ class PeakMeter extends VisuComponentStereo {
     let sumOfSquaresR = 0;
     for (let i = 0; i < dataL.length; i++) {
       sumOfSquaresL += dataL[i] * dataL[i];
-      sumOfSquaresR += dataR[i] * dataL[i];
+      sumOfSquaresR += dataR[i] * dataR[i];
     }
     const avgPowerDecibelsL = 10 * Math.log10(sumOfSquaresL / dataL.length);
     const avgPowerDecibelsR = 10 * Math.log10(sumOfSquaresR / dataR.length);

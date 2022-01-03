@@ -102,13 +102,13 @@ const buttonClicked = function() {
           index: 0
         }, {
           color: '#AFF2B3',
-          index: 0.7
+          index: 0.3
         }, {
           color: '#FFAD00',
-          index: 0.833
+          index: 0.5
         }, {
           color: '#006B67',
-          index: 0.9
+          index: 0.7
         }, {
           color: '#00BAB8',
           index: 1

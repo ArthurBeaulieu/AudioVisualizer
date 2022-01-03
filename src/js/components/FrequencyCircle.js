@@ -252,7 +252,7 @@ class FrequencyCircle extends VisuComponentMono {
         x1: this._centerX + Math.cos(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight),
         y1: this._centerY + Math.sin(this._radialSection * i - (Math.PI / 2)) * (this._radius + this._circleStrokeWidth + barHeight),
         width: barWidth,
-        color: this._averageHit ? /* Green */ '#56D45B' : /* Dark Green */ '#37C340'
+        color: this._averageHit ? '#56D45B' : '#37C340'
       });
     }
   }

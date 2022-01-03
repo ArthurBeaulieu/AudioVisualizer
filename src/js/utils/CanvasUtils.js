@@ -32,11 +32,6 @@ class CanvasUtils {
   static drawRadialBar(canvas, options) {
     const ctx = canvas.getContext('2d');
     let amount = options.frequencyValue / 255;
-    if (amount < 0.05) {
-      amount = -amount;
-    } else {
-      amount = amount * 1.33;
-    }
     // Draw on canvas context
     ctx.beginPath();
     ctx.moveTo(options.x0, options.y0);
@@ -310,10 +305,6 @@ class CanvasUtils {
     // Test if options contains other mandatory args
     if ((options.orientation === undefined || options.orientation === null) || (options.amplitude === undefined || options.amplitude === null) || (options.peak === undefined || options.peak === null) || (options.colors === undefined || options.colors === null)) {
       return new Error('CanvasUtils.drawPeakMeter : Missing arguments options.orientation or options.amplitude or options.peak or options.top');
-    }
-    // Test mandatory arguments proper types
-    if (typeof options.orientation !== 'string' || typeof options.y !== 'number' || typeof options.radius !== 'number' || typeof options.colors !== 'number') {
-      return new Error('CanvasUtils.drawPeakMeter : Invalid type for options.x or options.y or options.radius or options.top');
     }
     // Perform method purpose
     const ctx = canvas.getContext('2d');

@@ -8,6 +8,7 @@ html, body {
   font-family: sans-serif;
   height: 100vh;
   margin: 0;
+  overflow: hidden;
   width: 100vw;
 }
 
