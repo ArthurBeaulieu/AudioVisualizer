@@ -1,6 +1,6 @@
 # AudioVisualizer
 
-![](https://badgen.net/badge/version/0.9.8/blue)
+![](https://badgen.net/badge/version/1.0.0/blue)
 ![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
 ![Doc](https://badgen.net/badge/documentation/written/green)
 ![Test](https://badgen.net/badge/test/wip/orange)

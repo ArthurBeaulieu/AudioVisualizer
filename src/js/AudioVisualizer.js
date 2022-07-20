@@ -10,7 +10,7 @@ import Timeline from './components/Timeline.js';
 import Waveform from './components/Waveform.js';
 
 
-const AudioVisualizerVersion = '0.9.8';
+const AudioVisualizerVersion = '1.0.0';
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
