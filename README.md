@@ -3,7 +3,7 @@
 ![](https://badgen.net/badge/version/1.0.0/blue)
 ![License](https://img.shields.io/github/license/ArthurBeaulieu/AudioVisualizer.svg)
 ![Doc](https://badgen.net/badge/documentation/written/green)
-![Test](https://badgen.net/badge/test/wip/orange)
+![Test](https://badgen.net/badge/test/basic/green)
 ![Dep](https://badgen.net/badge/dependencies/none/green)
 
 This library free module provides several standard audio visualizations in the browser using WebAudioAPI. It is best to be used with an HTML audio element (to benefit its streaming mechanism), but can also work with an `AudioContext`.
