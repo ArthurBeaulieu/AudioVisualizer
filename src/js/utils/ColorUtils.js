@@ -70,7 +70,7 @@ class ColorUtils {
     // Test mandatory arguments proper types (destination)
     if (typeof options.x1 !== 'number' || typeof options.y1 !== 'number' || typeof options.r1 !== 'number') {
       return new Error('ColorUtils.drawRadialGradient : Invalid type for options.x1 or options.y1 or options.r1');
-    }    
+    }
     // Perform method purpose
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createRadialGradient(
@@ -296,7 +296,7 @@ class ColorUtils {
     if (amount === 0) {
       return (usePound ? '#' : '') + color.toLowerCase();
     }
-    
+
     if (amount > 0) {
       amount += 16;
     } else {
@@ -360,7 +360,7 @@ class ColorUtils {
     }
     // Check that alpha value is properly bounded to [0, 1]
     if (alpha < 0 || alpha > 1) {
-      return new Error('ColorUtils.alphaColor : Alpha is not a valid float in [0, 1]');      
+      return new Error('ColorUtils.alphaColor : Alpha is not a valid float in [0, 1]');
     }
     // Perform method purpose
     const num = parseInt(color, 16);
@@ -370,7 +370,7 @@ class ColorUtils {
 
   /*  --------------------------------------------------------------------------------------------------------------- */
   /*  ------------------------------------  COMPONENT DEFAULT COLORS METHOD  ---------------------------------------  */
-  /*  --------------------------------------------------------------------------------------------------------------- */  
+  /*  --------------------------------------------------------------------------------------------------------------- */
 
 
   /** @public

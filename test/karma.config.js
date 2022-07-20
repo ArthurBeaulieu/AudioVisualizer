@@ -1,5 +1,3 @@
-'use strict';
-
 const webpack = require('webpack');
 const loaders = require('../webpack/loaders');
 const plugins = require('../webpack/plugins');

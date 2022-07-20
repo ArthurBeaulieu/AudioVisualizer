@@ -22,7 +22,7 @@ class VisuComponentStereo extends BaseComponent {
   constructor(options) {
     super();
     /** @private
-     * @member {boolean} - Merge L and R channel on output */    
+     * @member {boolean} - Merge L and R channel on output */
     this._merged = null;
     /** @private
      * @member {object} - Audio nodes from web audio API to manipulate data with */
@@ -35,16 +35,16 @@ class VisuComponentStereo extends BaseComponent {
       analyserR: null // Right channel analysis
     };
     /** @private
-     * @member {object} - The canvas to rendered left channed data to */       
+     * @member {object} - The canvas to rendered left channed data to */
     this._canvasL = null;
     /** @private
-     * @member {object} - The canvas to rendered right channed data to */     
+     * @member {object} - The canvas to rendered right channed data to */
     this._canvasR = null;
     /** @private
-     * @member {object} - The left canvas associated context */ 
+     * @member {object} - The left canvas associated context */
     this._ctxL = null;
     /** @private
-     * @member {object} - The right canvas associated context */     
+     * @member {object} - The right canvas associated context */
     this._ctxR = null;
     // Construction sequence
     this._fillAttributes(options);

@@ -91,7 +91,7 @@ class CanvasUtils {
   static drawCircleGlow(canvas, options) {
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);    
+    ctx.arc(options.centerX, options.centerY, options.radius, options.radStart, options.radEnd);
     ctx.fillStyle = ColorUtils.radialGlowGradient(canvas, options);
     ctx.fill();
     ctx.closePath();
@@ -144,7 +144,7 @@ class CanvasUtils {
     ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);
     options.vertical = true; // Enforce vertical gradient
     ctx.fillStyle = ColorUtils.linearGradient(canvas, options);
-    ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);    
+    ctx.fillRect(options.originX, canvas.height - options.height, options.width, options.height);
     ctx.closePath();
   }
 
@@ -311,7 +311,7 @@ class CanvasUtils {
     options.vertical = (options.orientation === 'vertical');
     ctx.fillStyle = ColorUtils.linearGradient(canvas, options);
     ctx.fill();
-    
+
     if (options.orientation === 'horizontal') {
       const ledWidth = canvas.width - options.amplitude;
       ctx.fillRect(0, 0, ledWidth, canvas.height);
@@ -453,7 +453,7 @@ class CanvasUtils {
     if (typeof options.x !== 'number' || typeof options.y !== 'number' || typeof options.label !== 'string') {
       return new Error('CanvasUtils.drawBeatCount : Invalid type for options.x or options.y or options.label');
     }
-    // Perform method purpose 
+    // Perform method purpose
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
     // Label text drawing
@@ -485,7 +485,7 @@ class CanvasUtils {
     if (typeof value !== 'number' || typeof precision !== 'number') {
       return new Error('CanvasUtils.precisionRound : Invalid type for value or precision');
     }
-    // Perform method purpose    
+    // Perform method purpose
     const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
   }
