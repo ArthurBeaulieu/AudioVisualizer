@@ -85,8 +85,8 @@ class Waveform extends VisuComponentMono {
       align: options.wave ? options.wave.align || 'center' : 'center',
       barWidth: options.wave ? options.wave.barWidth || 1 : 1,
       barMarginScale: options.wave ? (options.wave.barMarginScale / 2) : 0.125, // Divide by 2 because true range is [0, 0.5]
-      merged: options.wave ? options.wave.merged || true : true,
-      noSignalLine: options.wave ? options.wave.noSignalLine || true : false
+      merged: options.wave ? ((options.wave.merged === true) ? true : false) : false,
+      noSignalLine: options.wave ? ((options.wave.noSignalLine === true) ? true : false) : false
     };
     this._hotCues = options.hotCues || [];
 
@@ -126,10 +126,12 @@ class Waveform extends VisuComponentMono {
    * @since 2020
    * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
   _addEvents() {
-    super._addEvents();
-    this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
-    this._player.addEventListener('seeking', this._onProgress, false);
-    this._dom.container.addEventListener('click', this._onClick, false);
+    if (this._noEvents === false) {
+      super._addEvents();
+      this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
+      this._player.addEventListener('seeking', this._onProgress, false);
+      this._dom.container.addEventListener('click', this._onClick, false);
+    }
   }
 
 
