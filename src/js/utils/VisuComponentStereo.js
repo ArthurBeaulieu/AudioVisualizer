@@ -16,6 +16,7 @@ class VisuComponentStereo extends BaseComponent {
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
    * @param {object} options.renderTo - The DOM element to render canvas in
    * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {boolean} [options.noEvents] - Force component to be inactive to events
    * @param {object} [options.audioContext=null] - The audio context to base analysis from
    * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one
    * @param {boolean} [options.merged=false] - Merge channels into mono output **/
@@ -34,6 +35,9 @@ class VisuComponentStereo extends BaseComponent {
       analyserL: null, // Left channel analysis
       analyserR: null // Right channel analysis
     };
+    /** @private
+     * @member {boolean} - Force no events on components, must be handled in child class */    
+    this._noEvents = options.noEvents || true;
     /** @private
      * @member {object} - The canvas to rendered left channed data to */
     this._canvasL = null;
@@ -94,8 +98,8 @@ class VisuComponentStereo extends BaseComponent {
     this._dom.container.classList.add(`audio-${this._type}`);
     this._canvasL = document.createElement('canvas');
     this._canvasR = document.createElement('canvas');
-    this._canvasL.style.cssText = 'background-color:black;border: solid 1px #2c2c30;display:block;box-sizing:border-box;';
-    this._canvasR.style.cssText = 'background-color:black;border: solid 1px #2c2c30;display:block;box-sizing:border-box;';
+    this._canvasL.style.cssText = 'display:block;box-sizing:border-box;';
+    this._canvasR.style.cssText = 'display:block;box-sizing:border-box;';
     this._ctxL = this._canvasL.getContext('2d');
     this._ctxR = this._canvasR.getContext('2d');
     this._ctxL.translate(0.5, 0.5);
