@@ -83,9 +83,9 @@ class VisuComponentMono extends BaseComponent {
     this._canvas = document.createElement('CANVAS');
     this._canvas.style.cssText = 'display:block;box-sizing:border-box;';
     this._ctx = this._canvas.getContext('2d');
+    this._canvas.width = this._renderTo.offsetWidth;
+    this._canvas.height = this._renderTo.offsetHeight;
     this._ctx.translate(0.5, 0.5);
-    this._canvas.width = this._renderTo.offsetWidth - 2;
-    this._canvas.height = this._renderTo.offsetHeight - 2;
     this._dom.container.appendChild(this._canvas);
     this._renderTo.appendChild(this._dom.container);
   }
@@ -129,8 +129,8 @@ class VisuComponentMono extends BaseComponent {
    * @since 2020
    * @description <blockquote>On resize event callback.</blockquote> **/
   _onResize() {
-    this._canvas.width = this._renderTo.offsetWidth - 2;
-    this._canvas.height = this._renderTo.offsetHeight - 2;
+    this._canvas.width = this._renderTo.offsetWidth;
+    this._canvas.height = this._renderTo.offsetHeight;
   }
 
 
