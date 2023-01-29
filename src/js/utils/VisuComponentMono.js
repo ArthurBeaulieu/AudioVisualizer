@@ -16,6 +16,7 @@ class VisuComponentMono extends BaseComponent {
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
    * @param {object} options.renderTo - The DOM element to render canvas in
    * @param {number} options.fftSize - The FFT size for analysis. Must be a power of 2. High values may lead to heavy CPU cost
+   * @param {boolean} [options.noEvents] - Force component to be inactive to events
    * @param {object} [options.audioContext=null] - The audio context to base analysis from
    * @param {object} [options.inputNode=null] - The audio node to take source instead of player's one **/
   constructor(options) {
@@ -26,6 +27,9 @@ class VisuComponentMono extends BaseComponent {
       source: null, // HTML audio element
       analyser: null // Analysis node
     };
+    /** @private
+     * @member {boolean} - Force no events on components, must be handled in child class */    
+    this._noEvents = options.noEvents || true;
     /** @private
      * @member {object} - The canvas to rendered mono data to */
     this._canvas = null;
@@ -77,7 +81,7 @@ class VisuComponentMono extends BaseComponent {
     this._dom.container = document.createElement('DIV');
     this._dom.container.classList.add(`audio-${this._type}`);
     this._canvas = document.createElement('CANVAS');
-    this._canvas.style.cssText = 'background-color:black;border:solid 1px #2c2c30;display:block;box-sizing:border-box;';
+    this._canvas.style.cssText = 'display:block;box-sizing:border-box;';
     this._ctx = this._canvas.getContext('2d');
     this._ctx.translate(0.5, 0.5);
     this._canvas.width = this._renderTo.offsetWidth - 2;
