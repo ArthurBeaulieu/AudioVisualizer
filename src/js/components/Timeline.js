@@ -137,14 +137,16 @@ class Timeline extends VisuComponentMono {
    * @since 2020
    * @description <blockquote>Add component events (resize, play, pause, dbclick).</blockquote> **/
   _addEvents() {
-    super._addEvents();
-    this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
-    this._player.addEventListener('timeupdate', this._onProgress, false);
-    this._canvas.addEventListener('mousedown', this._mouseDown, false);
+    if (this._noEvents === false) {
+      super._addEvents();
+      this._player.addEventListener('loadedmetadata', this._trackLoaded, false);
+      this._player.addEventListener('timeupdate', this._onProgress, false);
+      this._canvas.addEventListener('mousedown', this._mouseDown, false);
 
-    if (!this._player.paused) {
-      this._isPlaying = true;
-      requestAnimationFrame(this._processAudioBin);
+      if (!this._player.paused) {
+        this._isPlaying = true;
+        requestAnimationFrame(this._processAudioBin);
+      }
     }
   }
 
