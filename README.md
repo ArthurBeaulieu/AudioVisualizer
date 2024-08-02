@@ -215,7 +215,7 @@ If you clone this repository, you can `npm install` to install development depen
 
 - `npm run build` to generate the minified file ;
 - `npm run prod` to watch for any change in source code ;
-- `npm run server` to launch a local development server ;
+- `npm run start` to launch a local development server ;
 - `npm run doc` to generate documentation ;
 - `npm run test` to perform tests ;
 - `npm run test-dev` to debug tests ;

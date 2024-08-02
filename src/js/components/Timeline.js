@@ -63,7 +63,7 @@ class Timeline extends VisuComponentMono {
       scale: options.wave ? options.wave.scale || .95 : .95
     };
     // HotCues and beats arrays
-    this._hotCues = [...options.hotCues] || [];
+    this._hotCues = [...options.hotCues];
     this._beatsArray = [];
     this._beatCount = '0.0';
     // Loop utils

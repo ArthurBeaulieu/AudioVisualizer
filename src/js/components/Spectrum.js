@@ -47,7 +47,7 @@ class Spectrum extends VisuComponentStereo {
    * @author Arthur Beaulieu
    * @since 2020
    * @description <blockquote>Internal method to fill internal properties from options object sent to constructor.</blockquote>
-   * @param {object} options - The frequency circle options
+   * @param {object} options - The spectrum options
    * @param {string} options.type - The component type as string
    * @param {object} options.player - The player to take as processing input (if inputNode is given, player source will be ignored)
    * @param {object} options.renderTo - The DOM element to render canvas in

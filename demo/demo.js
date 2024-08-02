@@ -120,10 +120,11 @@ const buttonClicked = function() {
       type: 'spectrum',
       player: document.querySelector('#audio-player'),
       renderTo: document.getElementById('view'),
-      fftSize: 2048,
-      merged: true,
+      fftSize: 8192,
+      merged: false,
       colorSmoothing: true,
-      scale: 'logarithmic'
+      scale: 'logarithmic',
+      preCompute: true
     });
   } else if (this.dataset.type === 'timeline') {
     component = new AudioVisualizer({
